@@ -52,6 +52,11 @@ public class Pawn : MonoBehaviour
         controller.PawnFixedUpdate(this);
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position + ((FPS_Stats)stats).headCheckOffset, ((FPS_Stats)stats).headCheckRadius);
+    }
+
     //=-----------------=
     // Internal Functions
     //=-----------------=

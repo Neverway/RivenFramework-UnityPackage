@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   airMovementMultiplier: 0.25
+  crouchMovementMultiplier: 0.25
   groundMask:
     serializedVersion: 2
     m_Bits: 1
   groundCheckRadius: 0.25
   groundCheckOffset: {x: 0, y: -0.125, z: 0}
   jumpForce: 10
-  headCheckRadius: 0.5
-  headCheckOffset: {x: 0, y: 2, z: 0}
-  crouchHeight: 1
+  headCheckRadius: 0.25
+  headCheckOffset: {x: 0, y: 1.75, z: 0}
+  headCheckDistance: 0.55
+  crouchDistance: 0.5
+  crouchColliderOffset: {x: 0, y: 0.25, z: 0}

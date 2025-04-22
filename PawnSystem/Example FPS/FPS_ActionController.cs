@@ -206,17 +206,18 @@ public class FPS_ActionController
     /// <param name="_enable"></param>
     public void Crouch(Pawn _pawn, bool _enable)
     {
+        Debug.Log(IsHeadClear(_pawn));
         if (_enable && isCrouching is false)
         {
             var collider = _pawn.GetComponent<CapsuleCollider>();
-            collider.height -= ((FPS_Stats)_pawn.stats).crouchHeight;
+            collider.height -= ((FPS_Stats)_pawn.stats).crouchDistance;
             collider.center += ((FPS_Stats)_pawn.stats).crouchColliderOffset;
             isCrouching = true;
         }
         if (_enable is false && isCrouching && IsHeadClear(_pawn))
         {
             var collider = _pawn.GetComponent<CapsuleCollider>();
-            collider.height += ((FPS_Stats)_pawn.stats).crouchHeight;
+            collider.height += ((FPS_Stats)_pawn.stats).crouchDistance;
             collider.center -= ((FPS_Stats)_pawn.stats).crouchColliderOffset;
             isCrouching = false;
         }
@@ -249,7 +250,12 @@ public class FPS_ActionController
     
     public bool IsHeadClear(Pawn _pawn)
     {
-        return !Physics.CheckSphere(_pawn.transform.position + ((FPS_Stats)_pawn.stats).headCheckOffset, ((FPS_Stats)_pawn.stats).headCheckRadius, ((FPS_Stats)_pawn.stats).groundMask, QueryTriggerInteraction.Ignore);
+        RaycastHit hit;
+        if (Physics.SphereCast(_pawn.transform.position + ((FPS_Stats)_pawn.stats).headCheckOffset, ((FPS_Stats)_pawn.stats).headCheckRadius, _pawn.transform.up, out hit, ((FPS_Stats)_pawn.stats).headCheckDistance, ((FPS_Stats)_pawn.stats).groundMask, QueryTriggerInteraction.Ignore))
+        {
+            return false;
+        }
+        return true;
     }
     
     public bool IsOnGround(Pawn _pawn)
