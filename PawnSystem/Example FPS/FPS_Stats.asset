@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dbeb98eb5310bc1a80f2b490beea0d1, type: 3}
+  m_Name: FPS_Stats
+  m_EditorClassIdentifier: 
+  movementSpeed: 10
+  airMovementMultiplier: 0.25
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1
+  groundCheckRadius: 0.25
+  groundCheckOffset: {x: 0, y: -0.125, z: 0}
+  jumpForce: 10
+  headCheckRadius: 0.5
+  headCheckOffset: {x: 0, y: 2, z: 0}
+  crouchHeight: 1
