@@ -1,16 +1,15 @@
 //===================== (Neverway 2024) Written by Liz M. =====================
 //
-// Purpose: This class holds a list of actions that any FPS pawn can implement
+// Purpose:
 // Notes:
 //
 //=============================================================================
 
+using System.Collections;
 using System.Collections.Generic;
-using Framework.PawnManagement;
-using JetBrains.Annotations;
 using UnityEngine;
-/*
-public class FPS_ActionList
+
+public class FPPawnActions : PawnActions
 {
     //=-----------------=
     // Public Variables
@@ -28,9 +27,7 @@ public class FPS_ActionList
     //=-----------------=
     // Reference Variables
     //=-----------------=
-    public List<Pawn> visiblePawns;
-    public List<Pawn> visibleHositles;
-    public List<Pawn> visibleAllies;
+
 
     //=-----------------=
     // Mono Functions
@@ -52,9 +49,12 @@ public class FPS_ActionList
     /// <param name="_rigidbody">A reference to the owning rigidbody</param>
     /// <param name="_direction">The direction to move in (x-axis is left/right, y-axis is forward/backward, and z-axis is up/down (which is only really used for flying enemies))</param>
     /// <param name="_speed">The speed to move the pawn at (set this to 0 to just use the stats movement speed)</param>
-    public void Move(PawnController _pawn, Vector3 _direction, float _speed=0)
+    public void Move(FPPawn _pawn, Vector3 _direction, float _speed=0)
     {
-        if (_speed == 0) _speed = ((FPS_StatsData)_pawn.currentStats).movementSpeed;
+        if (_speed == 0)
+        {
+            _speed = ((FPPawnStats)_pawn.currentStats).movementSpeed;
+        }
 
         var rigidbody = _pawn.GetComponent<Rigidbody>();
         
@@ -67,19 +67,19 @@ public class FPS_ActionList
         IsOnSlope(_pawn); // Calculate IsOnSlope to get the result of slopeHit
         var slopMoveDirection = Vector3.ProjectOnPlane(localMoveDirection, slopeHit.normal);
         var desiredSlopeVelocity = slopMoveDirection * _speed;
-        var desiredAirVelocity = localMoveDirection.normalized * (_speed * ((FPS_StatsData)_pawn.currentStats).airMovementMultiplier);
-        var desiredCrouchVelocity = localMoveDirection.normalized * (_speed * ((FPS_StatsData)_pawn.currentStats).crouchMovementMultiplier);
+        var desiredAirVelocity = localMoveDirection.normalized * (_speed * ((FPPawnStats)_pawn.currentStats).airMovementMultiplier);
+        var desiredCrouchVelocity = localMoveDirection.normalized * (_speed * ((FPPawnStats)_pawn.currentStats).crouchMovementMultiplier);
         
         // Define acceleration rates
-        var groundAccelerationRate = ((FPS_StatsData)_pawn.currentStats).groundAccelerationRate;
-        var slopeAccelerationRate = ((FPS_StatsData)_pawn.currentStats).slopeAccelerationRate;
-        var airAccelerationRate = ((FPS_StatsData)_pawn.currentStats).airAccelerationRate;
+        var groundAccelerationRate = ((FPPawnStats)_pawn.currentStats).groundAccelerationRate;
+        var slopeAccelerationRate = ((FPPawnStats)_pawn.currentStats).slopeAccelerationRate;
+        var airAccelerationRate = ((FPPawnStats)_pawn.currentStats).airAccelerationRate;
         
         // Ground Movement
         if (IsOnGround(_pawn) && !IsOnSlope(_pawn) && !isCrouching)
         {
             rigidbody.useGravity = true;
-            rigidbody.drag = ((FPS_StatsData)_pawn.currentStats).groundDrag;
+            rigidbody.drag = ((FPPawnStats)_pawn.currentStats).groundDrag;
             // if current is less than target and target is positive, or current is greater than target and target is negative
             if (currentVelocity.x < desiredGroundVelocity.x && desiredGroundVelocity.x > 0f || currentVelocity.x > desiredGroundVelocity.x && desiredGroundVelocity.x < 0f )
             {
@@ -99,7 +99,7 @@ public class FPS_ActionList
         {
             rigidbody.useGravity = true;
             Debug.Log("Crouching");
-            rigidbody.drag = ((FPS_StatsData)_pawn.currentStats).groundDrag;
+            rigidbody.drag = ((FPPawnStats)_pawn.currentStats).groundDrag;
             // if current is less than target and target is positive, or current is greater than target and target is negative
             if (currentVelocity.x < desiredCrouchVelocity.x && desiredCrouchVelocity.x > 0f || currentVelocity.x > desiredCrouchVelocity.x && desiredCrouchVelocity.x < 0f )
             {
@@ -118,7 +118,7 @@ public class FPS_ActionList
         else if (IsOnGround(_pawn) && IsOnSlope(_pawn))
         {
             rigidbody.useGravity = false;
-            rigidbody.drag = ((FPS_StatsData)_pawn.currentStats).slopeDrag;
+            rigidbody.drag = ((FPPawnStats)_pawn.currentStats).slopeDrag;
             // if current is less than target and target is positive, or current is greater than target and target is negative
             if (currentVelocity.x < desiredSlopeVelocity.x && desiredSlopeVelocity.x > 0f || currentVelocity.x > desiredSlopeVelocity.x && desiredSlopeVelocity.x < 0f )
             {
@@ -137,7 +137,7 @@ public class FPS_ActionList
         else
         {
             rigidbody.useGravity = true;
-            rigidbody.drag = ((FPS_StatsData)_pawn.currentStats).airDrag;
+            rigidbody.drag = ((FPPawnStats)_pawn.currentStats).airDrag;
             // if current is less than target and target is positive, or current is greater than target and target is negative
             if (currentVelocity.x < desiredAirVelocity.x && desiredAirVelocity.x > 0f || currentVelocity.x > desiredAirVelocity.x && desiredAirVelocity.x < 0f )
             {
@@ -178,7 +178,7 @@ public class FPS_ActionList
     /// <param name="_pawn">A reference to the root of the pawn (this is needed to rotate the body to look left and right)</param>
     /// <param name="_viewPoint">A reference to the object that represents the head of the pawn (this is needed to rotate the head to look up and down)</param>
     /// <param name="_direction">The direction to rotate in (x-axis is left/right, y-axis is up/down)</param>
-    public void FaceTowardsDirection(PawnController _pawn, GameObject _viewPoint, Vector2 _direction)
+    public void FaceTowardsDirection(FPPawn _pawn, GameObject _viewPoint, Vector2 _direction)
     {
         _viewPoint.transform.localRotation = Quaternion.Euler(_direction.x, 0, 0); // Rotate the head for up/down
         _pawn.transform.rotation = Quaternion.Euler(0, _direction.y, 0); // Rotate the body for left/right
@@ -191,7 +191,7 @@ public class FPS_ActionList
     /// <param name="_viewPoint">A reference to the object that represents the head of the pawn (this is needed to rotate the head to look up and down)</param>
     /// <param name="_position"></param>
     /// <param name="_speed"></param>
-    public void FaceTowardsPosition(PawnController _pawn, GameObject _viewPoint, Vector3 _position, float _speed)
+    public void FaceTowardsPosition(FPPawn _pawn, GameObject _viewPoint, Vector3 _position, float _speed)
     {
         var vectorToTarget = _pawn.transform.position - _position;
 
@@ -210,12 +210,12 @@ public class FPS_ActionList
     /// </summary>
     /// <param name="_pawn">A reference to the pawn to get its jump force & IsOnGround state</param>
     /// <param name="_rigidbody"></param>
-    public void Jump(PawnController _pawn)
+    public void Jump(FPPawn _pawn)
     {
         if (IsOnGround(_pawn) is false) return;
         var rigidbody = _pawn.GetComponent<Rigidbody>();
         rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-        rigidbody.AddForce(Vector3.up * ((FPS_StatsData)_pawn.currentStats).jumpForce, ForceMode.Impulse);
+        rigidbody.AddForce(Vector3.up * ((FPPawnStats)_pawn.currentStats).jumpForce, ForceMode.Impulse);
     }
     
     /// <summary>
@@ -223,20 +223,20 @@ public class FPS_ActionList
     /// </summary>
     /// <param name="_pawn"></param>
     /// <param name="_enable"></param>
-    public void Crouch(PawnController _pawn, bool _enable)
+    public void Crouch(FPPawn _pawn, bool _enable)
     {
         if (_enable && isCrouching is false)
         {
             var collider = _pawn.GetComponent<CapsuleCollider>();
-            collider.height -= ((FPS_StatsData)_pawn.currentStats).crouchDistance;
-            collider.center += ((FPS_StatsData)_pawn.currentStats).crouchColliderOffset;
+            collider.height -= ((FPPawnStats)_pawn.currentStats).crouchDistance;
+            collider.center += ((FPPawnStats)_pawn.currentStats).crouchColliderOffset;
             isCrouching = true;
         }
         if (_enable is false && isCrouching && IsHeadClear(_pawn))
         {
             var collider = _pawn.GetComponent<CapsuleCollider>();
-            collider.height += ((FPS_StatsData)_pawn.currentStats).crouchDistance;
-            collider.center -= ((FPS_StatsData)_pawn.currentStats).crouchColliderOffset;
+            collider.height += ((FPPawnStats)_pawn.currentStats).crouchDistance;
+            collider.center -= ((FPPawnStats)_pawn.currentStats).crouchColliderOffset;
             isCrouching = false;
         }
     }
@@ -266,34 +266,34 @@ public class FPS_ActionList
         
     }
     
-    public bool IsHeadClear(PawnController _pawn)
+    public bool IsHeadClear(FPPawn _pawn)
     {
         RaycastHit hit;
-        if (Physics.SphereCast(_pawn.transform.position + ((FPS_StatsData)_pawn.currentStats).headCheckOffset, ((FPS_StatsData)_pawn.currentStats).headCheckRadius, _pawn.transform.up, out hit, ((FPS_StatsData)_pawn.currentStats).headCheckDistance, ((FPS_StatsData)_pawn.currentStats).groundMask, QueryTriggerInteraction.Ignore))
+        if (Physics.SphereCast(_pawn.transform.position + ((FPPawnStats)_pawn.currentStats).headCheckOffset, ((FPPawnStats)_pawn.currentStats).headCheckRadius, _pawn.transform.up, out hit, ((FPPawnStats)_pawn.currentStats).headCheckDistance, ((FPPawnStats)_pawn.currentStats).groundMask, QueryTriggerInteraction.Ignore))
         {
             return false;
         }
         return true;
     }
     
-    public bool IsOnGround(PawnController _pawn)
+    public bool IsOnGround(FPPawn _pawn)
     {
         // Move the ground check position upwards if the pawn is crouching to account for their change in height
         Vector3 crouchingOffset = new Vector3(0,0,0);
-        if (isCrouching) crouchingOffset = new Vector3(0, ((FPS_StatsData)_pawn.currentStats).crouchDistance, 0);
+        if (isCrouching) crouchingOffset = new Vector3(0, ((FPPawnStats)_pawn.currentStats).crouchDistance, 0);
         
-        return Physics.CheckSphere(_pawn.transform.position - ((FPS_StatsData)_pawn.currentStats).groundCheckOffset + crouchingOffset, ((FPS_StatsData)_pawn.currentStats).groundCheckRadius, ((FPS_StatsData)_pawn.currentStats).groundMask, QueryTriggerInteraction.Ignore);
+        return Physics.CheckSphere(_pawn.transform.position - ((FPPawnStats)_pawn.currentStats).groundCheckOffset + crouchingOffset, ((FPPawnStats)_pawn.currentStats).groundCheckRadius, ((FPPawnStats)_pawn.currentStats).groundMask, QueryTriggerInteraction.Ignore);
     }
 
-    public bool IsOnSlope(PawnController _pawn)
+    public bool IsOnSlope(FPPawn _pawn)
     {
         /*
         This function does not account for crouching offsets. Meaning if a pawn is crouched, the slope detection will likely fail and the pawn will slip off the slope.
         This is a bug, but I'm deciding to keep it in since it's super fun to be able to crouch when falling at a slope to slide down it!
         If this needs to be patched out for any reason, update this function to account for the crouch offset. If you're not sure how to do that, check IsOnGround function above. It correctly accounts for the crouch offset.
         Happy sliding! ~Liz
-        //*//*
-        if (Physics.Raycast(_pawn.transform.position, Vector3.down, out slopeHit, ((FPS_StatsData)_pawn.currentStats).slopeCheckDistance, ((FPS_StatsData)_pawn.currentStats).groundMask, QueryTriggerInteraction.Ignore))
+        //*/
+        if (Physics.Raycast(_pawn.transform.position, Vector3.down, out slopeHit, ((FPPawnStats)_pawn.currentStats).slopeCheckDistance, ((FPPawnStats)_pawn.currentStats).groundMask, QueryTriggerInteraction.Ignore))
         {
             return slopeHit.normal != Vector3.up;
         }
@@ -301,7 +301,7 @@ public class FPS_ActionList
         return false;
     }
 
-    public void EnableViewCamera(PawnController _pawn, bool _setActive)
+    public void EnableViewCamera(FPPawn _pawn, bool _setActive)
     {
         if (viewCamera is null)
         {
@@ -318,34 +318,35 @@ public class FPS_ActionList
     /// </summary>
     /// <param name="_pawn"></param>
     /// <param name="_distance"></param>
-    public void Look(PawnController _pawn, float _distance)
+    public void Look(FPPawn _pawn, float _distance)
     {
         // Clear the list of visible pawns
-        visiblePawns.Clear();
-        visibleHositles.Clear();
-        visibleAllies.Clear();
-        foreach (var target in Physics.OverlapSphere(_pawn.transform.position, _distance, ((FPS_StatsData)_pawn.currentStats).groundMask))
+        _pawn.visiblePawns.Clear();
+        _pawn.visibleHositles.Clear();
+        _pawn.visibleAllies.Clear();
+        foreach (var target in Physics.OverlapSphere(_pawn.transform.position, _distance))
         {
             // Object is pawn
-            var targetPawn = target.GetComponent<Pawn>();
+            var targetPawn = target.GetComponent(typeof(FPPawn)) as FPPawn;
             if (targetPawn)
             {
+                if (targetPawn.gameObject == _pawn.gameObject) continue;
                 // Pawn is not occluded by something
-                if (Physics.Raycast(_pawn.transform.position, _pawn.transform.position - target.transform.position))
-                {
+                //if (!Physics.Raycast(_pawn.viewPoint.transform.position, _pawn.transform.position - target.transform.position, 9999, _pawn.currentStats.groundMask))
+                //{
                     // Add it to the list of visible pawns
-                    visiblePawns.Add(targetPawn);
+                    _pawn.visiblePawns.Add(targetPawn);
                     // If it's an enemy, add it to the list of visible hostiles
-                    if (((FPS_StatsData)_pawn.currentStats).hostileTeams.Contains(((FPS_StatsData)_pawn.currentStats).team))
+                    if (_pawn.currentStats.opposedTeams.Contains(((FPPawnStats)targetPawn.currentStats).team))
                     {
-                        visibleHositles.Add(targetPawn);
+                        _pawn.visibleHositles.Add(targetPawn);
                     }
                     // If it's a friend, add it to the list of visible allies
-                    if (((FPS_StatsData)_pawn.currentStats).allyTeams.Contains(((FPS_StatsData)_pawn.currentStats).team))
+                    if (((FPPawnStats)_pawn.currentStats).alliedTeams.Contains(((FPPawnStats)targetPawn.currentStats).team))
                     {
-                        visibleAllies.Add(targetPawn);
+                        _pawn.visibleAllies.Add(targetPawn);
                     }
-                }
+                //}
             }
         }
     }
@@ -355,38 +356,38 @@ public class FPS_ActionList
         
     }
 
-    public Pawn GetClosest(PawnController _pawn, List<Pawn> _pawns)
+    public FPPawn GetClosest(FPPawn _pawn, List<Pawn> _pawns)
     {
         var closestDistance = 999999f;
-        Pawn closestPawn = null;
+        FPPawn closestPawn = null;
         foreach (var target in _pawns)
         {
             var distanceToTarget = Vector3.Distance(_pawn.transform.position, target.transform.position);
             if (distanceToTarget <= closestDistance)
             {
                 closestDistance = distanceToTarget;
-                closestPawn = target;
+                closestPawn = ((FPPawn)target);
             }
         }
 
         return closestPawn;
     }
 
-    public float GetCollectiveAllyCourage(PawnController _pawn, List<Pawn> _pawns)
+    public float GetCollectiveAllyCourage(FPPawn _pawn, List<Pawn> _pawns)
     {
+        float collectiveAllyCourage = 0;
         foreach (var target in _pawns)
         {
             var distanceToTarget = Vector3.Distance(_pawn.transform.position, target.transform.position);
-            if (distanceToTarget <= ((FPS_StatsData)_pawn.currentStats).comfortableAllyDistance)
+            if (distanceToTarget <= ((FPPawnStats)_pawn.currentStats).comfortableAllyDistance)
             {
-                //collectiveAllyCourage += targetcurrentCourage;
+                collectiveAllyCourage += ((FPPawnStats)_pawn.currentStats).courage;
             }
         }
         /*foreach (var VARIABLE in COLLECTION)
         {
             Vector3.Distance(closestAlly.transform.position, _pawn.transform.position) > ((FPS_Stats)_pawn.stats).comfortableAllyDistance
-        }*//*
-        return 0;
+        }*/
+        return collectiveAllyCourage;
     }
-    
-}*/
+}

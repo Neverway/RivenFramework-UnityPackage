@@ -9,8 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Framework.PawnManagement
-{
 public class FPPawn_NPCWolf : FPPawn
 {
     //=-----------------=
@@ -203,5 +201,4 @@ public class FPPawn_NPCWolf : FPPawn
     //=-----------------=
     // External Functions
     //=-----------------=
-}
 }

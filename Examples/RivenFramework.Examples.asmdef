@@ -1,0 +1,18 @@
+{
+    "name": "RivenFramework.Examples",
+    "rootNamespace": "RivenFramework",
+    "references": [
+        "GUID:f47009f683dcea55fb9faad1db3dd237",
+        "GUID:6ecdcf73f26e356e983e0d30f4aeb3e2",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

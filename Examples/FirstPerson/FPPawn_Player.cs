@@ -8,9 +8,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-namespace Framework.PawnManagement
-{
 public class FPPawn_Player : FPPawn
 {
     //=-----------------=
@@ -35,6 +34,27 @@ public class FPPawn_Player : FPPawn
     //=-----------------=
     // Mono Functions
     //=-----------------=
+    private void UpdatePauseMenu()
+    {
+        // Pause Game
+        //if (FPPawnActions.Pause.WasPressedThisFrame()) FPPawnActions.UI_ShowPause();
+
+        // Lock mouse when unpaused, unlock when paused
+        if (isPaused)
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+
+            return;
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    
     public void Awake()
     {
         base.Awake();
@@ -45,6 +65,9 @@ public class FPPawn_Player : FPPawn
         
         // Enable the view camera
         action.EnableViewCamera(this, true);
+        
+        // Disable the mouse cursor
+        
     }
 
     public void Update()
@@ -66,6 +89,9 @@ public class FPPawn_Player : FPPawn
         {
             action.Crouch(this, false);
         }
+        
+        // Pausing
+        UpdatePauseMenu();
     }
 
     public void FixedUpdate()
@@ -125,5 +151,4 @@ public class FPPawn_Player : FPPawn
     //=-----------------=
     // External Functions
     //=-----------------=
-}
 }

@@ -9,8 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Framework.PawnManagement
-{
 public class PawnActions
 {
     //=-----------------=
@@ -41,5 +39,4 @@ public class PawnActions
     //=-----------------=
     // External Functions
     //=-----------------=
-}
 }

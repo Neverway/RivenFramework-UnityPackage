@@ -10,9 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Framework.PawnManagement
-{ 
-    [Serializable]
+[Serializable]
 public class FPPawnStats : PawnStats
 {
     [Header("Personality")]
@@ -69,5 +67,4 @@ public class FPPawnStats : PawnStats
     [Tooltip("The amount of height to add/subtract from the collider's height when uncrouching/crouching")]
     public float crouchDistance = 0.5f;
     public Vector3 crouchColliderOffset = new Vector3(0, 0.25f, 0);
-}
 }
