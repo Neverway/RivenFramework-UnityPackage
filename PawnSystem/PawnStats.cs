@@ -5,11 +5,14 @@
 //
 //=============================================================================
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PawnStats : ScriptableObject
+namespace Framework.PawnManagement
+{ 
+public class PawnStats
 {
-    
+}
 }

@@ -5,23 +5,18 @@
 //
 //=============================================================================
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class Pawn : MonoBehaviour
+namespace Framework.PawnManagement
+{
+public class Pawn : Actor
 {
     //=-----------------=
     // Public Variables
     //=-----------------=
-    public PawnController controller;
-    public PawnStats stats;
-    public PawnAppearance appearance;
-
     public bool isPaused;
-    public bool wasPaused; // used to restore a paused state when all pawns isPaused state is modified by the game instance
 
 
     //=-----------------=
@@ -32,30 +27,15 @@ public class Pawn : MonoBehaviour
     //=-----------------=
     // Reference Variables
     //=-----------------=
+    public PawnStats defaultStats;
+    public PawnStats currentStats;
+    public PawnActions action;
 
 
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    private void Awake()
-    {
-        controller.PawnAwake(this);
-    }
 
-    private void Update()
-    {
-        controller.PawnUpdate(this);
-    }
-
-    private void FixedUpdate()
-    {
-        controller.PawnFixedUpdate(this);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(transform.position + ((FPS_Stats)stats).headCheckOffset, ((FPS_Stats)stats).headCheckRadius);
-    }
 
     //=-----------------=
     // Internal Functions
@@ -65,4 +45,5 @@ public class Pawn : MonoBehaviour
     //=-----------------=
     // External Functions
     //=-----------------=
+}
 }
