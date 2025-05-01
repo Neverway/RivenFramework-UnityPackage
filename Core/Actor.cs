@@ -40,7 +40,6 @@ public class Actor : MonoBehaviour
     //=-----------------=
     private void Start()
     {
-    
     }
 
     private void Update()
@@ -91,4 +90,19 @@ public class Actor : MonoBehaviour
     //=-----------------=
     // External Functions
     //=-----------------=
+
+    [ContextMenu("Check UUID")]
+    public List<Actor> GetConflictingActors()
+    {
+        List<Actor> conflictingActors = new List<Actor>();
+        foreach (var actor in FindObjectsOfType<Actor>())
+        {
+            if (actor.uniqueId == uniqueId)
+            {
+                conflictingActors.Add(this);
+            }
+        }
+
+        return conflictingActors;
+    }
 }
