@@ -14,6 +14,7 @@ public class Pawn : Actor
     //=-----------------=
     // Public Variables
     //=-----------------=
+    [Header("Pawn Data")]
     public bool isPaused;
 
 
