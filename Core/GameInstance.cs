@@ -9,8 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RivenFramework
-{
 public class GameInstance : MonoBehaviour
 {
     //=-----------------=
@@ -31,15 +29,7 @@ public class GameInstance : MonoBehaviour
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    private void Start()
-    {
-    
-    }
 
-    private void Update()
-    {
-    
-    }
 
     //=-----------------=
     // Internal Functions
@@ -49,5 +39,4 @@ public class GameInstance : MonoBehaviour
     //=-----------------=
     // External Functions
     //=-----------------=
-}
 }

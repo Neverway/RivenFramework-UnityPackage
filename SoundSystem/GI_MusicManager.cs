@@ -11,11 +11,13 @@ using UnityEngine;
 
 namespace RivenFramework
 {
-public class GameInstance_MusicManager : MonoBehaviour
+public class GI_MusicManager : MonoBehaviour
 {
     //=-----------------=
     // Public Variables
     //=-----------------=
+    public AudioSource primaryTrackPlayer;
+    public AudioSource secondaryTrackPlayer;
 
 
     //=-----------------=
@@ -31,15 +33,7 @@ public class GameInstance_MusicManager : MonoBehaviour
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    private void Start()
-    {
     
-    }
-
-    private void Update()
-    {
-    
-    }
 
     //=-----------------=
     // Internal Functions
@@ -49,5 +43,23 @@ public class GameInstance_MusicManager : MonoBehaviour
     //=-----------------=
     // External Functions
     //=-----------------=
+    /// <summary>
+    /// Smoothly fades from the current track to a target track
+    /// </summary>
+    /// <param name="_musicTrack">The music track to change to</param>
+    /// <param name="_cossfadeDuration">The amount of time it takes to fade to the target track</param>
+    public void CrossFadeToTrack(AudioClip _musicTrack, float _cossfadeDuration)
+    {
+        
+    }
+
+    /// <summary>
+    /// Immediately changes the current music track
+    /// </summary>
+    /// <param name="_musicTrack">The music track to change to</param>
+    public void SwitchToTrack(AudioClip _musicTrack)
+    {
+        
+    }
 }
 }
