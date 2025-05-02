@@ -1,20 +1,23 @@
 //===================== (Neverway 2024) Written by Liz M. =====================
 //
-// Purpose: Updates a TextMeshPro text component with the current project version.
-// Notes: This script assumes TextMeshPro is used for displaying text.
+// Purpose:
+// Notes:
 //
 //=============================================================================
 
 using TMPro;
 using UnityEngine;
 
-namespace Neverway.Framework
+namespace Neverway.Framework.ApplicationManagement
 {
-    public class Text_ProjectVersion : MonoBehaviour
+    public class ControlBindingEntry : MonoBehaviour
     {
         //=-----------------=
         // Public Variables
         //=-----------------=
+        public TMP_Text text;
+        public Image_KeyHint[] keyHints;
+        public bool isComposite;
 
 
         //=-----------------=
@@ -25,17 +28,11 @@ namespace Neverway.Framework
         //=-----------------=
         // Reference Variables
         //=-----------------=
-        private TMP_Text tmpText;
 
 
         //=-----------------=
         // Mono Functions
         //=-----------------=
-        private void Start()
-        {
-            tmpText = GetComponent<TMP_Text>();
-            tmpText.text = Application.version;
-        }
 
 
         //=-----------------=
@@ -46,5 +43,10 @@ namespace Neverway.Framework
         //=-----------------=
         // External Functions
         //=-----------------=
+        public void SendRebindRequest()
+        {
+            Debug.Log($"[{this.name}] Executing function 'SendRebindRequest()'");
+            FindObjectOfType<WB_Settings_Controls>().Rebind(keyHints[0].targetActionMap, keyHints[0].targetAction, isComposite);
+        }
     }
 }

@@ -64,6 +64,19 @@ public class GI_WidgetManager : MonoBehaviour
         }
         return false;
     }
+    public bool AddWidget(GameObject _widgetObject, bool _allowDuplicates = false)
+    {
+        var canvas = GameObject.FindWithTag("UserInterface");
+        if (_allowDuplicates is false && GetExistingWidget(_widgetObject.name)) return false;
+        if (canvas)
+        {
+            var newWidget = Instantiate(_widgetObject, canvas.transform, false);
+            newWidget.transform.localScale = new Vector3(1, 1, 1);
+            newWidget.name = newWidget.name.Replace("(Clone)", "").Trim();
+            return true;
+        }
+        return false;
+    }
 
     /// <summary>
     /// Adds the specified widget if it's no present on the interface, or removes it if it already is

@@ -561,8 +561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34a365c4df804c849b000c1b9500f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hover: {fileID: 0}
-  select: {fileID: 0}
+  hover: {fileID: 8300000, guid: 6d51e47f6595f4dd0a12a05ee8014ed3, type: 3}
+  select: {fileID: 8300000, guid: e6123e35019f3e5318619c0745bbcedb, type: 3}
 --- !u!1 &4162359594684262622
 GameObject:
   m_ObjectHideFlags: 0
