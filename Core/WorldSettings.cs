@@ -65,6 +65,9 @@ public class WorldSettings : MonoBehaviour
         {
             string uuid = actor.uniqueId;
             
+            // Actor was not given a UUID, skip them
+            if (actor.uniqueId == "") continue;
+            
             // UUID is already in use, destory this object
             if (uuidMap.ContainsKey(uuid))
             {
