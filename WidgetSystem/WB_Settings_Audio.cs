@@ -8,10 +8,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Neverway.Framework.ApplicationManagement;
 
-namespace Neverway.Framework
-{
     public class WB_Settings_Audio : MonoBehaviour
     {
         //=-----------------=
@@ -159,4 +156,3 @@ namespace Neverway.Framework
         // External Functions
         //=-----------------=
     }
-}

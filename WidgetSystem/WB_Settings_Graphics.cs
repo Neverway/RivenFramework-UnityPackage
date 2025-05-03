@@ -10,8 +10,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Neverway.Framework.ApplicationManagement
-{
     public class WB_Settings_Graphics : MonoBehaviour
     {
         //=-----------------=
@@ -234,4 +232,3 @@ namespace Neverway.Framework.ApplicationManagement
         // External Functions
         //=-----------------=
     }
-}

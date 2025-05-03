@@ -7,8 +7,6 @@
 
 using UnityEngine;
 
-namespace Neverway.Framework.ApplicationManagement
-{
 public class GameplayNotificationManager : MonoBehaviour
 {
     //=-----------------=
@@ -65,5 +63,4 @@ public class GameplayNotificationManager : MonoBehaviour
         }
         FindObjectOfType<WB_NotificationBox>().DisplayKeyHint(_duration, _keyhintText, _targetActionMap, _targetAction);
     }*/
-}
 }

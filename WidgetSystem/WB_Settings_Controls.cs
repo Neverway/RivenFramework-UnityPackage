@@ -9,8 +9,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Neverway.Framework.ApplicationManagement
-{
     public class WB_Settings_Controls : MonoBehaviour
     {
         //=-----------------=
@@ -154,4 +152,3 @@ namespace Neverway.Framework.ApplicationManagement
             applicationKeybinds.SetBinding(_actionMap, _action, _isComposite);
         }
     }
-}

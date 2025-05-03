@@ -5,12 +5,8 @@
 //
 //=============================================================================
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Neverway.Framework
-{
 public class Text_DontOverideFont : MonoBehaviour
 {
     //=-----------------=
@@ -49,5 +45,4 @@ public class Text_DontOverideFont : MonoBehaviour
     //=-----------------=
     // External Functions
     //=-----------------=
-}
 }

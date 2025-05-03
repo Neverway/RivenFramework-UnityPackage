@@ -9,8 +9,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Neverway.Framework;
 
-namespace Neverway.Framework.ApplicationManagement
-{
     public class WB_Settings_Gameplay : MonoBehaviour
     {
         //=-----------------=
@@ -137,4 +135,3 @@ namespace Neverway.Framework.ApplicationManagement
         // External Functions
         //=-----------------=
     }
-}

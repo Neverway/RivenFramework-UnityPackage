@@ -57,13 +57,11 @@ public class WorldSettings : MonoBehaviour
     {
         if (GetPawnManager() is false)
         {
-            print("This");
             return;
         }
 
         if (!pawnManager.localPlayerCharacter)
         {
-            print("that");
             SpawnPlayerCharacter();
         }
     }

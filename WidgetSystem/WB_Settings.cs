@@ -9,8 +9,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Neverway.Framework.ApplicationManagement
-{
     public class WB_Settings : MonoBehaviour
     {
         //=-----------------=
@@ -124,4 +122,3 @@ namespace Neverway.Framework.ApplicationManagement
             Destroy(widgetManager.GetExistingWidget("WB_Settings_Gameplay"));
         }
     }
-}
