@@ -27,7 +27,7 @@ PrefabInstance:
     - target: {fileID: 3858523280681670906, guid: e2df0c691163b7a14a1317809fa11536,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3858523280681670906, guid: e2df0c691163b7a14a1317809fa11536,
         type: 3}
@@ -67,7 +67,7 @@ PrefabInstance:
     - target: {fileID: 5197273255619862467, guid: e2df0c691163b7a14a1317809fa11536,
         type: 3}
       propertyPath: m_Name
-      value: LogicPlayerStart Variant
+      value: LogicPlayerStart
       objectReference: {fileID: 0}
     - target: {fileID: 6378020352869124245, guid: e2df0c691163b7a14a1317809fa11536,
         type: 3}

@@ -1,5 +1,6 @@
 using UnityEngine;
-public class PolymorphicAttribute : PropertyAttribute 
-{
 
-}
+    public class PolymorphicAttribute : PropertyAttribute 
+    {
+
+    }

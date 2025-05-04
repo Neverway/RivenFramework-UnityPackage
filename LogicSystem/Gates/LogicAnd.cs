@@ -7,16 +7,16 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Neverway.Framework.LogicValueSystem;
 using UnityEngine;
 
-public class LogicAnd : MonoBehaviour
+public class LogicAnd : Logic
 {
     //=-----------------=
     // Public Variables
     //=-----------------=
-    public List<LogicInput<bool>> inputs;
-    public LogicOutput<bool> output;
+    public LogicInput<bool> inputA = new(false);
+    public LogicInput<bool> inputB = new(false);
+    public LogicOutput<bool> output = new(false);
 
 
     //=-----------------=
@@ -34,32 +34,17 @@ public class LogicAnd : MonoBehaviour
     //=-----------------=
     private void Start()
     {
-    
-    }
-
-    private void Update()
-    {
-        output.Set(TestInputs());
+        //TestInputs();
+        //inputA.CallOnSourceChanged(TestInputs);
+        //inputB.CallOnSourceChanged(TestInputs);
     }
 
     //=-----------------=
     // Internal Functions
     //=-----------------=
-    /// <summary>
-    /// Returns true if all inputs are powered
-    /// </summary>
-    /// <returns></returns>
-    private bool TestInputs()
+    private void Update()
     {
-        foreach (var input in inputs)
-        {
-            if (input == false)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        output.Set(inputA && inputB);
     }
     
 

@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Neverway.Framework.LogicValueSystem
-{
     public interface LogicValue
     {
         public bool EditorHandles_GetShowHandle();
@@ -150,4 +148,3 @@ namespace Neverway.Framework.LogicValueSystem
         }
         public UnityEvent GetOnOutputChanged() => OnOutputChanged;
     }
-}

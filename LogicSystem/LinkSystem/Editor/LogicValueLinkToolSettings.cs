@@ -2,59 +2,59 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-public class LogicValueLinkToolSettings : ScriptableObject
-{
-    public static LogicValueLinkToolSettings _instance;
-    public static LogicValueLinkToolSettings Instance => (_instance != null ? _instance : _instance = LoadOrCreateSettings());
-    public event Action OnSettingsValidate;
-
-    public bool showToolButton = true;
-    public bool showLinksWhenNotUsingTool = true;
-    public bool selectTransformWhenNotUsingTool = true;
-
-    [Space]
-    public Texture2D toolbarIcon;
-
-    [HideInInspector] public bool EditorToolUsesSceneGUI => showToolButton || showLinksWhenNotUsingTool;
-
-    public void OnValidate()
+    public class LogicValueLinkToolSettings : ScriptableObject
     {
-        OnSettingsValidate?.Invoke();
-    }
+        public static LogicValueLinkToolSettings _instance;
+        public static LogicValueLinkToolSettings Instance => (_instance != null ? _instance : _instance = LoadOrCreateSettings());
+        public event Action OnSettingsValidate;
 
-    [MenuItem("Neverway/Tools/Logic Value Link Tool/Settings")]
-    private static void SelectSettings()
-    {
-        Selection.activeObject = _instance;
-    }
-    private static LogicValueLinkToolSettings LoadOrCreateSettings()
-    {
-        string path;
-        string[] settings = AssetDatabase.FindAssets($"t:{nameof(LogicValueLinkToolSettings)}");
-        if (settings.Length > 0)
+        public bool showToolButton = true;
+        public bool showLinksWhenNotUsingTool = true;
+        public bool selectTransformWhenNotUsingTool = true;
+
+        [Space]
+        public Texture2D toolbarIcon;
+
+        [HideInInspector] public bool EditorToolUsesSceneGUI => showToolButton || showLinksWhenNotUsingTool;
+
+        public void OnValidate()
         {
-            path = AssetDatabase.GUIDToAssetPath(settings[0]);
-            return AssetDatabase.LoadAssetAtPath<LogicValueLinkToolSettings>(path);
+            OnSettingsValidate?.Invoke();
         }
 
-        LogicValueLinkToolSettings newSettings = ScriptableObject.CreateInstance<LogicValueLinkToolSettings>();
-        try 
+        [MenuItem("Neverway/Tools/Logic Value Link Tool/Settings")]
+        private static void SelectSettings()
         {
-            MonoScript script = MonoScript.FromScriptableObject(newSettings);
-            path = AssetDatabase.GetAssetPath(script);
-
-            path = path.Substring(0, path.LastIndexOf('/'));
-            path += "/LogicValueLinkToolSettings.asset";
-
-            AssetDatabase.CreateAsset(newSettings, path);
-            AssetDatabase.SaveAssets();
+            Selection.activeObject = _instance;
         }
-        catch (Exception e)
+        private static LogicValueLinkToolSettings LoadOrCreateSettings()
         {
-            Debug.LogWarning($"Could not find nor create {nameof(LogicValueLinkToolSettings)} Asset, using defaults as fallback");
-            Debug.LogException(e);
-        }
+            string path;
+            string[] settings = AssetDatabase.FindAssets($"t:{nameof(LogicValueLinkToolSettings)}");
+            if (settings.Length > 0)
+            {
+                path = AssetDatabase.GUIDToAssetPath(settings[0]);
+                return AssetDatabase.LoadAssetAtPath<LogicValueLinkToolSettings>(path);
+            }
+
+            LogicValueLinkToolSettings newSettings = ScriptableObject.CreateInstance<LogicValueLinkToolSettings>();
+            try 
+            {
+                MonoScript script = MonoScript.FromScriptableObject(newSettings);
+                path = AssetDatabase.GetAssetPath(script);
+
+                path = path.Substring(0, path.LastIndexOf('/'));
+                path += "/LogicValueLinkToolSettings.asset";
+
+                AssetDatabase.CreateAsset(newSettings, path);
+                AssetDatabase.SaveAssets();
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"Could not find nor create {nameof(LogicValueLinkToolSettings)} Asset, using defaults as fallback");
+                Debug.LogException(e);
+            }
         
-        return newSettings;
+            return newSettings;
+        }
     }
-}

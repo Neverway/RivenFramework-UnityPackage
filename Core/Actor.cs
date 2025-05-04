@@ -9,6 +9,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class Actor : MonoBehaviour
@@ -50,11 +51,24 @@ public class Actor : MonoBehaviour
     //=-----------------=
     // Internal Functions
     //=-----------------=
+    [ContextMenu("Generate ID & Name")]
+    private void GenerateIDAndName()
+    {
+        GenerateID();
+        GenerateDisplayName();
+    }
+    
     [ContextMenu("Generate ID")]
     private void GenerateID()
     {
         // Generate a UUID
         id = gameObject.name;
+    }
+    
+    [ContextMenu("Generate Display Name")]
+    private void GenerateDisplayName()
+    {
+        displayName = Regex.Replace(gameObject.name, "([a-z])([A-Z])", "$1 $2");
     }
     
     [ContextMenu("Generate UUID")]

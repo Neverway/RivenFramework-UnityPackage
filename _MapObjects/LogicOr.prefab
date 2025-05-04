@@ -22,7 +22,7 @@ PrefabInstance:
     - target: {fileID: 3858523280681670906, guid: e2df0c691163b7a14a1317809fa11536,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3858523280681670906, guid: e2df0c691163b7a14a1317809fa11536,
         type: 3}
@@ -82,5 +82,55 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5197273255619862467, guid: e2df0c691163b7a14a1317809fa11536,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9190447238011372319}
   m_SourcePrefab: {fileID: 100100000, guid: e2df0c691163b7a14a1317809fa11536, type: 3}
+--- !u!1 &2162601897016865687 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5197273255619862467, guid: e2df0c691163b7a14a1317809fa11536,
+    type: 3}
+  m_PrefabInstance: {fileID: 6206935050812566612}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9190447238011372319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2162601897016865687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415bb51f3b76cbef599327665b3850f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputA:
+    editorHandles_showHandle: 1
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    sourceField:
+      EDITOR_targetGameObject: {fileID: 0}
+      EDITOR_hideTypeFilterText: 1
+      targetComponent: {fileID: 0}
+      fieldName: 
+  inputB:
+    editorHandles_showHandle: 1
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    sourceField:
+      EDITOR_targetGameObject: {fileID: 0}
+      EDITOR_hideTypeFilterText: 1
+      targetComponent: {fileID: 0}
+      fieldName: 
+  output:
+    editorHandles_showHandle: 1
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    OnOutputChanged:
+      m_PersistentCalls:
+        m_Calls: []

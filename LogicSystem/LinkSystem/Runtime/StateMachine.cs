@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace Neverway.Framework.Utility.StateMachine
-{
     public abstract class StateMachine<TStateMachine> where TStateMachine : StateMachine<TStateMachine>
     {
         public State<TStateMachine> lastStartedState { get; private set; }
@@ -47,5 +42,3 @@ namespace Neverway.Framework.Utility.StateMachine
         public virtual void OnLeave(State<TStateMachine> newState) { }
         public abstract void OnUpdate();
     }
-
-}
