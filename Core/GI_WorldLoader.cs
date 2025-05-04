@@ -44,6 +44,14 @@ public class GI_WorldLoader : MonoBehaviour
     //=-----------------=
     // Mono Functions
     //=-----------------=
+    private void Update()
+    {
+        // Make sure the streaming world is loaded, so we can store actors there if needed
+        if (!SceneManager.GetSceneByName(streamingWorldID).isLoaded)
+        {
+            SceneManager.LoadScene(streamingWorldID, LoadSceneMode.Additive);
+        }
+    }
     
 
     //=-----------------=
@@ -92,6 +100,25 @@ public class GI_WorldLoader : MonoBehaviour
         if (OnWorldLoaded is not null) OnWorldLoaded.Invoke();
     }
 
+    // This code was expertly copied from @Yagero on github.com
+    // https://gist.github.com/yagero/2cd50a12fcc928a6446539119741a343
+    // (Seriously though, this function is a lifesaver, so thanks!)
+    public static bool DoesSceneExist(string _targetSceneID)
+    {
+        if (string.IsNullOrEmpty(_targetSceneID)) return false;
+
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            var scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            var lastSlash = scenePath.LastIndexOf("/");
+            var sceneName = scenePath.Substring(lastSlash + 1, scenePath.LastIndexOf(".") - lastSlash - 1);
+
+            if (string.Compare(_targetSceneID, sceneName, true) == 0) return true;
+        }
+
+        return false;
+    }
+
 
     //=-----------------=
     // External Functions
@@ -102,6 +129,11 @@ public class GI_WorldLoader : MonoBehaviour
     /// <param name="_worldName">The name of the world to load</param>
     public void LoadWorld(string _worldName)
     {
+        if (DoesSceneExist(_worldName) is false)
+        {
+            ForceLoadWorld("_Error");
+            return;
+        }
         StartCoroutine(LoadWorldCoroutine(_worldName));
     }
 
@@ -111,6 +143,10 @@ public class GI_WorldLoader : MonoBehaviour
     /// <param name="_worldName">The name of the world to load</param>
     public void ForceLoadWorld(string _worldName)
     {
+        if (DoesSceneExist(_worldName) is false && _worldName != "_Error")
+        {
+            ForceLoadWorld("_Error");
+        }
         SceneManager.LoadScene(_worldName);
     }
 }
