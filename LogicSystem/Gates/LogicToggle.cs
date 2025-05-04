@@ -14,6 +14,8 @@ public class LogicToggle : Logic
     //=-----------------=
     // Public Variables
     //=-----------------=
+    public LogicInput<bool> input = new(false);
+    public LogicOutput<bool> output = new(false);
 
 
     //=-----------------=
@@ -31,17 +33,16 @@ public class LogicToggle : Logic
     //=-----------------=
     private void Start()
     {
-    
-    }
-
-    private void Update()
-    {
-    
+        input.CallOnSourceChanged(Toggle);
     }
 
     //=-----------------=
     // Internal Functions
     //=-----------------=
+    private void Toggle()
+    {
+        output.Set(!output);
+    }
 
 
     //=-----------------=
