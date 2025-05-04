@@ -146,7 +146,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text] (1)'
+      value: Text (Adjust the slider until the ticking is at a comfortable volume)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -315,7 +315,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Select a Language)
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -694,7 +694,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text] (1)'
+      value: Text (*Only available for some langauges)
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -1040,7 +1040,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Thank you!)
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -1224,7 +1224,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text] (1)'
+      value: Text (View the image below to preview the appearance)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -1425,7 +1425,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Dyslexic Friendly Font)
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -1652,7 +1652,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -2161,7 +2161,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Adjust Brightness)
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -3837,6 +3837,11 @@ PrefabInstance:
       propertyPath: m_ChildForceExpandHeight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1079684737426678677, guid: 10c12441d8d9f48d0a87c41e278fd91e,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Spanish)
+      objectReference: {fileID: 0}
     - target: {fileID: 1361858261693905908, guid: 10c12441d8d9f48d0a87c41e278fd91e,
         type: 3}
       propertyPath: m_Enabled
@@ -4127,10 +4132,20 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -37.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3881947561616038139, guid: 10c12441d8d9f48d0a87c41e278fd91e,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (English)
+      objectReference: {fileID: 0}
     - target: {fileID: 4021803635021862675, guid: 10c12441d8d9f48d0a87c41e278fd91e,
         type: 3}
       propertyPath: buttonBack
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4407937608796859933, guid: 10c12441d8d9f48d0a87c41e278fd91e,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (*Bahasa Indonesia)
       objectReference: {fileID: 0}
     - target: {fileID: 4627341424798631750, guid: 10c12441d8d9f48d0a87c41e278fd91e,
         type: 3}
@@ -4202,6 +4217,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -251.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5070712871675125198, guid: 10c12441d8d9f48d0a87c41e278fd91e,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Japanese)
+      objectReference: {fileID: 0}
     - target: {fileID: 5410198142186038616, guid: 10c12441d8d9f48d0a87c41e278fd91e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4247,6 +4267,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -465.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5726687042624937777, guid: 10c12441d8d9f48d0a87c41e278fd91e,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Chinese)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912631965644918005, guid: 10c12441d8d9f48d0a87c41e278fd91e,
+        type: 3}
+      propertyPath: m_Name
+      value: "Text (Portugu\xEAs\n)"
+      objectReference: {fileID: 0}
     - target: {fileID: 6171056192797202005, guid: 10c12441d8d9f48d0a87c41e278fd91e,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4287,6 +4317,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6216671808725497915, guid: 10c12441d8d9f48d0a87c41e278fd91e,
+        type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6613792847871651874, guid: 10c12441d8d9f48d0a87c41e278fd91e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4310,6 +4345,11 @@ PrefabInstance:
     - target: {fileID: 6858937901581194472, guid: 10c12441d8d9f48d0a87c41e278fd91e,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872919543313545924, guid: 10c12441d8d9f48d0a87c41e278fd91e,
+        type: 3}
+      propertyPath: m_enableWordWrapping
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6955925967932185657, guid: 10c12441d8d9f48d0a87c41e278fd91e,
@@ -4351,6 +4391,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -37.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655016381846461132, guid: 10c12441d8d9f48d0a87c41e278fd91e,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Russian)
       objectReference: {fileID: 0}
     - target: {fileID: 7900668877278522647, guid: 10c12441d8d9f48d0a87c41e278fd91e,
         type: 3}
@@ -4784,7 +4829,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text] (1)'
+      value: Text (*Marked langauges may be incomplete or translated)
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -5034,6 +5079,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 3997142479490871285, guid: 9135a41ca4dff3639906c6be6526ba8c,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 4974795641925013388, guid: 9135a41ca4dff3639906c6be6526ba8c,
         type: 3}
@@ -5398,14 +5448,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5075530235835855032}
-    - targetCorrespondingSourceObject: {fileID: 1915350728441961189, guid: 4e7a5a1e976bf93479d3b0d181c8f757,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6981283182005541041}
-    - targetCorrespondingSourceObject: {fileID: 1915350728441961189, guid: 4e7a5a1e976bf93479d3b0d181c8f757,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3772596497466919754}
   m_SourcePrefab: {fileID: 100100000, guid: 4e7a5a1e976bf93479d3b0d181c8f757, type: 3}
 --- !u!224 &2326382739441258811 stripped
 RectTransform:
@@ -5440,57 +5482,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6981283182005541041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5902573309611681718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75aa0cc8126d41c13a476cf80081007e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  play: 0
-  audio:
-    Guid:
-      Data1: 1989118500
-      Data2: 1090157795
-      Data3: 218963848
-      Data4: -674038254
-    Path: event:/SFX/Framework/Slider
---- !u!114 &3772596497466919754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5902573309611681718}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 1989118500
-      Data2: 1090157795
-      Data3: 218963848
-      Data4: -674038254
-    Path: event:/SFX/Framework/Slider
-  Event: 
-  PlayEvent: 0
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1001 &5461375035893820203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5558,7 +5549,8 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text] (1)'
+      value: "Text (Additional options and accessability features \nare available
+        in the settings menu.)"
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -6269,7 +6261,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Set Volume)
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -6620,7 +6612,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -6998,7 +6990,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text] (1)'
+      value: Text (Adjust the slider until the the image on left is barely visible)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -7814,7 +7806,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Select a Graphics Quality Level)
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}

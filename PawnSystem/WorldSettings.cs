@@ -38,7 +38,7 @@ public class WorldSettings : MonoBehaviour
     //=-----------------=
     // Reference Variables
     //=-----------------=
-    public GI_PawnManager pawnManager;
+    private GI_PawnManager pawnManager;
 
 
     //=-----------------=
@@ -137,7 +137,9 @@ public class WorldSettings : MonoBehaviour
     public void SpawnPlayerCharacter()
     {
         var startPoint = GetPlayerStartPoint();
-        var classToInstantiate = playerPawnOverride;
+
+        var classToInstantiate = pawnManager.defaultPawn;
+        if (playerPawnOverride) classToInstantiate = playerPawnOverride;
 
         // Determine the game mode to use - either the override or the default.
         //var gameMode = pawnManager.defaultGamemode;

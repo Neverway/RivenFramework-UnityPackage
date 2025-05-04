@@ -178,6 +178,7 @@ public class ApplicationSettings : MonoBehaviour
 
     private void CheckFPSCounterVisibility()
     {
+        widgetManager = FindObjectOfType<GI_WidgetManager>();
         switch (currentSettingsData.showFramecounter)
         {
             case true:
@@ -313,6 +314,7 @@ public class ApplicationSettings : MonoBehaviour
         }
 
         // Framecounter
+        widgetManager = FindObjectOfType<GI_WidgetManager>();
         switch (currentSettingsData.showFramecounter)
         {
             case true:
