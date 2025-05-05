@@ -15,10 +15,12 @@ public class Volume : MonoBehaviour
     //=-----------------=
     // Public Variables
     //=-----------------=
+    [Header("Team Filtering (Not functional right now)")]
     [Tooltip("Depending on which team owns this volumes will change the functionality. For example, pain volumes normally don't affect their own team.")]
     public List<string> unaffectedTeams = new List<string>(); // Which team owns the trigger
     [Tooltip("If enabled, the volume will affect everyone regardless of team")]
     public bool ignoreUnaffectedTeamsFilter;
+    [Header("Object Filtering")]
     [Tooltip("If enabled, physics props that are being held won't be effected by the volume (This is used for things like wind boxes)")]
     public bool ignoreHeldObjects = true;
     [Tooltip("If enabled, will remove objects from the list of objects in the volume when that object becomes disabled")]
@@ -27,8 +29,8 @@ public class Volume : MonoBehaviour
     //=-----------------=
     // Private Variables
     //=-----------------=
-    public List<Pawn> pawnsInTrigger = new List<Pawn>();
-    public List<GameObject> propsInTrigger = new List<GameObject>();
+    [HideInInspector] public List<Pawn> pawnsInTrigger = new List<Pawn>();
+    [HideInInspector] public List<GameObject> propsInTrigger = new List<GameObject>();
 
 
     //=-----------------=
@@ -46,7 +48,7 @@ public class Volume : MonoBehaviour
         CheckPropsInTrigger();
     }
 
-    private void OnTriggerEnter(Collider _other)
+    protected void OnTriggerEnter(Collider _other)
     {
         // Pawn has entered the volume
         if (_other.CompareTag("Pawn"))

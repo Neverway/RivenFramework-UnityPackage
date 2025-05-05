@@ -14,7 +14,7 @@ public class VolumeTriggerInteraction : MonoBehaviour
     //=-----------------=
     // Public Variables
     //=-----------------=
-    public Pawn targetPawn;
+    public Pawn owningPawn;
 
 
     //=-----------------=
@@ -30,15 +30,7 @@ public class VolumeTriggerInteraction : MonoBehaviour
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    private void Start()
-    {
     
-    }
-
-    private void Update()
-    {
-    
-    }
 
     //=-----------------=
     // Internal Functions

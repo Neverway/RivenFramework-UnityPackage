@@ -139,7 +139,7 @@ using Neverway.Framework;
             var interaction = _other.GetComponent<VolumeTriggerInteraction>();
             if (interaction)
             {
-                targetPawn = interaction.targetPawn;
+                targetPawn = interaction.owningPawn;
                 ToggleHeld();
                 is2D = true;
             }
@@ -151,7 +151,7 @@ using Neverway.Framework;
             var interaction = _other.GetComponent<VolumeTriggerInteraction>();
             if (interaction)
             {
-                targetPawn = interaction.targetPawn;
+                targetPawn = interaction.owningPawn;
                 if (!isHeld)
                 {
                     // If this isn't being held, and the pawn is already holding something, exit
