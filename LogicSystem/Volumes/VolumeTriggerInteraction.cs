@@ -14,6 +14,7 @@ public class VolumeTriggerInteraction : MonoBehaviour
     //=-----------------=
     // Public Variables
     //=-----------------=
+    public Pawn targetPawn;
 
 
     //=-----------------=

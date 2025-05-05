@@ -29,6 +29,7 @@ public class Pawn : Actor
     public PawnStats defaultStats;
     public PawnStats currentStats;
     public PawnActions action;
+    public Pawn_AttachmentPoint physObjectAttachmentPoint;
 
 
     //=-----------------=
