@@ -41,6 +41,7 @@ public class LogicToggle : Logic
     //=-----------------=
     private void Toggle()
     {
+        if (input.Get() is false) return;
         output.Set(!output);
     }
 

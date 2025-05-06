@@ -260,11 +260,9 @@ MonoBehaviour:
     editorHandles_handleTarget: {fileID: 0}
     editorHandles_customName: 
     value: 0
-    sourceField:
-      EDITOR_targetGameObject: {fileID: 0}
-      EDITOR_hideTypeFilterText: 1
-      targetComponent: {fileID: 0}
-      fieldName: 
+    OnOutputChanged:
+      m_PersistentCalls:
+        m_Calls: []
   hasBeenTriggered: 0
   interactionIndicator: {fileID: 0}
 --- !u!4 &1660088753006467463 stripped

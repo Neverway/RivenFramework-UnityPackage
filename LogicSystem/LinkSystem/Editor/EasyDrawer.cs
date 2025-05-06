@@ -252,7 +252,7 @@ using UnityEngine;
     
         public abstract class DrawerObjectWithStyle : DrawerObject
         {
-            public GUIStyle style = new GUIStyle(EditorStyles.label);
+            public new GUIStyle style = new GUIStyle(EditorStyles.label);
 
             public DrawerObjectWithStyle AlignUpperLeft()
             {

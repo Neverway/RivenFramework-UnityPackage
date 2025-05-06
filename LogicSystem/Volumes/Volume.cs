@@ -191,7 +191,7 @@ public class Volume : MonoBehaviour
                 continue;
             }
 
-            if (_pawn.gameObject.activeInHierarchy is false && disabledObjectsExitVolume)
+            else if (_pawn.gameObject.activeInHierarchy is false && disabledObjectsExitVolume)
             {
                 pawnsToRemove.Add(_pawn);
                 continue;
@@ -225,6 +225,12 @@ public class Volume : MonoBehaviour
     
     protected Pawn GetPlayerInTrigger()
     {
+        if (pawnManager is null)
+        {
+            pawnManager = FindObjectOfType<GI_PawnManager>();
+            if (pawnManager is null) return null;
+        }
+        
         foreach (var _pawn in pawnsInTrigger)
         {
             if (pawnsInTrigger.Contains(pawnManager.localPlayerCharacter.GetComponent<Pawn>()))

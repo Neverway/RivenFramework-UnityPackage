@@ -106,3 +106,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5b7da3d4f62c9f680a76f16a135bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input:
+    editorHandles_showHandle: 1
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    sourceField:
+      EDITOR_targetGameObject: {fileID: 0}
+      EDITOR_hideTypeFilterText: 1
+      targetComponent: {fileID: 0}
+      fieldName: 
+  output:
+    editorHandles_showHandle: 1
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    OnOutputChanged:
+      m_PersistentCalls:
+        m_Calls: []

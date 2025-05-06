@@ -35,8 +35,7 @@ using UnityEngine;
             }
             if (property[hideTypeFilterText].Property.boolValue)
                 contents.Add(new Boxed(line));
-            else
-                contents.Add(new FittedLabel($" {ReferenceType.SelectedName(true, true)}: ", new Boxed(line)).MaxWidthFactor(0.33f));
+            else contents.Add(new FittedLabel($" {ReferenceType.SelectedName(true, true)}: ", new Boxed(line)).MaxWidthFactor(0.33f));
 
 
             return contents;

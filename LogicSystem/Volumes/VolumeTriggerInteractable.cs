@@ -68,13 +68,14 @@ public class VolumeTriggerInteractable : Volume
     }
 
     private new void OnTriggerExit(Collider _other)
-    {/*
+    {
         base.OnTriggerExit(_other); // Call the base class method
+        
         SetInteractionIndicatorState();
 
         // Disable the indicator if the player left
         // (Shouldn't `SetInteractionIndicatorState();` already take care of this?? ~Liz)
-        if (_other.CompareTag("Pawn") && targetEntity.isPossessed)
+        /*if (_other.CompareTag("Pawn") && targetEntity.isPossessed)
         {
             //targetEntity.isNearInteractable = false;
         }*/
@@ -85,9 +86,10 @@ public class VolumeTriggerInteractable : Volume
     //=-----------------=
     private void SetInteractionIndicatorState()
     {
-        if (interactionIndicator.activeInHierarchy)
-            interactionIndicator.GetComponent<Animator>().Play(useTalkIndicator ? "talk" : "use");
+        // Switch between which kind of indicator we are using
+        if (interactionIndicator.activeInHierarchy) interactionIndicator.GetComponent<Animator>().Play(useTalkIndicator ? "talk" : "use");
 
+        // Enable or disable the indicator
         if (GetPlayerInTrigger() && !hideIndicator)
         {
             interactionIndicator.SetActive(true);
@@ -100,31 +102,28 @@ public class VolumeTriggerInteractable : Volume
 
     private void Interact(VolumeTriggerInteraction _interaction)
     {
-        if (hasBeenTriggered && !resetsAutomatically || requireActivatingActorInside && !pawnsInTrigger.Contains(_interaction.owningPawn))
-        {
-            return;
-        }
+        if (hasBeenTriggered && resetsAutomatically is false) return;
+        print("Test1");
+        //if (requireActivatingActorInside && pawnsInTrigger.Contains(_interaction.owningPawn) is false) return;
 
+        print("Test2");
         //onInteract.Invoke();
         // Dear future me, please keep in mind that this will not be called unless the onInteractSignal is set. I don't know if I intended for it to work that way. (P.S. I am using "-" for empty activations) ~Past Liz M.
         // Dear past me, you are a fool and a coward. I fixed it. ~Future Liz M.
         // Dear past and future me, you are both clowns. Those systems were bad and are now deprecated. ~Future Future Liz M.
 
         // Flip the current activation state
-        StartCoroutine(WaitUnpower());
         //previousIsPoweredState = isPowered;
 
-        // Update connected devices
+        StartCoroutine(SendTriggerPowerPulse());
         hasBeenTriggered = true;
     }
 
-    IEnumerator WaitUnpower()
+    IEnumerator SendTriggerPowerPulse()
     {
-        yield return null;/*
-        isPowered = true;
-        yield return null;
+        onTriggered.Set(true);
         yield return new WaitForSeconds(secondsToStayPowered);
-        isPowered = false;*/
+        onTriggered.Set(false);
     }
 
 

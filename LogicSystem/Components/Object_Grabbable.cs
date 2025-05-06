@@ -7,8 +7,6 @@
 //=============================================================================
 
 using UnityEngine;
-using Neverway.Framework.PawnManagement;
-using Neverway.Framework;
 
     public class Object_Grabbable : MonoBehaviour
     {
@@ -33,7 +31,7 @@ using Neverway.Framework;
         public Vector3 lastFaceDirection;
         private VolumeTriggerInteractable interactableTrigger;
         private Rigidbody propRigidbody;
-        private ActorData actorData;
+        //private ActorData actorData;
         [SerializeField] private LayerMask layerMask;
 
 
@@ -45,7 +43,7 @@ using Neverway.Framework;
             if (transform.childCount == 0) return;
             interactableTrigger = transform.GetChild(0).GetComponent<VolumeTriggerInteractable>();
             propRigidbody = GetComponent<Rigidbody>();
-            actorData = GetComponent<ActorData>();
+            //actorData = GetComponent<ActorData>();
         }
 
         private void FixedUpdate()
@@ -202,10 +200,10 @@ using Neverway.Framework;
         {
             isHeld = !isHeld;
 
-            if (actorData != null)
+           /* if (actorData != null)
             {
                 actorData.isHeld = isHeld;
-            }
+            }*/
 
             if (!isHeld)
             {

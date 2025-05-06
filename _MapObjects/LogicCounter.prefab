@@ -117,7 +117,41 @@ MonoBehaviour:
       EDITOR_hideTypeFilterText: 1
       targetComponent: {fileID: 0}
       fieldName: 
-  inputSubtract: 0
-  inputAddAmount: 0
-  inputSubtractAmount: 0
-  output: 0
+  inputSubtract:
+    editorHandles_showHandle: 1
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    sourceField:
+      EDITOR_targetGameObject: {fileID: 0}
+      EDITOR_hideTypeFilterText: 1
+      targetComponent: {fileID: 0}
+      fieldName: 
+  inputAddAmount:
+    editorHandles_showHandle: 1
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    sourceField:
+      EDITOR_targetGameObject: {fileID: 0}
+      EDITOR_hideTypeFilterText: 1
+      targetComponent: {fileID: 0}
+      fieldName: 
+  inputSubtractAmount:
+    editorHandles_showHandle: 1
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    sourceField:
+      EDITOR_targetGameObject: {fileID: 0}
+      EDITOR_hideTypeFilterText: 1
+      targetComponent: {fileID: 0}
+      fieldName: 
+  output:
+    editorHandles_showHandle: 1
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    OnOutputChanged:
+      m_PersistentCalls:
+        m_Calls: []
