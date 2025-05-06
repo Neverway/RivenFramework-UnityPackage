@@ -89,7 +89,7 @@ public class Pawn : Actor
             }
         }
 
-        if (currentStats.health + _value > currentStats.health) currentStats.health = currentStats.health;
+        if (currentStats.health + _value > defaultStats.health) currentStats.health = defaultStats.health;
         else if (currentStats.health + _value < 0) currentStats.health = 0;
         else currentStats.health += _value;
     }

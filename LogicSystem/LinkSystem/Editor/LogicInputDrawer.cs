@@ -13,8 +13,12 @@ using UnityEngine;
         string customName = "editorHandles_customName";
 
         string _hideTypeFilterText = "EDITOR_hideTypeFilterText";
+#pragma warning disable CS0414 // Field is assigned but its value is never used
         string _fieldName = "fieldName";
+#pragma warning restore CS0414 // Field is assigned but its value is never used
+#pragma warning disable CS0414 // Field is assigned but its value is never used
         string _targetComponent = "targetComponent";
+#pragma warning restore CS0414 // Field is assigned but its value is never used
 
         bool showHandleField = false;
 

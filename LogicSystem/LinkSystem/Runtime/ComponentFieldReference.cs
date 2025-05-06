@@ -16,13 +16,17 @@ using UnityEngine;
     {
 #if UNITY_EDITOR
         [SerializeField] private GameObject EDITOR_targetGameObject;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
         [SerializeField] private bool EDITOR_hideTypeFilterText;
+#pragma warning restore CS0414 // Field is assigned but its value is never used
 #endif
         [SerializeField] private Component targetComponent;
         [SerializeField] private string fieldName;
 
         [NonSerialized] private T cachedValue;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
         [NonSerialized] private bool hasCached;
+#pragma warning restore CS0414 // Field is assigned but its value is never used
         [NonSerialized] private FieldInfo _field;
 
         public ComponentFieldReference(Component target, string field)
