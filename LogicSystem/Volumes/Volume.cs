@@ -191,10 +191,18 @@ public class Volume : MonoBehaviour
                 continue;
             }
 
-            else if (_pawn.gameObject.activeInHierarchy is false && disabledObjectsExitVolume)
+            // Adding this redundant check since sometimes it was throwing a null ref on the active check ~Liz
+            if (_pawn)
+            {
+                if (_pawn.gameObject.activeInHierarchy is false && disabledObjectsExitVolume)
+                {
+                    pawnsToRemove.Add(_pawn);
+                    continue;
+                }
+            }
+            else
             {
                 pawnsToRemove.Add(_pawn);
-                continue;
             }
         }
         
