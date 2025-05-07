@@ -66,14 +66,14 @@ public class Volume : MonoBehaviour
         if (_other.CompareTag("PhysProp"))
         {
             // Don't register held objects if we are ignoring held objects
-            var grabbable = _other.gameObject.GetComponent<Object_Grabbable>();
+           /* var grabbable = _other.gameObject.GetComponent<Object_Grabbable>();
             if (grabbable && ignoreHeldObjects)
             {
                 if (grabbable.isHeld)
                 {
                     return;
                 }
-            }
+            }*/
 
             // Get a reference to the entity component
             var targetProp = _other.gameObject;
