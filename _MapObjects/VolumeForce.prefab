@@ -210,6 +210,6 @@ MonoBehaviour:
   disabledObjectsExitVolume: 1
   pawnsInTrigger: []
   propsInTrigger: []
-  actorForceIntensity: 1000
+  actorForceIntensity: 5000
   propForceIntensity: 1000
   forceDirection: {fileID: 3819161172189545970}

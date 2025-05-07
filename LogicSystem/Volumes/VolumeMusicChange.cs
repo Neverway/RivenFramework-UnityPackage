@@ -7,13 +7,16 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using RivenFramework;
 using UnityEngine;
 
-public class VolumeMusicChange : MonoBehaviour
+public class VolumeMusicChange : Volume
 {
     //=-----------------=
     // Public Variables
     //=-----------------=
+    public AudioClip musicTrack;
+    public float transitionTime = 1;
 
 
     //=-----------------=
@@ -24,19 +27,24 @@ public class VolumeMusicChange : MonoBehaviour
     //=-----------------=
     // Reference Variables
     //=-----------------=
+    private GI_MusicManager musicManager;
 
 
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    private void Start()
+    private new void OnTriggerEnter(Collider _other)
     {
-    
-    }
-
-    private void Update()
-    {
-    
+        base.OnTriggerEnter(_other); // Call the base class method
+        if (!GetPlayerInTrigger())
+        {
+            return;
+        }
+        if (_other.gameObject == GetPlayerInTrigger().gameObject)
+        {
+                if (!musicManager) musicManager = FindObjectOfType<GI_MusicManager>();
+                musicManager.CrossFadeToTrack(musicTrack, transitionTime);
+        }
     }
 
     //=-----------------=

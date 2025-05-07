@@ -40,10 +40,11 @@ using UnityEngine;
         //=-----------------=
         private void Start()
         {
+            /*
             if (transform.childCount == 0) return;
             interactableTrigger = transform.GetChild(0).GetComponent<VolumeTriggerInteractable>();
             propRigidbody = GetComponent<Rigidbody>();
-            //actorData = GetComponent<ActorData>();
+            //actorData = GetComponent<ActorData>();*/
         }
 
         private void FixedUpdate()
@@ -64,8 +65,7 @@ using UnityEngine;
             else
             {
                 var direction = targetPawn.physObjectAttachmentPoint.transform.position - gameObject.transform.position;
-                var distance = Vector3.Distance(targetPawn.physObjectAttachmentPoint.transform.position,
-                    gameObject.transform.position);
+                var distance = Vector3.Distance(targetPawn.physObjectAttachmentPoint.transform.position, gameObject.transform.position);
                 Vector3 targetPosition;
                 if (Physics.Raycast(transform.position, direction, out RaycastHit hit, distance, layerMask))
                 {
@@ -82,8 +82,7 @@ using UnityEngine;
                 propRigidbody.MovePosition(targetPosition);
 
                 var targetRotation = targetPawn.physObjectAttachmentPoint.transform.rotation;
-                transform.rotation =
-                    new Quaternion(targetRotation.x, targetRotation.y, targetRotation.z, targetRotation.w);
+                transform.rotation = new Quaternion(targetRotation.x, targetRotation.y, targetRotation.z, targetRotation.w);
 
                 //propRigidbody.velocity = new Vector3();
                 propRigidbody.useGravity = false;

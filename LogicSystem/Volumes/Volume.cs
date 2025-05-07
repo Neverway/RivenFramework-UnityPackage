@@ -29,8 +29,9 @@ public class Volume : MonoBehaviour
     //=-----------------=
     // Private Variables
     //=-----------------=
-    [HideInInspector] public List<Pawn> pawnsInTrigger = new List<Pawn>();
-    [HideInInspector] public List<GameObject> propsInTrigger = new List<GameObject>();
+    [Header("Debugging Stuff")]
+    public List<Pawn> pawnsInTrigger = new List<Pawn>();
+    public List<GameObject> propsInTrigger = new List<GameObject>();
 
 
     //=-----------------=

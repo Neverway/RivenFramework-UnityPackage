@@ -81,5 +81,54 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5578371265734815444, guid: 438f8222c1217a93b97132e8300c5b7f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5784322812030093192}
   m_SourcePrefab: {fileID: 100100000, guid: 438f8222c1217a93b97132e8300c5b7f, type: 3}
+--- !u!1 &3282653597122486272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5578371265734815444, guid: 438f8222c1217a93b97132e8300c5b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6981721891215658708}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5784322812030093192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3282653597122486272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 573ce29f1529cd8fc9da0e48f4249471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unaffectedTeams: []
+  ignoreUnaffectedTeamsFilter: 0
+  ignoreHeldObjects: 1
+  disabledObjectsExitVolume: 1
+  pawnsInTrigger: []
+  propsInTrigger: []
+  resetsAutomatically: 1
+  reset:
+    editorHandles_showHandle: 0
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    sourceField:
+      EDITOR_targetGameObject: {fileID: 0}
+      EDITOR_hideTypeFilterText: 1
+      targetComponent: {fileID: 0}
+      fieldName: 
+  triggerFilter: 0
+  onOccupied:
+    editorHandles_showHandle: 0
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    OnOutputChanged:
+      m_PersistentCalls:
+        m_Calls: []
+  hasBeenTriggered: 0

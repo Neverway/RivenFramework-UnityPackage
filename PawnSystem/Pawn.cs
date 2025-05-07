@@ -37,6 +37,7 @@ public class Pawn : Actor
     public PawnStats defaultStats;
     public PawnStats currentStats;
     public PawnActions action;
+    public Transform viewPoint;
     public Pawn_AttachmentPoint physObjectAttachmentPoint;
 
     public event Action OnPawnHurt;
