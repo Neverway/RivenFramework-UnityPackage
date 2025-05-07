@@ -103,18 +103,15 @@ public class VolumeTriggerInteractable : Volume
     private void Interact(VolumeTriggerInteraction _interaction)
     {
         if (hasBeenTriggered && resetsAutomatically is false) return;
-        print("Test1");
-        //if (requireActivatingActorInside && pawnsInTrigger.Contains(_interaction.owningPawn) is false) return;
+        
+        if (requireActivatingActorInside && pawnsInTrigger.Contains(_interaction.owningPawn) is false) return;
 
-        print("Test2");
         //onInteract.Invoke();
         // Dear future me, please keep in mind that this will not be called unless the onInteractSignal is set. I don't know if I intended for it to work that way. (P.S. I am using "-" for empty activations) ~Past Liz M.
         // Dear past me, you are a fool and a coward. I fixed it. ~Future Liz M.
         // Dear past and future me, you are both clowns. Those systems were bad and are now deprecated. ~Future Future Liz M.
 
         // Flip the current activation state
-        //previousIsPoweredState = isPowered;
-
         StartCoroutine(SendTriggerPowerPulse());
         hasBeenTriggered = true;
     }

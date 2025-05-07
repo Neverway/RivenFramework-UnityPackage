@@ -174,7 +174,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3819161172189545970}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5578371265734815444, guid: 438f8222c1217a93b97132e8300c5b7f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3822030454198327321}
   m_SourcePrefab: {fileID: 100100000, guid: 438f8222c1217a93b97132e8300c5b7f, type: 3}
 --- !u!4 &3135257843529421255 stripped
 Transform:
@@ -182,3 +186,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9027821524663535054}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3468643369011161882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5578371265734815444, guid: 438f8222c1217a93b97132e8300c5b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 9027821524663535054}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3822030454198327321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3468643369011161882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a863a355825bd35ac3ef6d0eb91bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unaffectedTeams: []
+  ignoreUnaffectedTeamsFilter: 0
+  ignoreHeldObjects: 1
+  disabledObjectsExitVolume: 1
+  pawnsInTrigger: []
+  propsInTrigger: []
+  actorForceIntensity: 1000
+  propForceIntensity: 1000
+  forceDirection: {fileID: 3819161172189545970}

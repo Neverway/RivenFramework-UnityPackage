@@ -15,7 +15,7 @@ public class Volume : MonoBehaviour
     //=-----------------=
     // Public Variables
     //=-----------------=
-    [Header("Team Filtering (Not functional right now)")]
+    [Header("Team Filtering")]
     [Tooltip("Depending on which team owns this volumes will change the functionality. For example, pain volumes normally don't affect their own team.")]
     public List<string> unaffectedTeams = new List<string>(); // Which team owns the trigger
     [Tooltip("If enabled, the volume will affect everyone regardless of team")]
