@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1601334765381139313}
   m_Layer: 13
   m_Name: PhysProp3D
-  m_TagString: Untagged
+  m_TagString: PhysProp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,9 +59,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2276721478425129573}
   serializedVersion: 4
-  m_Mass: 15
-  m_Drag: 15
-  m_AngularDrag: 15
+  m_Mass: 1
+  m_Drag: 5
+  m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -114,7 +114,6 @@ MonoBehaviour:
   breakAwayDistance: 3
   holdPositionOffset: {x: 0, y: -0.5, z: 0}
   holdRotationOffset: {x: 0, y: 0, z: 0}
-  checkDistanceAdjustment: 0
   checkRadius: 0.5
   layerMask:
     serializedVersion: 2
