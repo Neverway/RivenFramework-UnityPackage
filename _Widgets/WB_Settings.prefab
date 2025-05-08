@@ -258,7 +258,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Gameplay)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -448,7 +453,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text] Header'
+      value: Text (Settings)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -608,7 +618,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Back)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -1087,7 +1102,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text] Header (1)'
+      value: Text (* These options may not be fully implemented. Sorry! ~Liz)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -1995,7 +2015,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Controls)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -2175,7 +2200,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Reset Settings)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -3419,7 +3449,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Apply)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -3574,7 +3609,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Audio)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -3889,7 +3929,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (Graphics)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}

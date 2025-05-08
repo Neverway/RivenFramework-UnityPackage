@@ -1009,7 +1009,7 @@ GameObject:
   - component: {fileID: 8365528070208356150}
   - component: {fileID: 7292738843827245292}
   m_Layer: 0
-  m_Name: '[Text]'
+  m_Name: Text (Communication)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1313,6 +1313,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 8534681378816
       objectReference: {fileID: 0}
@@ -1381,6 +1386,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Invert Horizontal Look)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -2717,6 +2727,11 @@ PrefabInstance:
       propertyPath: m_enableAutoSizing
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Speedrunner Mode)
+      objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2868,6 +2883,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 9541754740736
       objectReference: {fileID: 0}
@@ -2936,6 +2956,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Dyslexic Friendly Font)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -3140,7 +3165,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -3466,6 +3491,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 8585717669888
       objectReference: {fileID: 0}
@@ -3534,6 +3564,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Invert Vertical Look)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -3738,7 +3773,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -4214,6 +4249,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 9034084573184
       objectReference: {fileID: 0}
@@ -4277,6 +4317,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Color Blind Intensity)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -4733,6 +4778,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 8830375616512
       objectReference: {fileID: 0}
@@ -4796,6 +4846,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Camera Field Of View)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -5242,7 +5297,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -5858,6 +5913,11 @@ PrefabInstance:
       propertyPath: m_enableAutoSizing
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Mouse Look Sensitivity)
+      objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6061,7 +6121,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -6907,6 +6967,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2668621922408729126, guid: 2c045bfe6fc79dc1cbe7fd011d751e32,
         type: 2}
+    - target: {fileID: 3997142479490871285, guid: 9135a41ca4dff3639906c6be6526ba8c,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (---)
+      objectReference: {fileID: 0}
     - target: {fileID: 4974795641925013388, guid: 9135a41ca4dff3639906c6be6526ba8c,
         type: 3}
       propertyPath: selectorOptions.Array.size
@@ -7514,6 +7579,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 9709094887424
       objectReference: {fileID: 0}
@@ -7581,6 +7651,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (*Reduce Strobing Effects)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -7785,7 +7860,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -8158,6 +8233,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Joystick Look Sensitivity)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -8626,6 +8706,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 8979424403456
       objectReference: {fileID: 0}
@@ -8689,6 +8774,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Brightness)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -9135,7 +9225,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -9539,6 +9629,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 8718396088320
       objectReference: {fileID: 0}
@@ -9602,6 +9697,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Horizontal Look Speed)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -9930,7 +10030,7 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (---)
       objectReference: {fileID: 0}
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -10440,7 +10540,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text]'
+      value: Text (View)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
@@ -10651,6 +10756,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Enable Push To Talk)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -11105,6 +11215,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 9116792053760
       objectReference: {fileID: 0}
@@ -11159,6 +11274,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2668621922408729126, guid: 2c045bfe6fc79dc1cbe7fd011d751e32,
         type: 2}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Color Blind Filter)
+      objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
       propertyPath: m_Pivot.x
@@ -11310,6 +11430,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 9798177710080
       objectReference: {fileID: 0}
@@ -11378,6 +11503,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (*Screen Reader)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -11731,6 +11861,11 @@ PrefabInstance:
       propertyPath: m_enableAutoSizing
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Hide Text Chat)
+      objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
       propertyPath: m_Pivot.x
@@ -12044,6 +12179,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590716280109510810, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 8776629805056
       objectReference: {fileID: 0}
@@ -12107,6 +12247,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412470178849975687, guid: 124c8ef24db47d946827e45b2e31cbc4,
+        type: 3}
+      propertyPath: m_Name
+      value: Text (Vertical Look Speed)
       objectReference: {fileID: 0}
     - target: {fileID: 8645111210792547475, guid: 124c8ef24db47d946827e45b2e31cbc4,
         type: 3}
@@ -12578,7 +12723,12 @@ PrefabInstance:
     - target: {fileID: 1732088717169147424, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}
       propertyPath: m_Name
-      value: '[Text] (1)'
+      value: Text (Accessibility)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4017326338698437437, guid: e939f13b17fb3bcb582ebe98d53fc04a,
         type: 3}

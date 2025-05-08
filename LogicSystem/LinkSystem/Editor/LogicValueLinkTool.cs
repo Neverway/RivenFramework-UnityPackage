@@ -458,6 +458,17 @@ using UnityEngine;
             }
             public void DrawJustForDisplay()
             {
+                if (start is null)
+                {
+                    Debug.Log("Start was null"); 
+                    return;
+                }
+
+                if (end is null)
+                {
+                    Debug.Log("End was null");
+                    return;
+                }
                 Vector3 delta = end.position - start.position;
 
                 Vector3 offsetDirection = Vector3.Cross(delta, ValueLinkMachine.sceneViewCameraTransform.forward);
