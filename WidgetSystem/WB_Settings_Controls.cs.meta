@@ -4,11 +4,12 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - inputActionAsset: {fileID: -944628639613478452, guid: 5fa0b253babc4d73ea861c5528a17d2d, type: 3}
+  - inputActionAsset: {fileID: -944628639613478452, guid: 5fa0b253babc4d73ea861c5528a17d2d,
+      type: 3}
   - bindingRoot: {instanceID: 0}
   - bindingObject: {instanceID: 0}
   executionOrder: 0
-  icon: {instanceID: 0}
+  icon: {fileID: 2800000, guid: e6cb8ab4e78ab8b6b967d63bc8775c74, type: 3}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

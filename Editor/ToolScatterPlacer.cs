@@ -142,7 +142,9 @@ public class ToolScatterPlacerUI : EditorWindow
     
     public void OnGUI()
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         targetAsset = EditorGUILayout.ObjectField("", targetAsset, typeof(UnityEngine.GameObject)) as GameObject;
+#pragma warning restore CS0618 // Type or member is obsolete
         localPositionOffset = EditorGUILayout.Vector3Field("Position Offset", localPositionOffset);
         scaleRange = EditorGUILayout.Vector2Field("Scale Range", scaleRange);
         rotationYRange = EditorGUILayout.Vector2Field("Y-axis Rotation Range", rotationYRange);
