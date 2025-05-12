@@ -19,6 +19,7 @@ public class PlaceAttachmentPoint : MonoBehaviour
     [SerializeField] private float minYPos = -0.7f;
     [SerializeField] private Transform attachmentPointTransform;
     [SerializeField] private Pawn targetPawn;
+    [SerializeField] private LayerMask layerMask;
 
 
     //=-----------------=
@@ -60,7 +61,7 @@ public class PlaceAttachmentPoint : MonoBehaviour
             resultPos = new Vector3 (horizontalPosition.x, forwardPos.y, horizontalPosition.y);
         }
 
-        RaycastHit[] hits = Physics.SphereCastAll (transform.position, 0.2f, resultPos, resultPos.magnitude);
+        RaycastHit[] hits = Physics.SphereCastAll (transform.position, 0.2f, resultPos, resultPos.magnitude, layerMask);
         float nearestHit = resultPos.magnitude;
         foreach (RaycastHit hit in hits)
         {

@@ -156,7 +156,7 @@ public class Object_PhysPickup : MonoBehaviour
         propRigidbody.useGravity = false;
 
         // Drop the object if it's too far away
-        if (Vector3.Distance(gameObject.transform.position, holdingPawn.physObjectAttachmentPoint.transform.position) > breakAwayDistance)
+        if (Vector3.Distance(gameObject.transform.position, targetPosition) > breakAwayDistance)
         {
             Drop();
         }
