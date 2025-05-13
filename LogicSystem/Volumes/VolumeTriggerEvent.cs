@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Codice.Client.BaseCommands;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VolumeTriggerEvent : Volume
 {
@@ -22,6 +23,10 @@ public class VolumeTriggerEvent : Volume
     public LogicInput<bool> reset;
     public TriggerFilter triggerFilter;
     public LogicOutput<bool> onOccupied;
+    [Tooltip("This event will only fire when something first enters (does not refire for subsequent entries until unoccupied)")]
+    public UnityEvent onFirstOccupied;
+    [Tooltip("This event will only fire when last one leaves")]
+    public UnityEvent onFirstUnoccupied;
 
 
     public enum TriggerFilter
@@ -55,6 +60,7 @@ public class VolumeTriggerEvent : Volume
     { 
         // Call the base class method
         base.OnTriggerEnter(_other);
+        if (pawnsInTrigger.Count + propsInTrigger.Count == 1) onFirstOccupied.Invoke();
         onOccupied.Set(IsOccupied());
     }
 
@@ -62,6 +68,7 @@ public class VolumeTriggerEvent : Volume
     { 
         // Call the base class method
         base.OnTriggerExit(_other);
+        if (IsOccupied() is false) onFirstUnoccupied.Invoke();
         onOccupied.Set(IsOccupied());
     }
 
