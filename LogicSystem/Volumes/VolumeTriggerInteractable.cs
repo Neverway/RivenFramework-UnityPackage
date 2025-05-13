@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VolumeTriggerInteractable : Volume
 {
@@ -28,6 +29,8 @@ public class VolumeTriggerInteractable : Volume
     public float secondsToStayPowered = 0.2f;
     [Tooltip("This powers logic components when interacted with")]
     public LogicOutput<bool> onTriggered;
+    [Tooltip("This event will only fire when the output is powered")]
+    public UnityEvent onOutputPowered;
 
 
     //=-----------------=
@@ -112,6 +115,7 @@ public class VolumeTriggerInteractable : Volume
         // Dear past and future me, you are both clowns. Those systems were bad and are now deprecated. ~Future Future Liz M.
 
         // Flip the current activation state
+        onOutputPowered.Invoke();
         StartCoroutine(SendTriggerPowerPulse());
         hasBeenTriggered = true;
     }

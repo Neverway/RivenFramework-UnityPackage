@@ -1,5 +1,8 @@
 fileFormatVersion: 2
 guid: 7f9deacf5fc9113a092f5b25ec79f2c8
+labels:
+- Actor3D
+- Framework
 PrefabImporter:
   externalObjects: {}
   userData: 
