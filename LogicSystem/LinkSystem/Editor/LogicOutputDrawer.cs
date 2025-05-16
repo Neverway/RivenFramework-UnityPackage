@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
     [CustomPropertyDrawer(typeof(LogicOutput<>))]
-    public class LogicOutputDrawer : EasyDrawer
+    public class LogicOutputDrawer : EasyPropertyDrawer
     {
         string value = "value";
         string OnOutputChanged = "OnOutputChanged";
@@ -29,7 +29,7 @@ using UnityEngine;
             {
                 contents.Add(new Divider());
                 contents.Add(new Property(property[showHandle]).Label("Show Handle in Editor? "));
-                if (property[showHandle].Bool)
+                if (property[showHandle].AsBool)
                 {
                     contents.Add(new Property(property[handle]).Label("Handle Transform :"));
                     contents.Add(new Property(property[customName]).Label("Handle Custom Name :"));

@@ -1,0 +1,16 @@
+{
+    "name": "SimpleFields",
+    "rootNamespace": "",
+    "references": [
+        "GUID:315fc61573ecdcc418a8ba551e851a21"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

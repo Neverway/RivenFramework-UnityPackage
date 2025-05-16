@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
-using static EasyDrawer;
 using EasyInspector;
 
 namespace EasyInspector
@@ -50,6 +49,7 @@ namespace EasyInspector
                 return toReturn;
             }
         }
+        //todo: implement this
         public EasyProperty this[params int[] arrayIndexs]
         {
             get
@@ -57,6 +57,7 @@ namespace EasyInspector
                 EasyProperty toReturn = this;
                 foreach (int index in arrayIndexs)
                 {
+                    throw new NotImplementedException();
                     //if (!toReturn.properties.ContainsKey(field))
                     //    toReturn.properties.Add(field, new EasyProperty(property.FindPropertyRelative(field)));
                     //

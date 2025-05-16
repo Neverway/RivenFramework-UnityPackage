@@ -6,64 +6,31 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+using EasyInspector;
 
-public abstract class EasyDrawer : PropertyDrawer
+public abstract class EasyPropertyDrawer : PropertyDrawer
 {
     public float propertyHeight;
-    public Rect area;
-    public Properties property;
+    public EasyProperty property;
     public GUIContent label;
 
-
-    private List<string> alreadyDisplayedErrors = new();
-    public static int nestedDrawing = 0;
-
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    public override void OnGUI(Rect inspectorArea, SerializedProperty property, GUIContent label)
     {
-        this.property = new Properties(property);
+        this.property = new EasyProperty(property);
         this.label = label;
-        this.area = position;
 
-        List<DrawerObject> previouslyDrawing = DrawerObject.currentlyDrawing;
-        DrawerObject.currentlyDrawing = new();
-
+        
         property.serializedObject.Update();
-        EditorGUI.BeginProperty(position, label, property);
-        try
-        {
-            DrawerObject contents = OnGUIEasyDrawer(new VerticalGroup());
-            position.height = propertyHeight = contents.GetHeight();
-            contents.Draw(position);
-            OnBeforeFinishGUI(position);
-        }
-        catch (Exception e)
-        {
-            if (e is not ExitGUIException && !(string.IsNullOrEmpty(e.StackTrace) || alreadyDisplayedErrors.Contains(e.StackTrace)))
-            {
-                UnityEngine.Object unityObject = property.serializedObject.targetObject;
-                try
-                {
-                    string errorMessage =
-                        $"<size=10><color=yellow>Error drawing property drawer. Context for next error:</color></size>" +
-                        $"   Type: {property.GetUnderlyingType().SelectedName(false, true)}" +
-                        $"  |  Field: {property.displayName}  " +
-                        $"  |  Object: {unityObject}" +
-                        $"\n{DrawerObject.CurrentDrawerChainNames()}";
+        EditorGUI.BeginProperty(inspectorArea, label, property);
 
-                alreadyDisplayedErrors.Add(e.StackTrace);
+        DrawerObject contents = OnGUIEasyDrawer(new VerticalGroup());
+        inspectorArea.height = propertyHeight = contents.GetHeight();
 
-                Debug.LogError(errorMessage, unityObject);
-                }
-                catch
-                {
-                    Debug.Log(property.GetUnderlyingField());
-                    Debug.LogWarning($"Had error trying to display extra context information for property drawer error???", unityObject);
-                }
-
-                Debug.LogException(e, unityObject);
-            }
-        }
+        contents.DrawCheckingForErrors(inspectorArea, GetErrorContext());
+        OnBeforeFinishGUI(inspectorArea);
+        
         EditorGUI.EndProperty();
+
         OnAfterGUI();
 
         if (property.serializedObject.hasModifiedProperties)
@@ -71,133 +38,35 @@ public abstract class EasyDrawer : PropertyDrawer
             property.serializedObject.ApplyModifiedProperties();
             EditorUtility.SetDirty(property.serializedObject.targetObject);
         }
-        DrawerObject.currentlyDrawing = previouslyDrawing;
+    }
+
+    public string GetErrorContext()
+    {
+        if (property == null || property.SerializedObject == null || property.SerializedObject.targetObject == null)
+        {
+            return "---";
+        }
+        UnityEngine.Object unityObject = property.SerializedObject.targetObject;
+        string errorMessage =
+            $"<size=10><color=yellow>Error drawing property drawer. Context for next error:</color></size>" +
+            $"   Type: {property.Property.GetUnderlyingType().SelectedName(false, true)}" +
+            $"  |  Field: {property.Property.displayName}  " +
+            $"  |  Object: {unityObject}" +
+            $"\n{DrawerObject.CurrentDrawerChainNames()}";
+
+        return errorMessage;
     }
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) =>
         Mathf.Max(propertyHeight, EditorGUIUtility.singleLineHeight);
 
     public abstract DrawerObject OnGUIEasyDrawer(VerticalGroup contents);
     public virtual void OnBeforeFinishGUI(Rect position) { }
-    public virtual void DebugError(Exception e) { Debug.LogError(e); }
     public abstract void OnAfterGUI();
-
-    public struct Properties
-    {
-        private SerializedProperty property;
-        private Type cachedType;
-        private FieldInfo cachedFieldInfo;
-        private Dictionary<string, Properties> properties;
-
-        public Properties(SerializedProperty property)
-        {
-            properties = new Dictionary<string, Properties>();
-            this.property = property;
-            this.cachedType = null;
-            this.cachedFieldInfo = null;
-        }
-
-        public SerializedProperty Property => property;
-        #region Quick Access To Property Values
-        public AnimationCurve AnimationCurve
-        {
-            get { return property.animationCurveValue; }
-            set { property.animationCurveValue = value; }
-        }
-        public bool Bool
-        {
-            get { return property.boolValue; }
-            set { property.boolValue = value; }
-        }
-        public string String
-        {
-            get { return property.stringValue; }
-            set { property.stringValue = value; }
-        }
-        public float Float
-        {
-            get { return property.floatValue; }
-            set { property.floatValue = value; }
-        }
-        public int Int
-        {
-            get { return property.intValue; }
-            set { property.intValue = value; }
-        }
-        public Vector3 Vector3
-        {
-            get { return property.vector3Value; }
-            set { property.vector3Value = value; }
-        }
-        public Vector3Int Vector3Int
-        {
-            get { return property.vector3IntValue; }
-            set { property.vector3IntValue = value; }
-        }
-        public Vector2 Vector2
-        {
-            get { return property.vector2Value; }
-            set { property.vector2Value = value; }
-        }
-        public Vector2Int Vector2Int
-        {
-            get { return property.vector2IntValue; }
-            set { property.vector2IntValue = value; }
-        }
-        #endregion
-
-        public Properties this[params string[] fields]
-        {
-            get
-            {
-                Properties toReturn = this;
-                foreach(string field in fields)
-                {
-                    if (!toReturn.properties.ContainsKey(field))
-                        toReturn.properties.Add(field, new Properties(property.FindPropertyRelative(field)));
-
-                    toReturn = toReturn.properties[field];
-                }
-                return toReturn;
-            }
-        }
-
-        public static implicit operator SerializedProperty(Properties myself) => myself.property;
-
-        public Type FieldType => (cachedType == null) ? cachedType = property.GetUnderlyingType() : cachedType;
-        public FieldInfo FieldInfo => (cachedFieldInfo == null) ? cachedFieldInfo = property.GetFieldInfo() : cachedFieldInfo;
-        public bool IsPropertyInArrayOrList() => property.propertyPath.Contains("Array.data");
-
-        public T GetExpensive<T>() => (T)property.boxedValue;
-        public void SetExpensive(object value) => property.boxedValue = value;
-
-    }
-    public class UniqueDrawerValue<T>
-    {
-        private Dictionary<string, T> separatedValues = new Dictionary<string, T>();
-
-        public T this[Properties prop]
-        {
-            get
-            {
-                if (!separatedValues.ContainsKey(prop.Property.propertyPath))
-                    separatedValues.Add(prop.Property.propertyPath, default);
-
-                return separatedValues[prop.Property.propertyPath];
-            }
-            set
-            {
-                if (!separatedValues.ContainsKey(prop.Property.propertyPath))
-                    separatedValues.Add(prop.Property.propertyPath, value);
-                else
-                    separatedValues[prop.Property.propertyPath] = value;
-            }
-        }
-    }
     
 
     public abstract class DrawerObject
     {
-        public static List<DrawerObject> currentlyDrawing = new();
+        private static List<DrawerObject> currentlyDrawing = new();
 
         public GUIContent content = new GUIContent("");
         public GUIStyle style = new GUIStyle(EditorStyles.label);
@@ -211,6 +80,30 @@ public abstract class EasyDrawer : PropertyDrawer
                 all[i + 1] = objectsToAdd[i];
 
             return new VerticalGroup(all);
+        }
+        
+        public void DrawCheckingForErrors(Rect area, string errorContext)
+        {
+            List<DrawerObject> previouslyDrawing = DrawerObject.currentlyDrawing;
+            currentlyDrawing = new();
+            try
+            {
+                Draw(area);
+            }
+            catch (Exception e)
+            {
+                if (e is not ExitGUIException && !(string.IsNullOrEmpty(e.StackTrace)))
+                {
+                    string errorMessage =
+                        $"<size=10><color=yellow>Error drawing property drawer. Context for next error:</color></size>" +
+                        $"\n{errorContext}" +
+                        $"\n{DrawerObject.CurrentDrawerChainNames()}";
+
+                    Debug.LogError(errorMessage);
+                }
+            }
+
+            DrawerObject.currentlyDrawing = previouslyDrawing;
         }
         public void Draw(Rect area)
         {
@@ -1232,7 +1125,7 @@ public abstract class EasyDrawer : PropertyDrawer
         DrawerObject contents;
         SerializedProperty property;
         Type baseType;
-        public PolymorphicSelector(Properties property)
+        public PolymorphicSelector(EasyProperty property)
         {
             style = EditorStyles.label;
             this.property = property.Property;
@@ -1423,7 +1316,7 @@ public abstract class EasyDrawer : PropertyDrawer
 }
 
 
-public static class EasyDrawerExtensions
+public static class EasyInspectorExtensions
 {
     public static BindingFlags InstanceFields = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
 
@@ -1501,6 +1394,16 @@ public static class EasyDrawerExtensions
 
     public static Type Generic(this Type type, int index)
     {
+        if (type == null)
+        {
+            throw new NullReferenceException();
+        }
+        if (!type.IsGenericType)
+        {
+            throw new ArgumentException(type + " is not a generic type");
+        }
+
+
         return type.GetGenericArguments()[index];
     }
 

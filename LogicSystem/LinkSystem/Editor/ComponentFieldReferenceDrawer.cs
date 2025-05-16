@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
     [CustomPropertyDrawer(typeof(ComponentFieldReference<>))]
-    public class ComponentFieldReferenceDrawer : EasyDrawer
+    public class ComponentFieldReferenceDrawer : EasyPropertyDrawer
     {
         public string targetGameObject = "EDITOR_targetGameObject";
         public string targetComponent = "targetComponent";

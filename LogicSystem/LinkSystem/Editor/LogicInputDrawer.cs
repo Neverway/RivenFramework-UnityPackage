@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
     [CustomPropertyDrawer(typeof(LogicInput<>))]
-    public class LogicInputDrawer : EasyDrawer
+    public class LogicInputDrawer : EasyPropertyDrawer
     {
         string sourceField = "sourceField";
         string value = "value";
@@ -27,11 +27,11 @@ using UnityEngine;
 
         public override DrawerObject OnGUIEasyDrawer(VerticalGroup contents)
         {
-            area.x += 2;
+            //area.x += 2;
             if (underlyingValue == null)
                 underlyingValue = property.Property.GetUnderlyingValue() as LogicInput;
 
-            if (!property[sourceField][_hideTypeFilterText].Bool)
+            if (!property[sourceField][_hideTypeFilterText].AsBool)
             {
                 property[sourceField][_hideTypeFilterText].Property.boolValue = true;
             }
@@ -60,7 +60,7 @@ using UnityEngine;
                 VerticalGroup handleEditor = new VerticalGroup();
 
                 handleEditor.Add(new Property(property[showHandle]).Label("Show Handle in Editor? "));
-                if (property[showHandle].Bool)
+                if (property[showHandle].AsBool)
                 {
                     handleEditor.Add(new Property(property[handle]).Label("Handle Transform :"));
                     handleEditor.Add(new Property(property[customName]).Label("Handle Custom Name :"));
