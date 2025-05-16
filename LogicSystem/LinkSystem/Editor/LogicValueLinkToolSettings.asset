@@ -15,4 +15,4 @@ MonoBehaviour:
   showToolButton: 1
   showLinksWhenNotUsingTool: 1
   selectTransformWhenNotUsingTool: 1
-  toolbarIcon: {fileID: 2800000, guid: 2398b7137c4c3ac4b8b08a04fcb6b8f5, type: 3}
+  toolbarIcon: {fileID: 0}
