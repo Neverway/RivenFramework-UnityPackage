@@ -78,6 +78,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DevOrientation
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fec30c16f958e80fab001a5379a74152,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -212,4 +217,6 @@ MonoBehaviour:
   propsInTrigger: []
   actorForceIntensity: 5000
   propForceIntensity: 1000
+  forceMode: 0
+  forceMode2d: 0
   forceDirection: {fileID: 3819161172189545970}

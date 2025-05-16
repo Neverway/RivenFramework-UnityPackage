@@ -16,6 +16,8 @@ public class VolumeForce : Volume
     //=-----------------=
     [SerializeField] private float actorForceIntensity;
     [SerializeField] private float propForceIntensity;
+    [SerializeField] private ForceMode forceMode;
+    [SerializeField] private ForceMode2D forceMode2d;
 
 
     //=-----------------=
@@ -47,11 +49,11 @@ public class VolumeForce : Volume
                 {
                     if (rigidbody2D)
                     {
-                        rigidbody2D.AddForce(forceDirection.transform.forward * actorForceIntensity, ForceMode2D.Force);
+                        rigidbody2D.AddForce(forceDirection.transform.forward * actorForceIntensity, forceMode2d);
                     }
                     if (rigidbody)
                     {
-                        rigidbody.AddForce(forceDirection.transform.forward * actorForceIntensity, ForceMode.Force);
+                        rigidbody.AddForce(forceDirection.transform.forward * actorForceIntensity, forceMode);
                     }
                 }
                 // If teams match and self-infliction enabled
@@ -59,11 +61,11 @@ public class VolumeForce : Volume
                 {
                     if (rigidbody2D)
                     {
-                        rigidbody2D.AddForce(forceDirection.transform.forward * actorForceIntensity, ForceMode2D.Force);
+                        rigidbody2D.AddForce(forceDirection.transform.forward * actorForceIntensity, forceMode2d);
                     }
                     if (rigidbody)
                     {
-                        rigidbody.AddForce(forceDirection.transform.forward * actorForceIntensity, ForceMode.Force);
+                        rigidbody.AddForce(forceDirection.transform.forward * actorForceIntensity, forceMode);
                     }
                 }
                 // If teams don't match
@@ -71,11 +73,11 @@ public class VolumeForce : Volume
                 {
                     if (rigidbody2D)
                     {
-                        rigidbody2D.AddForce(forceDirection.transform.forward * actorForceIntensity, ForceMode2D.Force);
+                        rigidbody2D.AddForce(forceDirection.transform.forward * actorForceIntensity, forceMode2d);
                     }
                     if (rigidbody)
                     {
-                        rigidbody.AddForce(forceDirection.transform.forward * actorForceIntensity, ForceMode.Force);
+                        rigidbody.AddForce(forceDirection.transform.forward * actorForceIntensity, forceMode);
                     }
                 }
             }
@@ -88,11 +90,11 @@ public class VolumeForce : Volume
 
                 if (rigidbody)
                 {
-                    rigidbody.AddForce(forceDirection.transform.forward * propForceIntensity, ForceMode.Force);
+                    rigidbody.AddForce(forceDirection.transform.forward * propForceIntensity, forceMode);
                 }
                 else if (rigidbody2D)
                 {
-                    rigidbody2D.AddForce(forceDirection.transform.forward * propForceIntensity, ForceMode2D.Force);
+                    rigidbody2D.AddForce(forceDirection.transform.forward * propForceIntensity, forceMode2d);
                 }
             }
         }
