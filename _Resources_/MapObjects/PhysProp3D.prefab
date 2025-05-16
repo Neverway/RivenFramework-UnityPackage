@@ -117,7 +117,7 @@ MonoBehaviour:
   checkRadius: 0.5
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 129
   isHeld: 0
 --- !u!1001 &4783724821653919518
 PrefabInstance:
