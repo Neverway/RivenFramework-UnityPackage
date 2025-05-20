@@ -113,6 +113,7 @@ using UnityEngine;
 
                 
                 localPlayer = pawnManager.localPlayerCharacter.transform;
+                if (localPlayer is null) return false;
             }
 
             return true;
@@ -120,6 +121,12 @@ using UnityEngine;
 
         private bool LightIsInActiveRange()
         {
+            if (!localPlayer)
+            {
+                if (pawnManager && pawnManager.localPlayerCharacter) localPlayer = pawnManager.localPlayerCharacter.transform;
+                return false;
+            }
+                
             return Vector3.Distance(transform.position, localPlayer.position) <= targetLight.range * rangeMultiplier;
         }
 
