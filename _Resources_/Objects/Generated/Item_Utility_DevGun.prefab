@@ -1066,7 +1066,7 @@ PrefabInstance:
     - target: {fileID: 1066242453299824152, guid: d0afdda9847b38ab2b9e5c17ea2df693,
         type: 3}
       propertyPath: m_Name
-      value: Item_Utility_KINMachine
+      value: Item_Utility_DevGun
       objectReference: {fileID: 0}
     - target: {fileID: 1306892326886840255, guid: d0afdda9847b38ab2b9e5c17ea2df693,
         type: 3}
@@ -1186,6 +1186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5ed63b52401f3f1ad6a304acc5333d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: Item_Utility_DevGun
+  displayName: Dev Gun
+  uniqueId: 
   toolModes:
   - name: PhysGun
     toolIcon: {fileID: 21300000, guid: 693bab1164735b4caa56d90cc0597810, type: 3}

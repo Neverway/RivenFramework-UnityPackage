@@ -180,6 +180,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_Utility_FXOrbs
       objectReference: {fileID: 0}
+    - target: {fileID: 1147708419061025464, guid: d0afdda9847b38ab2b9e5c17ea2df693,
+        type: 3}
+      propertyPath: id
+      value: Item_Utility_FXOrbs
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147708419061025464, guid: d0afdda9847b38ab2b9e5c17ea2df693,
+        type: 3}
+      propertyPath: displayName
+      value: Utility_FXOrbs
+      objectReference: {fileID: 0}
     - target: {fileID: 1306892326886840255, guid: d0afdda9847b38ab2b9e5c17ea2df693,
         type: 3}
       propertyPath: m_Enabled

@@ -222,7 +222,7 @@ public class Volume : MonoBehaviour
                 continue;
             }
 
-            if (_prop.gameObject.activeInHierarchy is false && disabledObjectsExitVolume)
+            if (_prop && _prop.gameObject.activeInHierarchy is false && disabledObjectsExitVolume)
             {
                 propsToRemove.Add(_prop);
                 continue;
