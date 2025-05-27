@@ -39,14 +39,6 @@ public class Actor : MonoBehaviour
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    private void Start()
-    {
-    }
-
-    private void Update()
-    {
-    
-    }
 
     //=-----------------=
     // Internal Functions
