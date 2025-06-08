@@ -35,6 +35,13 @@ public class Object_PhysPickup : MonoBehaviour
     public bool isHeld;
     private bool wasGravityEnabled;
 
+    private Vector3 parentViewPos;
+    private Vector3 parentAttachmentPos;
+    private Vector3 directionFromAttachmentToView;
+    private float distanceFromAttachmentToView;
+    private Vector3 targetPosition;
+    
+
 
     //=-----------------=
     // Reference Variables
@@ -55,10 +62,9 @@ public class Object_PhysPickup : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isHeld)
-        {
-            MoveToHoldingPosition();
-        }
+        if (isHeld is false) return;
+        MoveToHoldingPosition();
+       
     }
 
     private void OnTriggerEnter(Collider _other)
@@ -122,18 +128,21 @@ public class Object_PhysPickup : MonoBehaviour
             Pickup();
         }
     }
+    
+    
+    
 
     public void MoveToHoldingPosition()
     {
         // Initialize values
-        var viewTransform = holdingPawn.viewPoint.position;
-        var attachmentTransform = holdingPawn.physObjectAttachmentPoint.transform.position;
-        var directionFromAttachmentToView = attachmentTransform - viewTransform;
-        var distanceFromAttachmentToView = Vector3.Distance(attachmentTransform, holdingPawn.viewPoint.position);
-        Vector3 targetPosition;
+        parentViewPos = holdingPawn.viewPoint.position;
+        parentAttachmentPos = holdingPawn.physObjectAttachmentPoint.transform.position;
+        directionFromAttachmentToView = parentAttachmentPos - parentViewPos;
+        distanceFromAttachmentToView = Vector3.Distance(parentAttachmentPos, holdingPawn.viewPoint.position);
         
         // Check to see if attachment point is clear of obstructions
-        if (Physics.SphereCast(viewTransform, checkRadius, directionFromAttachmentToView, out RaycastHit hit, distanceFromAttachmentToView, layerMask))
+        
+        if (Physics.SphereCast(parentViewPos, checkRadius, directionFromAttachmentToView, out RaycastHit hit, distanceFromAttachmentToView, layerMask))
         {
             // It's not clear, so we'll want to move the target position to hold the prop backwards until it is free
             targetPosition = (hit.point - (directionFromAttachmentToView.normalized * 0.5f));
@@ -141,7 +150,7 @@ public class Object_PhysPickup : MonoBehaviour
         else
         {
             // It is clear, so set the target position to the attachment point
-            targetPosition = (attachmentTransform);
+            targetPosition = (parentAttachmentPos);
         }
 
         // Snap the prop to match the target position

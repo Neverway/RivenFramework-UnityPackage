@@ -3,6 +3,7 @@ guid: 0691e5206c095094690805245502b274
 labels:
 - Actor3D
 - Framework
+- Prop
 PrefabImporter:
   externalObjects: {}
   userData: 

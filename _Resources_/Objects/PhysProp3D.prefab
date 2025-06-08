@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd475a26bae10db88ad2b0dfaad61264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: PhysProp
-  displayName: PhysProp
+  id: PhysProp3D
+  displayName: Phys Prop3D
   uniqueId: 
 --- !u!54 &7267226283918966251
 Rigidbody:

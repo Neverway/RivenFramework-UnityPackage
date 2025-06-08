@@ -134,7 +134,7 @@ public class ToolScatterPlacerUI : EditorWindow
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    [MenuItem("Neverway/ScatterPlacerTool")]
+    [MenuItem("Neverway/Tools/ScatterPlacer")]
     public static void ShowWindow()
     {
         GetWindow<ToolScatterPlacerUI>("Scatter Placer");
