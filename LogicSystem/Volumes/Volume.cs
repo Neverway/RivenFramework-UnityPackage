@@ -76,7 +76,7 @@ public class Volume : MonoBehaviour
             }*/
 
             // Get a reference to the entity component
-            var targetProp = _other.gameObject;
+            var targetProp = _other.gameObject.GetComponentInParent<Actor>().gameObject;
             // Add the entity to the list if they are not already present
             AddPropToVolume(targetProp);
         }
@@ -97,7 +97,7 @@ public class Volume : MonoBehaviour
         if (_other.CompareTag("PhysProp"))
         {
             // Get a reference to the entity component
-            var targetProp = _other.gameObject;
+            var targetProp = _other.gameObject.GetComponentInParent<Actor>().gameObject;
             // Add the entity to the list if they are not already present
             RemovePropFromVolume(targetProp);
         }
