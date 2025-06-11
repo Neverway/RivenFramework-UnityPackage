@@ -4,8 +4,6 @@ using UnityEditor;
 using UnityEngine;
 using static EasyPropertyDrawer;
 
-namespace SimpleFields
-{
     public class SimpleFieldsWindow : EditorWindow
     {
         public static SimpleFieldsWindow currentWindow;
@@ -158,4 +156,3 @@ namespace SimpleFields
             ConfirmEditedName();
         }
     }
-}

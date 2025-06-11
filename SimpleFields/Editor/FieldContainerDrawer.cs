@@ -2,8 +2,6 @@ using UnityEditor;
 using UnityEngine;
 using EasyInspector;
 
-namespace SimpleFields
-{
     [CustomPropertyDrawer(typeof(SimpleFields.FieldContainer))]
     internal class FieldContainerDrawer : EasyPropertyDrawer
     {
@@ -130,5 +128,3 @@ namespace SimpleFields
 
         public void TogglePickFieldsMode() => pickFieldsMode = !pickFieldsMode;
     }
-
-}

@@ -5,14 +5,13 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
-namespace SimpleFields
-{
     /// <summary>
     /// 
     /// </summary>
     [ExecuteAlways, DisallowMultipleComponent, AddComponentMenu("SimpleFields")]
     public class SimpleFields : MonoBehaviour
     {
+        #if UNITY_EDITOR
         //FieldContainer is just to make all the fields here into a single field itself
         //so that I can use the EasyDrawer class I made. This is bad, change this later
         /// <summary>
@@ -65,5 +64,5 @@ namespace SimpleFields
             public Component targetComponent;
             public string fieldName;
         }
+        #endif
     }
-}

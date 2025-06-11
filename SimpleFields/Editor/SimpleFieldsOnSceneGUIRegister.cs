@@ -1,8 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace SimpleFields
-{
     [InitializeOnLoad]
     public static class SimpleFieldsOnSceneGUIRegister
     {
@@ -30,5 +28,4 @@ namespace SimpleFields
             }
         }
     }
-}
 

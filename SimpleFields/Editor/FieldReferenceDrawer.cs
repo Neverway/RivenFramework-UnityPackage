@@ -2,8 +2,6 @@ using EasyInspector;
 using UnityEditor;
 using UnityEngine;
 
-namespace SimpleFields
-{
     [CustomPropertyDrawer(typeof(SimpleFields.FieldReference))]
     internal class FieldReferenceDrawer : EasyPropertyDrawer
     {
@@ -83,4 +81,3 @@ namespace SimpleFields
         public Component GetComponent => (Component)property[targetComponent].Property.objectReferenceValue;
 
     }
-}
