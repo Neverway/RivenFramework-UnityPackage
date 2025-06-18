@@ -242,10 +242,10 @@ public class Volume : MonoBehaviour
         
         foreach (var _pawn in pawnsInTrigger)
         {
-            print("Cool dogs don't do drugs");
+            //print("Cool dogs don't do drugs");
             if (pawnsInTrigger.Contains(pawnManager.localPlayerCharacter.GetComponent<Pawn>()))
             {
-                print("Cool cats wear cool hats");
+                //print("Cool cats wear cool hats");
                 return _pawn;
             }
         }
