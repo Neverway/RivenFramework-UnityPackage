@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VolumeItemPickup : Volume
 {
@@ -22,6 +23,9 @@ public class VolumeItemPickup : Volume
         All,
         OnlyPlayer
     }
+
+    public UnityEvent OnAttemptPickup;
+    
     /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
 
 
@@ -48,6 +52,7 @@ public class VolumeItemPickup : Volume
                     var inventory = pawnsInTrigger[0].GetComponentInChildren<Pawn_Inventory>();
                     if (inventory)
                     {
+                        OnAttemptPickup.Invoke();
                         if (inventory.AddItem(transform.GetChild(1).gameObject))
                         {
                             Destroy(gameObject);
@@ -61,6 +66,7 @@ public class VolumeItemPickup : Volume
                     var inventory = GetPlayerInTrigger().GetComponentInChildren<Pawn_Inventory>();
                     if (inventory)
                     {
+                        OnAttemptPickup.Invoke();
                         if (inventory.AddItem(transform.GetChild(1).gameObject))
                         {
                             Destroy(gameObject);
