@@ -16,6 +16,7 @@ public class Pawn_Inventory : MonoBehaviour
     // Public Variables
     //=-----------------=
     public int currentIndex;
+    public bool allowDuplicateItems;
     public List<GameObject> items;
 
 
@@ -119,7 +120,7 @@ public class Pawn_Inventory : MonoBehaviour
 
     public bool AddItem(GameObject _itemPrefab)
     {
-        if (HasItem(_itemPrefab))
+        if (HasItem(_itemPrefab) && !allowDuplicateItems)
         {
             return false;
         }
