@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6860228584438697348}
   - component: {fileID: 3954347698123193828}
+  - component: {fileID: -2147754228552126005}
   m_Layer: 0
   m_Name: Prop3D
   m_TagString: Untagged
@@ -48,6 +49,18 @@ MonoBehaviour:
   id: Prop3D
   displayName: Prop3D
   uniqueId: 
+--- !u!114 &-2147754228552126005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276721478425129573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca3b513376942e2884b9afb4babceef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4783724821653919518
 PrefabInstance:
   m_ObjectHideFlags: 0
