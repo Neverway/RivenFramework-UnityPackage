@@ -53,7 +53,7 @@ public class WorldSettings : MonoBehaviour
         InvokeRepeating(nameof(CheckKillVolume), 0, 2);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (GetPawnManager() is false)
         {

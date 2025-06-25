@@ -55,28 +55,23 @@ public class VolumeLevelChange : Volume
     private new void OnTriggerEnter(Collider _other)
     {
         base.OnTriggerEnter(_other);
-        print("0");
         if (GetPlayerInTrigger())
         {
-            print("1");
             //if (!_other.GetComponent<Pawn>().isPossessed) return;
             if (!worldLoader) worldLoader = FindObjectOfType<GI_WorldLoader>();
             if (useIndexInsteadOfID)
             {
-                print("2");
                 int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
                 string scenePath = SceneUtility.GetScenePathByBuildIndex(nextSceneIndex);
 
                 if (!string.IsNullOrEmpty(scenePath))
                 {
-                    print("3");
                     string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
                     worldLoader.LoadWorld(sceneName);
                 }
             }
             else if (!useIndexInsteadOfID)
             {
-                print("22");
                 worldLoader.LoadWorld(targetScene.sceneName);
             }
         }

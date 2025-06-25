@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7905679483278765302}
   - component: {fileID: 105928389219938393}
   - component: {fileID: 6967976215254305740}
-  - component: {fileID: 6933992816079287069}
+  - component: {fileID: 2003284490898505612}
   - component: {fileID: 4726423943619741238}
   m_Layer: 3
   m_Name: StreamingContainer
@@ -107,7 +107,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6933992816079287069
+--- !u!114 &2003284490898505612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,12 +116,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6197889656923623281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 428ff228d5bf24917a82d726900df32b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d38ebc75abf70f9db6ec8356845e1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   exitOffset: {x: 0, y: 0, z: 0}
   initializedExitZone: 0
-  parentStreamVolume: {fileID: 0}
+  parentStreamVolume: {fileID: 2772247697769048211}
 --- !u!114 &4726423943619741238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,8 +221,38 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5842415660845853255}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5578371265734815444, guid: 438f8222c1217a93b97132e8300c5b7f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7156753964132983893}
   m_SourcePrefab: {fileID: 100100000, guid: 438f8222c1217a93b97132e8300c5b7f, type: 3}
+--- !u!1 &2772247697769048211 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5578371265734815444, guid: 438f8222c1217a93b97132e8300c5b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7715611241350530631}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7156753964132983893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2772247697769048211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2c2e8062917ff7489ac23d6b56c3e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unaffectedTeams: []
+  ignoreUnaffectedTeamsFilter: 0
+  ignoreHeldObjects: 1
+  disabledObjectsExitVolume: 1
+  pawnsInTrigger: []
+  propsInTrigger: []
+  exitOffset: {x: 0, y: 0, z: 0}
+  debugDrawExitZone: 1
 --- !u!4 &4456509976819765838 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6254356106251211785, guid: 438f8222c1217a93b97132e8300c5b7f,

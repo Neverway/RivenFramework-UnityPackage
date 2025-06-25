@@ -44,7 +44,7 @@ public class GI_WorldLoader : MonoBehaviour
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    private void Update()
+    private void Start()
     {
         // Make sure the streaming world is loaded, so we can store actors there if needed
         if (!SceneManager.GetSceneByName(streamingWorldID).isLoaded)
@@ -70,34 +70,51 @@ public class GI_WorldLoader : MonoBehaviour
 
     private IEnumerator LoadWorldCoroutine(string _worldName)
     {
-        isLoading = true;
-        yield return new WaitForSeconds(delayBeforeWorldChange);
-
         // Load the transition level over top everything else
-        SceneManager.LoadScene(loadingWorldID);
+        //SceneManager.LoadScene(loadingWorldID, LoadSceneMode.Additive);
         
         // The following should execute on the loading screen scene
-        var loadingBarObject = GameObject.FindWithTag("LoadingBar");
-        if (loadingBarObject) loadingBar = loadingBarObject.GetComponent<Image>();
+        //var loadingBarObject = GameObject.FindWithTag("LoadingBar");
+        //if (loadingBarObject) loadingBar = loadingBarObject.GetComponent<Image>();
         
-        // Begin async load of target level
-        AsyncOperation loadAsync = SceneManager.LoadSceneAsync(_worldName);
-        loadAsync.allowSceneActivation = false;
-
-        // Set loading bar to reflect async progress
-        while (loadAsync.progress < 1)
+        /*AsyncOperation loadAsync = SceneManager.LoadSceneAsync(_worldName, LoadSceneMode.Additive);
+        while (!loadAsync.isDone)
         {
-            if (loadingBar) loadingBar.fillAmount = loadAsync.progress;
-            yield return new WaitForSeconds(minimumRequiredLoadTime);
+            //print(loadAsync.progress);
+            //if (loadingBar) loadingBar.fillAmount = loadAsync.progress;
+            yield return null;
+        }*/
+        
+        //print(unloadAsync.progress);
+        //if (loadingBar) loadingBar.fillAmount = unloadAsync.progress;
+        
+        isLoading = true;
+        yield return new WaitForSeconds(delayBeforeWorldChange);
+        print("Active scene was " + SceneManager.GetActiveScene().name);
+        
+        // Load target level
+        SceneManager.LoadScene(_worldName, LoadSceneMode.Additive);
+        print("Active scene is " + SceneManager.GetActiveScene().name);
+        
+        // Begin async unload of previous level
+        AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        
+        // Set loading bar to reflect async progress
+        while (!unloadAsync.isDone)
+        {
+            yield return new WaitForEndOfFrame();
         }
-
-        // Eject saved actors from previous
-        loadAsync.allowSceneActivation = true;
-        EjectStreamedActors();
+        print($"Unloaded previous scene");
 
         // Finish up by setting any external flags
         isLoading = false;
         if (OnWorldLoaded is not null) OnWorldLoaded.Invoke();
+        
+        // Assign the new scene to be the active scene
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(_worldName));
+        
+        // Eject saved actors from previous
+        EjectStreamedActors();
     }
 
     // This code was expertly copied from @Yagero on github.com
