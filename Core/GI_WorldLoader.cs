@@ -44,7 +44,7 @@ public class GI_WorldLoader : MonoBehaviour
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    private void Start()
+    private void Update()
     {
         // Make sure the streaming world is loaded, so we can store actors there if needed
         if (!SceneManager.GetSceneByName(streamingWorldID).isLoaded)

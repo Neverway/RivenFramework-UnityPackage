@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6967976215254305740}
   - component: {fileID: 2003284490898505612}
   - component: {fileID: 4726423943619741238}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: StreamingContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -5,9 +5,11 @@
 //
 //=============================================================================
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using RivenFramework;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +27,7 @@ public class Image_EntityPain : MonoBehaviour
     // Private Variables
     //=-----------------=
     private bool isInPain; // Used to keep track of if we are currently fading the image in or out (Fadeout: Underground reference?)
+    private bool initialized;
 
 
     //=-----------------=
@@ -49,15 +52,22 @@ public class Image_EntityPain : MonoBehaviour
         {
             targetPawn = FindPossessedPawn();
         }
-        if (targetPawn)
+        if (targetPawn && !initialized)
         {
-            targetPawn.OnPawnHurt += () => { OnHurt(); };
+            initialized = true;
+            targetPawn.OnPawnHurt += OnHurt;
         }
-        else
+        else if (!targetPawn)
         {
             var color = image.color;
             image.color = new Color(color.r, color.g, color.b, 0);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (!targetPawn) return;
+        targetPawn.OnPawnHurt -= OnHurt;
     }
 
     //=-----------------=
