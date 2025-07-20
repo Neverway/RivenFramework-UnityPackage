@@ -25,7 +25,7 @@ public class DevTools
         {
             GetMemberInfos();
             List<MenuOption> menuOptions = new List<MenuOption>();
-            MenuOption menuOption;
+            //MenuOption menuOption;
             foreach(FieldInfo field in staticFields)
             {
                 DevMenuAttribute[] menuAttributes = field.GetCustomAttributes<DevMenuAttribute>().ToArray();
