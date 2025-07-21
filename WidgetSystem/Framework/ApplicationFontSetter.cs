@@ -33,7 +33,7 @@ public class ApplicationFontSetter : MonoBehaviour
     //=-----------------=
     private void Start()
     {
-        InvokeRepeating(nameof(UpdateFonts), 0, 0.25f);
+        InvokeRepeating(nameof(UpdateFonts), 0, 0.1f);
     }
 
     private void UpdateFonts()
