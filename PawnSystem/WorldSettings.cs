@@ -110,7 +110,9 @@ public class WorldSettings : MonoBehaviour
                 var distanceToEntity = Vector3.Distance(actor.transform.position, new Vector3(0, 0, 0));
                 if (distanceToEntity >= worldKillVolumeDistance || distanceToEntity <= (worldKillVolumeDistance * -1))
                 {
-                    Destroy(actor.gameObject);
+                    var actorPawn = actor.GetComponent<Pawn>();
+                    if (actorPawn) actorPawn.Kill();
+                    else Destroy(actor.gameObject);
                 }
             }
 
@@ -118,7 +120,9 @@ public class WorldSettings : MonoBehaviour
             {
                 if (actor.transform.position.y <= worldKillHeightDistance)
                 {
-                    Destroy(actor.gameObject);
+                    var actorPawn = actor.GetComponent<Pawn>();
+                    if (actorPawn) actorPawn.Kill();
+                    else Destroy(actor.gameObject);
                 }
             }
         }
