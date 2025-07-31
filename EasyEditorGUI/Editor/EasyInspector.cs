@@ -6,9 +6,9 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
-using EasyInspector;
+using EasyEditorGUI;
 
-namespace EasyInspector
+namespace EasyEditorGUI
 {
     public class EasyInspector
     {
