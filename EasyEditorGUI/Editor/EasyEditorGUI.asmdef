@@ -1,0 +1,20 @@
+{
+    "name": "EasyEditorGUI",
+    "rootNamespace": "EasyEditorGUI",
+    "references": [
+        "GUID:21b0c8d1703a94250bfac916590cea4f",
+        "GUID:54cb1906aeb4e4264bc1d2aa3818a43f",
+        "GUID:67b10ea981aa4544fb6b7052ab787722"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,12 +1,14 @@
+using EasyEditorGUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Windows;
 using Debug = UnityEngine.Debug;
-using EasyInspector;
 
 public abstract class EasyPropertyDrawer : PropertyDrawer
 {
@@ -115,7 +117,6 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
             catch (Exception e)
             {
                 EditorGUI.DrawRect(area, new Color(0.8f, 0f, 0f, 0.3f));
-                //GUIContent content = new GUIContent(e.GetType().Name, e.StackTrace);
                 GUIStyle errorStyle = new GUIStyle(EditorStyles.helpBox);
                 errorStyle.alignment = TextAnchor.MiddleCenter;
                 errorStyle.fontSize = 16;
@@ -130,6 +131,17 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
             }
             currentlyDrawing.Remove(this);
         }
+        
+        public void Draw()
+        {
+            GUIContent content = new GUIContent();
+            GUIStyle style = new GUIStyle();
+
+            Draw(GUILayoutUtility.GetRect(content, style, GUILayout.Height(GetHeight()), GUILayout.ExpandWidth(true)));
+
+            GUILayout.Space(EditorGUIUtility.standardVerticalSpacing);
+        }
+        
         protected abstract void OnDraw(Rect area);
         public float GetHeight()
         {
@@ -304,6 +316,12 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
         public DrawerObjectWithStyle Big2()
         {
             style.fontSize = 18;
+            return this;
+        }
+
+        public DrawerObjectWithStyle WordWrap()
+        {
+            style.wordWrap = true;
             return this;
         }
     }
@@ -497,6 +515,16 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
 
             newObjects.AddRange(objects);
             newObjects.AddRange(objectsToAdd);
+
+            objects = newObjects.ToArray();
+            return this;
+        }
+        public VerticalGroup AddAbove(params DrawerObject[] objectsToAdd)
+        {
+            List<DrawerObject> newObjects = new List<DrawerObject>();
+
+            newObjects.AddRange(objectsToAdd);
+            newObjects.AddRange(objects);
 
             objects = newObjects.ToArray();
             return this;
@@ -773,6 +801,7 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
     }
     public class Label : DrawerObjectWithStyle
     {
+        public int labelLines = 1;
         public string label;
         public Label(string label)
         {
@@ -783,14 +812,86 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
         {
             EditorGUI.LabelField(area, label, style);
         }
+
+        public Label SetLabelLines(int lines)
+        {
+            labelLines = lines;
+            return this;
+        }
+        public Label CalcLabelLinesFromWidth(float boundsWidth)
+        {
+            float labelWidth = GetLabelWidth();
+            labelLines = Mathf.CeilToInt(labelWidth / boundsWidth);
+            return this;
+        }
+        public float GetLabelWidth()
+        {
+            string effectiveText = label;
+            if (style.richText)
+                effectiveText = Regex.Replace(label, "<.*?>", string.Empty);
+
+            return style.CalcSize(new GUIContent(effectiveText)).x;
+        }
+
+        protected override float OnGetHeight()
+        {
+            return base.OnGetHeight() * labelLines - (labelLines * 2);
+        }
+
+    }
+
+    public class Foldout : DrawerObjectWithStyle
+    {
+        public DrawerObject title;
+        public DrawerObject foldoutContent;
+        public bool foldout;
+        public Action<bool> setFoldout;
+        public Foldout(bool foldout, Action<bool> setFoldout, DrawerObject title, DrawerObject content)
+        {
+            style = new GUIStyle(EditorStyles.label);
+            this.title = title;
+            this.foldoutContent = content;
+            this.foldout = foldout;
+            this.setFoldout = setFoldout;
+        }
+        protected override void OnDraw(Rect area)
+        {
+            float givenHeight = area.height;
+            area.height = title.GetHeight();
+            Rect foldoutRect = new Rect(area.x + 2, area.y, 16f, area.height);
+
+            area.x += 16f;
+            area.width -= 16f;
+
+            bool foldoutNew = EditorGUI.Foldout(foldoutRect, foldout, "");
+            if (foldout != foldoutNew)
+                setFoldout?.Invoke(foldout = foldoutNew);
+            title.Draw(area);
+
+            if (foldout)
+            {
+                area.y += area.height;
+                area.height = givenHeight - area.height;
+                foldoutContent.Draw(area);
+            }
+
+        }
+
+        protected override float OnGetHeight()
+        {
+            if (foldout)
+                return title.GetHeight() + foldoutContent.GetHeight();
+            return title.GetHeight();
+        }
     }
     public class Button : DrawerObjectWithStyle
     {
         public string text;
         public Action onPress;
+        public GUIStyle GUIStyle = EditorStyles.miniButton;
         public Button(string text, Action onPress)
         {
-            style = new GUIStyle(EditorStyles.miniButton);
+            style = new GUIStyle(GUIStyle);
             this.text = text;
             this.onPress = onPress;
         }
@@ -798,6 +899,17 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
         {
             if (GUI.Button(area, text, style))
                 onPress?.Invoke();
+        }
+
+        public Button SetStyle(GUIStyle newStyle)
+        {
+            GUIStyle = newStyle;
+            return this;
+        }
+        public Button AsToggle()
+        {
+            GUIStyle = EditorStyles.toggle;
+            return this;
         }
     }
 
@@ -1081,11 +1193,11 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
         protected override float OnGetHeight() => 0f;
     }
 
-    public class Foldout : DrawerObjectWithGUIContent
+    public class FoldoutProperty : DrawerObjectWithGUIContent
     {
         public SerializedProperty property;
 
-        public Foldout(SerializedProperty property)
+        public FoldoutProperty(SerializedProperty property)
         {
             if (property == null)
                 throw new NullReferenceException();
@@ -1093,12 +1205,12 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
             content = new GUIContent(GUIContent.none);
             this.property = property;
         }
-        public new Foldout Label(string label)
+        public new FoldoutProperty Label(string label)
         {
             content.text = label;
             return this;
         }
-        public new Foldout HideLabel()
+        public new FoldoutProperty HideLabel()
         {
             content.text = "";
             return this;
