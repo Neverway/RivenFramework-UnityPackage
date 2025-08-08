@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace EasyEditorGUI
 {
-    [CustomEditor(typeof(MonoBehaviour), true), CanEditMultipleObjects]
+    //[CustomEditor(typeof(MonoBehaviour), true), CanEditMultipleObjects]
     public class InjectedMonobehaviourEditor : Editor
     {
         public Type monoType { get; private set; }
