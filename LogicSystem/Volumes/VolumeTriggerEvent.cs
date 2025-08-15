@@ -61,6 +61,7 @@ public class VolumeTriggerEvent : Volume
         base.OnTriggerEnter(_other);
         if (pawnsInTrigger.Count + propsInTrigger.Count == 1) onFirstOccupied.Invoke();
         onOccupied.Set(IsOccupied());
+        print("Test");
     }
 
     private new void OnTriggerExit(Collider _other)

@@ -1,7 +1,9 @@
 {
     "name": "LogicValues",
     "rootNamespace": "LogicValues",
-    "references": [],
+    "references": [
+        "GUID:f47009f683dcea55fb9faad1db3dd237"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

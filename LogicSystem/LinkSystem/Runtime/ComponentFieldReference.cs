@@ -2,6 +2,7 @@
 
 using System;
 using System.Reflection;
+using RivenFramework;
 using UnityEngine;
 
     /// <summary>
@@ -48,6 +49,7 @@ using UnityEngine;
         /// <summary>
         /// Cached <see cref="FieldInfo"/> of the referenced field
         /// </summary>
+        [Todo("Pls add handling for when a field name is invalid ~Liz", forWho:"Errynei")]
         public FieldInfo Field
         {
             get
