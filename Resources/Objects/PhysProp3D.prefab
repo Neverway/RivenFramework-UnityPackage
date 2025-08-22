@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7267226283918966251}
   - component: {fileID: 67491230044474581}
   - component: {fileID: 1601334765381139313}
+  - component: {fileID: 1248232264559991007}
+  - component: {fileID: 8039075810331489572}
   m_Layer: 13
   m_Name: PhysProp3D
   m_TagString: PhysProp
@@ -119,6 +121,31 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   isHeld: 0
+--- !u!114 &1248232264559991007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276721478425129573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca3b513376942e2884b9afb4babceef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8039075810331489572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276721478425129573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed1df3500ebdb29438b4c44d2de7c3a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 500
 --- !u!1001 &4783724821653919518
 PrefabInstance:
   m_ObjectHideFlags: 0
