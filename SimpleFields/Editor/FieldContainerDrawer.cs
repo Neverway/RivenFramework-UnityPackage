@@ -1,6 +1,6 @@
 using UnityEditor;
 using UnityEngine;
-using EasyInspector;
+using EasyEditorGUI;
 
     [CustomPropertyDrawer(typeof(SimpleFields.FieldContainer))]
     internal class FieldContainerDrawer : EasyPropertyDrawer
