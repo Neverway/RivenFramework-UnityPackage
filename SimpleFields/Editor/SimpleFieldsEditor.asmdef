@@ -1,11 +1,14 @@
 {
     "name": "SimpleFieldsEditor",
     "rootNamespace": "",
-    "references": [],
-    "includePlatforms": [],
-    "excludePlatforms": [
+    "references": [
+        "GUID:6648d5301543e434f9cdc9b4f932f6d0",
+        "GUID:315fc61573ecdcc418a8ba551e851a21"
+    ],
+    "includePlatforms": [
         "Editor"
     ],
+    "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],

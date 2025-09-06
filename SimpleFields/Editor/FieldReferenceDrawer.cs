@@ -1,4 +1,4 @@
-using EasyInspector;
+using EasyEditorGUI;
 using UnityEditor;
 using UnityEngine;
 

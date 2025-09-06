@@ -17,7 +17,7 @@ using System.Linq;
         /// <summary>
         /// 
         /// </summary>
-        [SerializeField] internal FieldContainer fc;
+        [SerializeField] public FieldContainer fc;
 
         /// <summary>
         /// 
@@ -45,20 +45,20 @@ using System.Linq;
 
 
         [System.Serializable]
-        internal struct FieldContainer
+        public struct FieldContainer
         {
             [SerializeField] public Category[] categories;
         }
 
         [System.Serializable]
-        internal struct Category
+        public struct Category
         {
             public string categoryName;
             [SerializeField] public FieldReference[] fields;
         }
 
         [System.Serializable]
-        internal struct FieldReference
+        public struct FieldReference
         {
             public GameObject targetGameObject;
             public Component targetComponent;

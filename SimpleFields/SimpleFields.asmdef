@@ -1,10 +1,10 @@
 {
     "name": "SimpleFields",
     "rootNamespace": "",
-    "references": [
-        "GUID:315fc61573ecdcc418a8ba551e851a21"
+    "references": [],
+    "includePlatforms": [
+        "Editor"
     ],
-    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
