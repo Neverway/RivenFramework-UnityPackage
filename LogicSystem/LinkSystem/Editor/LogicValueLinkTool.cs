@@ -458,13 +458,13 @@ using UnityEngine;
             }
             public void DrawJustForDisplay()
             {
-                if (start is null)
+                if (start == null)
                 {
                     Debug.Log("Start was null"); 
                     return;
                 }
 
-                if (end is null)
+                if (end == null)
                 {
                     Debug.Log("End was null");
                     return;
