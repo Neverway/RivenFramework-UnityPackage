@@ -31,31 +31,21 @@ public class VolumeLevelStream : Volume
     // Reference Variables
     //=-----------------=
     private GI_WorldLoader worldLoader;
+    [Tooltip("This is the empty game object that streamed actors are stored in, (to save them from being destroyed on map changes)")]
     private VolumeLevelStreamContainer streamContainer;
 
 
     //=-----------------=
     // Mono Functions
     //=-----------------=
-        private void Start()
+        private void Awake()
         {
-            worldLoader = FindObjectOfType<GI_WorldLoader>();
-            streamContainer = transform.GetComponentInChildren<VolumeLevelStreamContainer>();
-            streamContainer.exitOffset = exitOffset;
-            streamContainer.parentStreamVolume = gameObject;
-            streamContainer.transform.SetParent(null);
             worldLoader = FindObjectOfType<GI_WorldLoader>();
         }
 
-        private void LateUpdate()
+        private void FixedUpdate()
         {
-            if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).IsValid())
-            {
-                streamContainer.initializedExitZone = true;
-                initializedExitZone = true;
-                SceneManager.MoveGameObjectToScene(streamContainer.gameObject, SceneManager.GetSceneByName(worldLoader.streamingWorldID));
-                streamContainer.transform.SetParent(null);
-            }
+            StartCoroutine(InitializeStreamContainer());
         }
 
         private void OnDrawGizmos()
@@ -77,6 +67,7 @@ public class VolumeLevelStream : Volume
                 
                 // Exit if the object is already parented
                 if (targetEntity.transform.parent == streamContainer.transform) return;
+                print($"[{gameObject.name}] Pawn streamed");
                 
                 // Add the entity to the list if they are not already present
                 MoveObjectToStreamContainer(targetEntity.gameObject);
@@ -98,7 +89,7 @@ public class VolumeLevelStream : Volume
 
         private new void OnTriggerExit(Collider _other)
         {
-            if (!worldLoader) worldLoader = FindObjectOfType<GI_WorldLoader>();
+            if (!initializedExitZone) return;
             
             // Pawn has entered the volume
             if (_other.CompareTag("Pawn"))
@@ -108,6 +99,7 @@ public class VolumeLevelStream : Volume
                 
                 targetEntity.transform.SetParent(null);
                 SceneManager.MoveGameObjectToScene(targetEntity.gameObject, SceneManager.GetActiveScene());
+                print($"[{gameObject.name}] Pawn unstreamed");
             }
 
             // A physics prop has entered the volume
@@ -124,13 +116,33 @@ public class VolumeLevelStream : Volume
     //=-----------------=
     // Internal Functions
     //=-----------------=
+    private IEnumerator InitializeStreamContainer()
+    {
+        if (initializedExitZone) yield break;
+        // Prepare the streaming container
+        streamContainer = transform.GetComponentInChildren<VolumeLevelStreamContainer>();
+        if (!streamContainer) yield break;
+        streamContainer.exitOffset = exitOffset;
+        streamContainer.parentStreamVolume = gameObject;
+        print($"[{gameObject.name}] Initializing...");
+        
+        if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).isLoaded)
+        {
+            streamContainer.initializedExitZone = true;
+            initializedExitZone = true;
+            streamContainer.transform.SetParent(null);
+            SceneManager.MoveGameObjectToScene(streamContainer.gameObject, SceneManager.GetSceneByName(worldLoader.streamingWorldID));
+            print($"[{gameObject.name}] Done!");
+        }
+    }
+    
     private void MoveObjectToStreamContainer(GameObject _targetObject)
     {
         // Clear its parent to avoid random bugs
         _targetObject.transform.SetParent(null);
         
         // Ensure the stream scene is loaded
-        if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).IsValid())
+        if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).isLoaded)
         {
             // Move the object to the scene and set its parent properly, so it can be ejected if need be
             SceneManager.MoveGameObjectToScene(_targetObject, SceneManager.GetSceneByName(worldLoader.streamingWorldID));

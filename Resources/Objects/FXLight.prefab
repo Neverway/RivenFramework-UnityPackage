@@ -198,11 +198,7 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3152552973295086229}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7000857651837644730, guid: 6eaa804f787a93fe7b99f2159ecaf200,
-        type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 180668711060497125}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eaa804f787a93fe7b99f2159ecaf200, type: 3}
 --- !u!4 &3401546280913286658 stripped
 Transform:
@@ -210,39 +206,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2345092330123300072}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4729760362686423890 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7000857651837644730, guid: 6eaa804f787a93fe7b99f2159ecaf200,
-    type: 3}
-  m_PrefabInstance: {fileID: 2345092330123300072}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &180668711060497125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4729760362686423890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387309e836e9cd94085c6924bfd13338, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fc:
-    categories:
-    - categoryName: Light
-      fields:
-      - targetGameObject: {fileID: 993213290060812357}
-        targetComponent: {fileID: 2705181668536080169}
-        fieldName: m_BakedIndex
-    - categoryName: Light Culling
-      fields:
-      - targetGameObject: {fileID: 993213290060812357}
-        targetComponent: {fileID: 4224132570510112453}
-        fieldName: cullWhenOutOfRange
-      - targetGameObject: {fileID: 993213290060812357}
-        targetComponent: {fileID: 4224132570510112453}
-        fieldName: rangeMultiplier
-      - targetGameObject: {fileID: 993213290060812357}
-        targetComponent: {fileID: 4224132570510112453}
-        fieldName: debugDrawCullRange

@@ -37,7 +37,7 @@ public class Volume : MonoBehaviour
     //=-----------------=
     // Reference Variables
     //=-----------------=
-    private GI_PawnManager pawnManager;
+    public GI_PawnManager pawnManager;
 
 
     //=-----------------=
@@ -115,7 +115,7 @@ public class Volume : MonoBehaviour
     protected virtual bool AddPawnToVolume(Pawn _pawn)
     {
         // Ignore null
-        if (_pawn is null) return false;
+        if (_pawn == null) return false;
         
         // Add to list if it's not already present
         if (pawnsInTrigger.Contains(_pawn) is false)
@@ -132,7 +132,7 @@ public class Volume : MonoBehaviour
     protected virtual bool AddPropToVolume(GameObject _prop)
     {
         // Ignore null
-        if (_prop is null) return false;
+        if (_prop == null) return false;
         
         // Add to list if it's not already present
         if (propsInTrigger.Contains(_prop) is false)
@@ -149,7 +149,7 @@ public class Volume : MonoBehaviour
     protected virtual bool RemovePawnFromVolume(Pawn _pawn)
     {
         // Ignore null
-        if (_pawn is null) return false;
+        if (_pawn == null) return false;
         
         // Remove from list if it's present
         if (pawnsInTrigger.Contains(_pawn) is true)
@@ -166,7 +166,7 @@ public class Volume : MonoBehaviour
     protected virtual bool RemovePropFromVolume(GameObject _prop)
     {
         // Ignore null
-        if (_prop is null) return false;
+        if (_prop == null) return false;
         
         // Remove from list if it's present
         if (propsInTrigger.Contains(_prop) is true)
@@ -186,7 +186,7 @@ public class Volume : MonoBehaviour
         
         foreach (var _pawn in pawnsInTrigger)
         {
-            if (_pawn is null)
+            if (_pawn == null)
             {
                 pawnsToRemove.Add(_pawn);
                 continue;
@@ -216,7 +216,7 @@ public class Volume : MonoBehaviour
         
         foreach (var _prop in propsInTrigger)
         {
-            if (_prop is null)
+            if (_prop == null)
             {
                 propsToRemove.Add(_prop);
                 continue;
@@ -234,16 +234,23 @@ public class Volume : MonoBehaviour
     
     protected Pawn GetPlayerInTrigger()
     {
-        if (pawnManager is null)
+        if (pawnManager == null)
         {
             pawnManager = FindObjectOfType<GI_PawnManager>();
-            if (pawnManager is null) return null;
+            if (pawnManager == null) return null;
+        }
+
+        if (pawnManager.localPlayerCharacter == null)
+        { 
+            return null;
         }
         
         foreach (var _pawn in pawnsInTrigger)
         {
             //print("Cool dogs don't do drugs");
-            if (pawnsInTrigger.Contains(pawnManager.localPlayerCharacter.GetComponent<Pawn>()))
+            var test = pawnManager.localPlayerCharacter;
+            print($"{test}");
+            if (pawnsInTrigger.Contains(test.GetComponent<Pawn>()))
             {
                 //print("Cool cats wear cool hats");
                 return _pawn;

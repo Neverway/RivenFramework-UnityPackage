@@ -5016,6 +5016,7 @@ GameObject:
   - component: {fileID: 1134847039480085226}
   - component: {fileID: 5092951961886011814}
   - component: {fileID: -7579489438798369143}
+  - component: {fileID: -4213189540128148208}
   m_Layer: 6
   m_Name: FXSpark
   m_TagString: Untagged
@@ -5106,3 +5107,27 @@ MonoBehaviour:
   id: FX
   displayName: FX
   uniqueId: 
+--- !u!114 &-4213189540128148208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000857651837644730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca3b513376942e2884b9afb4babceef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeInNullSpace: 0
+  destroyedInKillTrigger: 1
+  homePosition: {x: 0, y: 0, z: 0}
+  homeScale: {x: 0, y: 0, z: 0}
+  homeParent: {fileID: 0}
+  dynamic: 0
+  crushInNullSpace: 1
+  isParentedIgnoreOffsets: 0
+  isHeld: 0
+  space: 0
+  wasActive: 0
+  debugLogData: 0

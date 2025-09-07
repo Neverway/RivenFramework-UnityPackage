@@ -62,11 +62,12 @@ public class GI_WorldLoader : MonoBehaviour
     /// </summary>
     private void EjectStreamedActors()
     {
-        foreach (var actor in SceneManager.GetSceneByName(streamingWorldID).GetRootGameObjects())
-        {
-            SceneManager.MoveGameObjectToScene(actor.gameObject, SceneManager.GetActiveScene());
+        
+        /*foreach (var actor in SceneManager.GetSceneByName(streamingWorldID).GetRootGameObjects())
+            {
+                SceneManager.MoveGameObjectToScene(actor.gameObject, SceneManager.GetActiveScene());
+            }*/
         }
-    }
 
     private IEnumerator LoadWorldCoroutine(string _worldName)
     {

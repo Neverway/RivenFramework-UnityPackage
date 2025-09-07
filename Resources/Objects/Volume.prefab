@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8070034792371159625}
   - component: {fileID: 1779741572944383904}
   - component: {fileID: 7823347618117552932}
+  - component: {fileID: -6742698321078899074}
   m_Layer: 6
   m_Name: Volume
   m_TagString: Untagged
@@ -121,3 +122,27 @@ MonoBehaviour:
   id: Volume
   displayName: Volume
   uniqueId: 
+--- !u!114 &-6742698321078899074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5578371265734815444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca3b513376942e2884b9afb4babceef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeInNullSpace: 0
+  destroyedInKillTrigger: 1
+  homePosition: {x: 0, y: 0, z: 0}
+  homeScale: {x: 0, y: 0, z: 0}
+  homeParent: {fileID: 0}
+  dynamic: 0
+  crushInNullSpace: 1
+  isParentedIgnoreOffsets: 0
+  isHeld: 0
+  space: 0
+  wasActive: 0
+  debugLogData: 0

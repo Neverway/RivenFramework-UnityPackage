@@ -9,7 +9,9 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using RivenFramework;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VolumeLevelStreamContainer : MonoBehaviour
 {
@@ -28,6 +30,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
 
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
+    private GI_WorldLoader worldLoader;
 
 
     #endregion
@@ -35,14 +38,19 @@ public class VolumeLevelStreamContainer : MonoBehaviour
 
     #region=======================================( Functions )=======================================================//
     /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
-    private void Update()
+    private void FixedUpdate()
     {
         if (!initializedExitZone) return;
+        if (!worldLoader) worldLoader = FindObjectOfType<GI_WorldLoader>();
         if (!parentStreamVolume && !hasActivated)
         {
-            hasActivated = true;
-            print($"link to parent has been lost, scene must have changed! Ejecting...");
-            StartCoroutine(EjectStreamedActors());
+            print($"[{gameObject.name}] Link to parent is broken, scene must have changed");
+            if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).isLoaded)
+            {
+                hasActivated = true;
+                print($"[{gameObject.name}] {worldLoader.streamingWorldID} returned isLoaded as true");
+                StartCoroutine(EjectStreamedActors());
+            }
         }
     }
 
@@ -53,7 +61,9 @@ public class VolumeLevelStreamContainer : MonoBehaviour
     /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
     public IEnumerator EjectStreamedActors()
     {
+        print($"[{gameObject.name}] Ejecting actors...");
         transform.position += exitOffset;
+        yield return new WaitForEndOfFrame();
         while (transform.childCount > 0)
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -63,6 +73,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
             }
         }
         yield return new WaitForEndOfFrame();
+        print($"[{gameObject.name}] My job is done here, self-deleting!");
         Destroy(gameObject);
     }
 

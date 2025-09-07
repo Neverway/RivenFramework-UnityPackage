@@ -59,9 +59,11 @@ public class VolumeTriggerEvent : Volume
     { 
         // Call the base class method
         base.OnTriggerEnter(_other);
-        if (pawnsInTrigger.Count + propsInTrigger.Count == 1) onFirstOccupied.Invoke();
+        if (IsOccupied())
+        {
+            onFirstOccupied.Invoke();
+        }
         onOccupied.Set(IsOccupied());
-        print("Test");
     }
 
     private new void OnTriggerExit(Collider _other)
@@ -78,47 +80,50 @@ public class VolumeTriggerEvent : Volume
     //=-----------------=
     private bool IsOccupied()
     {
-        if (hasBeenTriggered && resetsAutomatically is false) return false;
+        if (hasBeenTriggered && resetsAutomatically is false)
+        {
+            return false;
+        }
         switch (triggerFilter)
         {
             case TriggerFilter.All:
                 if (pawnsInTrigger.Count != 0 || propsInTrigger.Count != 0)
                 {
+                    hasBeenTriggered = true;
                     return true;
                 }
                 else
                 {
-                    hasBeenTriggered = true;
                     return false;
                 }
             case TriggerFilter.Pawns:
                 if (pawnsInTrigger.Count != 0)
                 {
+                    hasBeenTriggered = true;
                     return true;
                 }
                 else
                 {
-                    hasBeenTriggered = true;
                     return false;
                 }
             case TriggerFilter.Props:
                 if (propsInTrigger.Count != 0)
                 {
+                    hasBeenTriggered = true;
                     return true;
                 }
                 else
                 {
-                    hasBeenTriggered = true;
                     return false;
                 }
             case TriggerFilter.OnlyPlayer:
                 if (GetPlayerInTrigger())
                 {
+                    hasBeenTriggered = true;
                     return true;
                 }
                 else
                 {
-                    hasBeenTriggered = true;
                     return false;
                 }
         }
