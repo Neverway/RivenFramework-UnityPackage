@@ -67,7 +67,6 @@ public class VolumeLevelStream : Volume
                 
                 // Exit if the object is already parented
                 if (targetEntity.transform.parent == streamContainer.transform) return;
-                print($"[{gameObject.name}] Pawn streamed");
                 
                 // Add the entity to the list if they are not already present
                 MoveObjectToStreamContainer(targetEntity.gameObject);
@@ -99,7 +98,6 @@ public class VolumeLevelStream : Volume
                 
                 targetEntity.transform.SetParent(null);
                 SceneManager.MoveGameObjectToScene(targetEntity.gameObject, SceneManager.GetActiveScene());
-                print($"[{gameObject.name}] Pawn unstreamed");
             }
 
             // A physics prop has entered the volume
@@ -124,7 +122,6 @@ public class VolumeLevelStream : Volume
         if (!streamContainer) yield break;
         streamContainer.exitOffset = exitOffset;
         streamContainer.parentStreamVolume = gameObject;
-        print($"[{gameObject.name}] Initializing...");
         
         if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).isLoaded)
         {
@@ -132,7 +129,6 @@ public class VolumeLevelStream : Volume
             initializedExitZone = true;
             streamContainer.transform.SetParent(null);
             SceneManager.MoveGameObjectToScene(streamContainer.gameObject, SceneManager.GetSceneByName(worldLoader.streamingWorldID));
-            print($"[{gameObject.name}] Done!");
         }
     }
     
