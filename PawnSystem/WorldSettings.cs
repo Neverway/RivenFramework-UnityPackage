@@ -39,6 +39,8 @@ public class WorldSettings : MonoBehaviour
     // Reference Variables
     //=-----------------=
     private GI_PawnManager pawnManager;
+    private Actor[] allActors;
+    private Dictionary<string, Actor> uuidMap;
 
 
     //=-----------------=
@@ -79,7 +81,7 @@ public class WorldSettings : MonoBehaviour
     //=-----------------=
     private void CheckForDuplicateActors()
     {
-        Actor[] allActors = FindObjectsOfType<Actor>();
+        allActors = FindObjectsOfType<Actor>();
         Dictionary<string, Actor> uuidMap = new Dictionary<string, Actor>();
 
         foreach (Actor actor in allActors)
@@ -95,6 +97,7 @@ public class WorldSettings : MonoBehaviour
                 Debug.LogWarning($"Duplicate actor with UUID {actor.uniqueId} was found, destroying duplicates! If you are backtracking through level, you can ignore this, otherwise check {actor.displayName}'s on the map for conflicting UUIDs");
                 Destroy(actor.gameObject);
             }
+            
             // UUID is not in list yet, add it
             else uuidMap[uuid] = actor;
         }
