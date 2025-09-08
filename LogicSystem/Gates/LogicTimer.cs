@@ -51,7 +51,7 @@ public class LogicTimer : Logic
 
     private IEnumerator Countdown()
     {
-        if (startTimer == false) yield break;
+        //if (startTimer == false) yield break;
         currentTime.Set(timerDuration);
         
         while (currentTime > 0)
