@@ -72,7 +72,7 @@ public class ToolAssetManager : MonoBehaviour
                     continue;
                 }
                 // Asset is logic
-                if (highlightedAsset.name.Contains("Logic_") || highlightedAsset.name.Contains("Volume3D") || highlightedAsset.name.Contains("Volume2D"))
+                if (highlightedAsset.name.ToLower().Contains("logic") || highlightedAsset.name.ToLower().Contains("volume"))
                 {
                     highlightedAsset.transform.SetParent(logicContainer.transform);
                     continue;
@@ -84,13 +84,13 @@ public class ToolAssetManager : MonoBehaviour
                     continue;
                 }
                 // Asset is fx
-                if (highlightedAsset.name.Contains("Fx_") || highlightedAsset.GetComponent(typeof(ReflectionProbe)))
+                if (highlightedAsset.name.ToLower().Contains("fx") || highlightedAsset.GetComponent(typeof(ReflectionProbe)))
                 {
                     highlightedAsset.transform.SetParent(fxContainer.transform);
                     continue;
                 }
                 // Asset is structure
-                if (highlightedAsset.name.Contains("Structure_") || highlightedAsset.GetComponent(typeof(ProBuilderMesh)))
+                if (highlightedAsset.name.ToLower().Contains("structure_") || highlightedAsset.GetComponent(typeof(ProBuilderMesh)))
                 {
                     highlightedAsset.transform.SetParent(structureContainer.transform);
                     continue;
