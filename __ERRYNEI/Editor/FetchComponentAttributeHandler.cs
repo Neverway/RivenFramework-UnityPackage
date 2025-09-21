@@ -7,13 +7,6 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(FetchComponentAttribute))]
 public class FetchComponentAttributeHandler : PropertyDrawer
 {
-    //[InitializeOnLoad]
-    [DevMenuButton]
-    public static void FetchOnLoad()
-    {
-
-    }
-
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         Type defaultType = GetFieldType(property);
