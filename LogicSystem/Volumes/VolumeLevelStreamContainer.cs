@@ -7,6 +7,7 @@
 //
 //====================================================================================================================//
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using RivenFramework;
@@ -27,6 +28,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
 
 
     /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
+    private bool subscribedToEjectEvent;
 
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
@@ -41,17 +43,34 @@ public class VolumeLevelStreamContainer : MonoBehaviour
     private void FixedUpdate()
     {
         if (!initializedExitZone) return;
-        if (!worldLoader) worldLoader = FindObjectOfType<GI_WorldLoader>();
-        if (!parentStreamVolume && !hasActivated)
+        if (!worldLoader)
+        {
+            worldLoader = FindObjectOfType<GI_WorldLoader>();
+            return;
+        }
+        
+        // Subscribe to eject event
+        if (!subscribedToEjectEvent)
+        {
+            subscribedToEjectEvent = true;
+            print($"{gameObject.name} subscribed to eject event");
+            GI_WorldLoader.OnEjectStreamedActors += EjectStreamedActors;
+        }
+        
+        /*if (!parentStreamVolume && !hasActivated && !worldLoader.isLoading)
         {
             print($"[{gameObject.name}] Link to parent is broken, scene must have changed");
             if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).isLoaded)
             {
-                hasActivated = true;
                 print($"[{gameObject.name}] {worldLoader.streamingWorldID} returned isLoaded as true");
                 StartCoroutine(EjectStreamedActors());
             }
-        }
+        }*/
+    }
+
+    private void OnDestroy()
+    {
+        GI_WorldLoader.OnEjectStreamedActors -= EjectStreamedActors;
     }
 
 
@@ -59,20 +78,34 @@ public class VolumeLevelStreamContainer : MonoBehaviour
 
 
     /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
-    public IEnumerator EjectStreamedActors()
+    private void EjectStreamedActors()
     {
-        print($"[{gameObject.name}] Ejecting actors...");
+        StartCoroutine(EjectStreamedActorsCoroutine());
+    }
+    
+        
+    public IEnumerator EjectStreamedActorsCoroutine()
+    {
+        if (hasActivated) yield break;
+        hasActivated = true;
+        
+        print($"[{gameObject.name}] Ejecting {transform.childCount} actors...");
+        
+        // Adjust container to its offset
         transform.position += exitOffset;
-        yield return new WaitForEndOfFrame();
-        while (transform.childCount > 0)
-        {
+        
+        // Empty the container into the streaming world
+        //while (transform.childCount > 0)
+        //{
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject actor = transform.GetChild(i).gameObject;
+                print($"[{actor.name}] ejected");
                 actor.transform.SetParent(null);
             }
-        }
+        //}
         yield return new WaitForEndOfFrame();
+        
         print($"[{gameObject.name}] My job is done here, self-deleting!");
         Destroy(gameObject);
     }
