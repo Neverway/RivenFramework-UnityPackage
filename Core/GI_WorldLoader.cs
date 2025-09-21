@@ -51,7 +51,7 @@ public class GI_WorldLoader : MonoBehaviour
         // Make sure the streaming world is loaded, so we can store actors there if needed
         if (!SceneManager.GetSceneByName(streamingWorldID).isLoaded)
         {
-            print("Streaming world wasn't found, initializing...");
+            //print("Streaming world wasn't found, initializing...");
             
             // [Sanity Check] Store the currently active scene
             var activeScene = SceneManager.GetActiveScene();
@@ -82,15 +82,11 @@ public class GI_WorldLoader : MonoBehaviour
         {
             SceneManager.MoveGameObjectToScene(actor.gameObject, SceneManager.GetActiveScene());
         }
-
-        if (SceneManager.GetSceneByName(streamingWorldID).GetRootGameObjects().Length != 0)
-        {
-            throw new Exception("Ejecting did not complete!");
-        }
     }
 
     private IEnumerator LoadWorldCoroutine(string _worldName)
     {
+        // WARNING OLD GARBAGE BELOW //
         // Load the transition level over top everything else
         //SceneManager.LoadScene(loadingWorldID, LoadSceneMode.Additive);
         
@@ -108,6 +104,7 @@ public class GI_WorldLoader : MonoBehaviour
         
         //print(unloadAsync.progress);
         //if (loadingBar) loadingBar.fillAmount = unloadAsync.progress;
+        // END OF OLD GARBAGE (Carry on :3) //
         
         isLoading = true;
         yield return new WaitForSeconds(delayBeforeWorldChange);
@@ -133,9 +130,6 @@ public class GI_WorldLoader : MonoBehaviour
         
         // I tried freezing the theoretical kittens by setting timescale to 0 and then restoring once
         // the theoretical room full of puppies is done loading.
-        // The issue is that in order for that to work, we unload, then load.
-        // That means that until the puppies are ready, there is NOWHERE except for the streaming world
-        // for anything to exist, so 
         
         // Store what scene is the current one
         var previousScene = SceneManager.GetActiveScene();
@@ -154,15 +148,9 @@ public class GI_WorldLoader : MonoBehaviour
         print($"Setting the active scene to {_worldName}. Active scene was {SceneManager.GetActiveScene().name}");
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(_worldName));
         
-        // Empty the stream world
-        //EjectStreamedActors();
-        
-        /*while (SceneManager.GetSceneByName(streamingWorldID).GetRootGameObjects().Length != 0)
-        {
-            yield return new WaitForEndOfFrame();
-        }*/
-        
-        // Eject saved actors from previous level
+        // Empty the stream world into the active scene
+        EjectStreamedActors();
+        // Call the eject event so containers will empty into their current scene (Needs to be done a bit after eject)
         OnEjectStreamedActors?.Invoke();
         
         // Begin async unload of previous level

@@ -93,6 +93,7 @@ public class VolumeLevelStream : Volume
             // Pawn has entered the volume
             if (_other.CompareTag("Pawn"))
             {
+                print($"{gameObject.name} has triggered a dump");
                 // Get a reference to the entity component
                 var targetEntity = _other.gameObject.GetComponent<Pawn>();
                 
@@ -134,12 +135,14 @@ public class VolumeLevelStream : Volume
     
     private void MoveObjectToStreamContainer(GameObject _targetObject)
     {
+        print($"{gameObject.name} has triggered a move event");
         // Clear its parent to avoid random bugs
         _targetObject.transform.SetParent(null);
         
         // Ensure the stream scene is loaded
         if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).isLoaded)
         {
+            print($"{gameObject.name} move event succeded");
             // Move the object to the scene and set its parent properly, so it can be ejected if need be
             SceneManager.MoveGameObjectToScene(_targetObject, SceneManager.GetSceneByName(worldLoader.streamingWorldID));
             _targetObject.transform.SetParent(streamContainer.transform);

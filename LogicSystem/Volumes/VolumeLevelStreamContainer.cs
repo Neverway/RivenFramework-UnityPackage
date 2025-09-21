@@ -93,21 +93,26 @@ public class VolumeLevelStreamContainer : MonoBehaviour
         
         // Adjust container to its offset
         transform.position += exitOffset;
+        yield return new WaitForEndOfFrame();
         
-        // Empty the container into the streaming world
-        //while (transform.childCount > 0)
-        //{
+        // Empty the container into the streaming world then dump into the active scene
+        // The while loop is here since the for loop doesn't finish in time do to... witchcraft probably
+        // (Sorry Errynei, the while loop has to stay) ~Liz
+        while (transform.childCount != 0)
+        {
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject actor = transform.GetChild(i).gameObject;
                 print($"[{actor.name}] ejected");
                 actor.transform.SetParent(null);
             }
-        //}
-        yield return new WaitForEndOfFrame();
+        }
+        
+        // I don't think this 'wait' is necessary, but I am terrified of the consequences of removing it! ~Liz
+        yield return new WaitForFixedUpdate();
         
         print($"[{gameObject.name}] My job is done here, self-deleting!");
-        Destroy(gameObject);
+        Destroy(gameObject); // <= Bye bye :3
     }
 
 
