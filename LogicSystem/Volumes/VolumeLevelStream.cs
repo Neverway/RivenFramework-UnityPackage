@@ -22,7 +22,8 @@ public class VolumeLevelStream : Volume
     // Private Variables
     //=-----------------=
     [Tooltip("This is the offset that will be applied to objects within this volume when the level changes")]
-    [SerializeField] private Vector3 exitOffset;
+    [SerializeField] private Vector3 exitPositionOffset;
+    [SerializeField] private Vector3 exitRotationOffset;
     [SerializeField] private bool debugDrawExitZone;
     private bool initializedExitZone;
     
@@ -52,7 +53,7 @@ public class VolumeLevelStream : Volume
         {
             if (!debugDrawExitZone) return;
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireCube(transform.position+exitOffset, transform.localScale);
+            Gizmos.DrawWireCube(transform.position+exitPositionOffset, transform.localScale);
         }
 
         private new void OnTriggerStay(Collider _other)
@@ -121,7 +122,8 @@ public class VolumeLevelStream : Volume
         // Prepare the streaming container
         streamContainer = transform.GetComponentInChildren<VolumeLevelStreamContainer>();
         if (!streamContainer) yield break;
-        streamContainer.exitOffset = exitOffset;
+        streamContainer.exitPositionOffset = exitPositionOffset;
+        streamContainer.exitRotationOffset = exitRotationOffset;
         streamContainer.parentStreamVolume = gameObject;
         
         if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).isLoaded)

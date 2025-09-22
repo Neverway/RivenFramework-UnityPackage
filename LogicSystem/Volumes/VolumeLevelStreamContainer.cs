@@ -18,7 +18,8 @@ public class VolumeLevelStreamContainer : MonoBehaviour
 {
     #region========================================( Variables )======================================================//
     /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-    public Vector3 exitOffset;
+    public Vector3 exitPositionOffset;
+    public Vector3 exitRotationOffset;
     public bool initializedExitZone;
     public GameObject parentStreamVolume;
     private bool hasActivated;
@@ -92,7 +93,8 @@ public class VolumeLevelStreamContainer : MonoBehaviour
         print($"[{gameObject.name}] Ejecting {transform.childCount} actors...");
         
         // Adjust container to its offset
-        transform.position += exitOffset;
+        transform.position += exitPositionOffset;
+        transform.Rotate(exitRotationOffset);
         yield return new WaitForEndOfFrame();
         
         // Empty the container into the streaming world then dump into the active scene
