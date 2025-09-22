@@ -13,6 +13,10 @@ public class PolymorphicDrawer : PropertyDrawer
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
+        //todo: This is bad hotfix to make sure array elements are propertly indented, probably doesnt fully work
+        bool doIndent = property.propertyPath.Contains("Array.data[");
+        if (doIndent) EditorGUI.indentLevel++; //Also reduce indent at end of property
+
         if (property.propertyType != SerializedPropertyType.ManagedReference)
         {
             EditorGUI.PropertyField(position, property, label);
@@ -94,6 +98,7 @@ public class PolymorphicDrawer : PropertyDrawer
         position.height = EditorGUI.GetPropertyHeight(property, true);
         EditorGUI.PropertyField(position, property, true);
 
+        if (doIndent) EditorGUI.indentLevel--; //Undo added increment from beginning of property
         EditorGUI.EndProperty();
     }
 

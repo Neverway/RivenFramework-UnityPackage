@@ -34,7 +34,7 @@ namespace RivenFramework.Utils.Reflection
 
         public ReflectionCache()
         {
-            Benchmark.StartTiming();
+            //Benchmark.StartTiming();
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (Assembly assembly in assemblies)
             {
@@ -42,7 +42,7 @@ namespace RivenFramework.Utils.Reflection
                 if (assembly.IsProjectScriptAssembly() && !assembly.IsUnityAssembly())
                     AddAssemblyToCache(assembly);
             }
-            Benchmark.StopTiming("Reflection Cache");
+            //Benchmark.StopTiming("Reflection Cache");
         }
 
         public void AddAssemblyToCache(Assembly assembly)
