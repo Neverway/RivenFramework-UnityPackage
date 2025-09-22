@@ -288,7 +288,13 @@ public class ApplicationSettings : MonoBehaviour
     public void ApplySettings()
     {
         currentSettingsData = new ApplicationSettingsData(bufferedSettingsData);
-        
+
+        if (currentSettingsData.targetResolution >= resolutions.Length)
+        {
+            Debug.LogWarning("Target screen resolution is out of range of available screen resolutions. Fallback: going with first option");
+            currentSettingsData.targetResolution = 0;
+        }
+
         // Resolution
         Screen.SetResolution(resolutions[currentSettingsData.targetResolution].width,
             resolutions[currentSettingsData.targetResolution].height, GetFullscreenMode());
