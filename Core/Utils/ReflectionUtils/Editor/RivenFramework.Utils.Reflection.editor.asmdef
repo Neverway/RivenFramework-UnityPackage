@@ -1,0 +1,20 @@
+{
+    "name": "RivenFramework.Utils.Reflection.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f47009f683dcea55fb9faad1db3dd237",
+        "GUID:54cb1906aeb4e4264bc1d2aa3818a43f",
+        "GUID:67b10ea981aa4544fb6b7052ab787722"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -65,7 +65,7 @@ using UnityEngine;
             Gizmos.DrawWireSphere(transform.position, targetLight.range * rangeMultiplier);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (GetLocalPlayer() is false || cullWhenOutOfRange is false) return;
             if (fadeLightWhenCulled)
@@ -95,26 +95,24 @@ using UnityEngine;
         //=-----------------=
         private bool GetLocalPlayer()
         {
-            if (localPlayer is null)
+            if (localPlayer) return true;
+            if (pawnManager is null)
             {
+                pawnManager = FindObjectOfType<GI_PawnManager>();
                 if (pawnManager is null)
-                {
-                    pawnManager = FindObjectOfType<GI_PawnManager>();
-                    if (pawnManager is null)
-                    {
-                        return false;
-                    }
-                }
-
-                if (!pawnManager.localPlayerCharacter)
                 {
                     return false;
                 }
+            }
+
+            if (!pawnManager.localPlayerCharacter)
+            {
+                return false;
+            }
 
                 
-                localPlayer = pawnManager.localPlayerCharacter.transform;
-                if (localPlayer is null) return false;
-            }
+            localPlayer = pawnManager.localPlayerCharacter.transform;
+            if (localPlayer is null) return false;
 
             return true;
         }
