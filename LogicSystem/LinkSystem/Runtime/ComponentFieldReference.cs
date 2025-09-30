@@ -49,7 +49,7 @@ using UnityEngine;
         /// <summary>
         /// Cached <see cref="FieldInfo"/> of the referenced field
         /// </summary>
-        [Todo("Pls add handling for when a field name is invalid ~Liz", forWho:"Errynei")]
+        [Todo("Pls add handling for when a field name is invalid ~Liz", Owner = "Errynei")]
         public FieldInfo Field
         {
             get

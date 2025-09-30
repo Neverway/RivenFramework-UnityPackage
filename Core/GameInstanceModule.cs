@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RivenFramework
 {
-    [Todo("Implement GameInstanceModule system", "Errynei")]
+    [Todo("Implement GameInstanceModule system", Owner = "Errynei")]
     public abstract class GameInstanceModule : MonoBehaviour
     {
         public virtual void OnGameStart() { }

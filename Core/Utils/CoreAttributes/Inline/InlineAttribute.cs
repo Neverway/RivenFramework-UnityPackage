@@ -1,6 +1,6 @@
 using RivenFramework;
 using UnityEngine;
-[Todo("Not even sure this really works, test this out", "Errynei")]
+[Todo("Not even sure this really works, test this out", Owner = "Errynei")]
 public class InlineAttribute : PropertyAttribute
 {
     public bool showFoldout = true;
