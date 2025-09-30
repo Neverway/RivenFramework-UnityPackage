@@ -249,7 +249,7 @@ public class Volume : MonoBehaviour
         {
             //print("Cool dogs don't do drugs");
             var test = pawnManager.localPlayerCharacter;
-            print($"{test}");
+            //print($"{test}");
             if (pawnsInTrigger.Contains(test.GetComponent<Pawn>()))
             {
                 //print("Cool cats wear cool hats");

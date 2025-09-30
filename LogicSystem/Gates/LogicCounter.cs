@@ -38,10 +38,10 @@ public class LogicCounter : Logic
     //=-----------------=
     private void Start()
     {
-        inputAdd.CallOnSourceChanged(Add);
-        inputSubtract.CallOnSourceChanged(Subtract);
-        inputAddAmount.CallOnSourceChanged(AddAmount);
-        inputSubtractAmount.CallOnSourceChanged(SubtractAmount);
+        if (inputAdd.HasLogicOutputSource) inputAdd.CallOnSourceChanged(Add);
+        if (inputSubtract.HasLogicOutputSource) inputSubtract.CallOnSourceChanged(Subtract);
+        if (inputAddAmount.HasLogicOutputSource) inputAddAmount.CallOnSourceChanged(AddAmount);
+        if (inputSubtractAmount.HasLogicOutputSource) inputSubtractAmount.CallOnSourceChanged(SubtractAmount);
     }
 
     private void Update()

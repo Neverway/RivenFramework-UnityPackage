@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace RivenFramework.Utils.Reflection
 {
-    [Todo("Need to clean up, very sloppy")]
+    [Todo("Need to clean up, very sloppy", TodoSeverity.Minor, Owner = "errynei")]
     public class MonoScriptReader
     {
         public List<TokenInfo> previousTokens { get; private set; }

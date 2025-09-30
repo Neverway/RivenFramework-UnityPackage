@@ -133,19 +133,19 @@ public class GI_WorldLoader : MonoBehaviour
         
         // Store what scene is the current one
         var previousScene = SceneManager.GetActiveScene();
-        print($"Current scene is {previousScene.name}");
+        //print($"Current scene is {previousScene.name}");
 
         var originalTimescale = Time.timeScale;
         Time.timeScale = 0;
         
         // Load target level
-        print($"Loading next scene {_worldName}...");
+        //print($"Loading next scene {_worldName}...");
         AsyncOperation loadAsync = SceneManager.LoadSceneAsync(_worldName, LoadSceneMode.Additive);
         while (!loadAsync.isDone) { yield return new WaitForEndOfFrame(); }
-        print($"Loaded next scene");;
+        //print($"Loaded next scene");;
         
         // Assign the new scene to be the active scene
-        print($"Setting the active scene to {_worldName}. Active scene was {SceneManager.GetActiveScene().name}");
+        //print($"Setting the active scene to {_worldName}. Active scene was {SceneManager.GetActiveScene().name}");
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(_worldName));
         
         // Empty the stream world into the active scene
@@ -154,10 +154,10 @@ public class GI_WorldLoader : MonoBehaviour
         OnEjectStreamedActors?.Invoke();
         
         // Begin async unload of previous level
-        print($"Unloading previous scene {previousScene.name}...");
+        //print($"Unloading previous scene {previousScene.name}...");
         AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync(previousScene);
         while (!unloadAsync.isDone) { yield return new WaitForEndOfFrame(); }
-        print($"Unloaded previous scene");
+        //print($"Unloaded previous scene");
 
         Time.timeScale = originalTimescale;
 
