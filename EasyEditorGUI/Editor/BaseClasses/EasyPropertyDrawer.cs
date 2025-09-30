@@ -903,12 +903,12 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
 
         public Button SetStyle(GUIStyle newStyle)
         {
-            GUIStyle = newStyle;
+            style = newStyle;
             return this;
         }
         public Button AsToggle()
         {
-            GUIStyle = EditorStyles.toggle;
+            style = EditorStyles.toggle;
             return this;
         }
     }
