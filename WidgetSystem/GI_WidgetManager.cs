@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
-[Todo("Finish implementing generic widget references", "Errynei")]
+[Todo("Finish implementing generic widget references", Owner = "Errynei")]
 public class GI_WidgetManager : MonoBehaviour
 {
     //=-----------------=
