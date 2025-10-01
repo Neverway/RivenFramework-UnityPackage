@@ -5,8 +5,10 @@ using System.Reflection;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.EditorTools;
+using UnityEditor.SceneManagement;
 using UnityEditor.ShortcutManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LogicValueLinkTool : EditorTool
 {
@@ -15,8 +17,21 @@ public class LogicValueLinkTool : EditorTool
     [InitializeOnLoadMethod]
     public static void Initialize()
     {
+        LogicValueLinkToolSettings.Instance.OnSettingsValidate -= OnSettingsChanged;
         LogicValueLinkToolSettings.Instance.OnSettingsValidate += OnSettingsChanged;
+
+        Undo.undoRedoPerformed -= NewStateMachine;
         Undo.undoRedoPerformed += NewStateMachine;
+
+        EditorSceneManager.sceneClosing -= OnSceneClosing;
+        EditorSceneManager.sceneClosing += OnSceneClosing;
+
+        EditorSceneManager.sceneOpened -= OnSceneOpened;
+        EditorSceneManager.sceneOpened += OnSceneOpened;
+
+        EditorSceneManager.sceneClosed -= OnSceneClosed;
+        EditorSceneManager.sceneClosed += OnSceneClosed;
+
         OnSettingsChanged();
         NewStateMachine();
     }
@@ -33,6 +48,13 @@ public class LogicValueLinkTool : EditorTool
         }
 
         m_Icon = null;
+    }
+    public static void OnSceneOpened(Scene scene, OpenSceneMode mode) => OnAnySceneChange();
+    public static void OnSceneClosed(Scene scene) => OnAnySceneChange();
+    public static void OnSceneClosing(Scene scene, bool removingScene) => OnAnySceneChange();
+    public static void OnAnySceneChange()
+    {
+        NewStateMachine();
     }
 
     public static bool IsCurrentTool => ToolManager.activeToolType == typeof(LogicValueLinkTool);
@@ -90,12 +112,9 @@ public class LogicValueLinkTool : EditorTool
 
     private static ValueLinkMachine stateMachine;
     private static bool wasInPlayMode = false;
-    //Set to true whenever there is some null error that suggests we need to refresh the info for drawing the links
-    public static bool doStateMachineRefresh = false;
 
     private static void NewStateMachine()
     {
-        doStateMachineRefresh = false;
         stateMachine = new ValueLinkMachine(new ValueLinkMachine.StartingState());
     }
 
@@ -111,11 +130,6 @@ public class LogicValueLinkTool : EditorTool
     }
     public static void OnMainGUI(SceneView sceneview)
     {
-        if (doStateMachineRefresh)
-        {
-            NewStateMachine();
-            return;
-        }
         if ((wasInPlayMode ^ Application.isPlaying))
         {
             wasInPlayMode = Application.isPlaying;
@@ -127,8 +141,18 @@ public class LogicValueLinkTool : EditorTool
             NewStateMachine();
             return;
         }
+        try
+        {
+            stateMachine.DoUpdate(sceneview);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"{nameof(LogicValueLinkTool)}: Refreshing tool because of broken reference. " +
+                $"Should be fine unless this is happening a lot, here is caught error:\n\n{e.ToString()}");
 
-        stateMachine.DoUpdate(sceneview);
+            NewStateMachine();
+        }
+        
         SceneView.RepaintAll();
     }
 
@@ -370,13 +394,6 @@ public class LogicValueLinkTool : EditorTool
         
         public static bool CompareDistanceToCamera(Handle h1, Handle h2)
         {
-            if (h1.handleTarget == null || h2.handleTarget == null)
-            {
-                LogicValueLinkTool.doStateMachineRefresh = true; LogicValueLinkTool.doStateMachineRefresh = true;
-                Debug.LogWarning("LogicLinkTool error: A Handle target is null. Auto-refreshing the tool state machine to fix its info");
-                return false;
-            }
-
             return (h1.handleTarget.position - ValueLinkMachine.sceneViewCameraTransform.position).sqrMagnitude <
                     (h2.handleTarget.position - ValueLinkMachine.sceneViewCameraTransform.position).sqrMagnitude;
         }
@@ -478,19 +495,6 @@ public class LogicValueLinkTool : EditorTool
         }
         public void DrawJustForDisplay()
         {
-            if (start == null)
-            {
-                LogicValueLinkTool.doStateMachineRefresh = true;
-                Debug.LogWarning("LogicLinkTool error: ValueLink.start is null. Auto-refreshing the tool state machine to fix its info");
-                return;
-            }
-
-            if (end == null)
-            {
-                LogicValueLinkTool.doStateMachineRefresh = true;
-                Debug.LogWarning("LogicLinkTool error: ValueLink.end is null. Auto-refreshing the tool state machine to fix its info");
-                return;
-            }
             Vector3 delta = end.position - start.position;
 
             Vector3 offsetDirection = Vector3.Cross(delta, ValueLinkMachine.sceneViewCameraTransform.forward);
