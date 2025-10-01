@@ -7,7 +7,7 @@ namespace RivenFramework
     [Todo("Implement GameInstanceModule system", Owner = "Errynei")]
     public abstract class GameInstanceModule : MonoBehaviour
     {
-        public virtual void OnGameStart() { }
-        public virtual void OnModuleUpdate() { }
+        public void OnGameStart() { }
+        public void OnGameUpdate() { }
     }
 }
