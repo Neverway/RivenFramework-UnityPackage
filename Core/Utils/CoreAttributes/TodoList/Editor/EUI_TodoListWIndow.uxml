@@ -15,6 +15,7 @@
                     <ui:Toggle name="Search_Severity_IncludeHigher" style="flex-direction: row-reverse;" />
                     <ui:Label tabindex="-1" text=": Include higher severities?" parse-escape-sequences="true" display-tooltip-when-elided="true" style="max-width: 150px; min-width: 0; flex-shrink: 1;" />
                 </ui:VisualElement>
+                <ui:Button text="Clear Search" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Search_Clear_Button" style="width: 80px; align-items: stretch; align-self: flex-end; height: 16px; font-size: 10px;" />
                 <ui:Label tabindex="-1" text="--------------------------------------------------------------------------------------------" parse-escape-sequences="true" display-tooltip-when-elided="true" style="height: 10px; margin-left: -2px;" />
             </ui:VisualElement>
         </ui:Foldout>
