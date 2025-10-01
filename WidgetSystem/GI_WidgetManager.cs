@@ -7,9 +7,7 @@
 
 using RivenFramework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 [Todo("Finish implementing generic widget references", Owner = "Errynei")]

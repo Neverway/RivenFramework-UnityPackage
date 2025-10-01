@@ -1,3 +1,4 @@
+using RivenFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using UnityEngine;
 /// <summary>
 /// todo: NOT DONE, IMPLEMENT ARRAYS
 /// </summary>
+[Todo("Check if this actually works, and either use it or toss it", Owner = "Errynei")]
 public class FetchComponentAttribute : PropertyAttribute 
 {
     private bool searchChildren;
