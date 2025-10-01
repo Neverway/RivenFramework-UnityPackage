@@ -1,15 +1,13 @@
 ﻿using RivenFramework.Utils.Reflection;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEditor;
-using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEngine.UI.InputField;
+using static RivenFramework.TodoWindow;
+
 
 
 //EasyPropertyDrawer conflicts with UnityEngine.UIElements,
@@ -21,55 +19,168 @@ namespace RivenFramework
 {
     public class TodoWindow : EditorWindow
     {
-
-        [Todo_ToRemove(Owner = "errynei")]
-        private enum TestTodos
-        {
-            [Todo("Minor severity test!", TodoSeverity.Minor)]
-            MinorSeverityTest,
-            [Todo("Moderate severity test!", TodoSeverity.Moderate)]
-            ModerateSeverityTest,
-            [Todo("Major severity test!", TodoSeverity.Major)]
-            MajorSeverityTest,
-            [Todo("CRITICAL severity test! AAAAH!", TodoSeverity.Critical)]
-            CRITICALSeverityTest,
-
-            [Todo_AddComments(severity: TodoSeverity.Minor)]
-            [Todo_Optimize(severity: TodoSeverity.Moderate)]
-            [Todo_ToRemove(severity: TodoSeverity.Major)]
-            [Todo_StressTest(severity: TodoSeverity.Critical)]
-            MultipleTodoTest
-        }
-
-
+        //Name and category hierarchy of where to show up in the top menu bar
+        public const string MENU_ITEM_NAME = "Neverway/Todo List";
 
         /// <summary>Template UI asset for the whole window to be cloned and queried for UI components to 
         /// define functionality for</summary>
         [SerializeField] private VisualTreeAsset EUITemplate_TodoWindow;
 
-        
+        private AttributeUsage[] todoAttributes_all;
+        private AttributeUsage[] todoAttributes_filtered;
+        private List<SearchFilter> searchFilters;
+        private List<string> ownerOptions;
+        private TodoItemsDisplay todoListDisplay;
 
-        [Todo_Implement(Owner = "Errynei")]
-        public List<SearchFilter> SearchFilters { 
-            get 
+
+        [MenuItem(MENU_ITEM_NAME)]
+        public static void ShowWindow() => GetWindow<TodoWindow>("Todo List");
+
+        /// <summary>Called when any change happens to any values in search options UI. Also is called when ReflectionCache 
+        /// reloads because thats after script recompile which may mean a change in TodoAttributes</summary>
+
+        public void OnUpdatedSearch() => GenerateSearchFilters();
+
+        [InvokeOnReflectionCacheLoad]
+        public void OnRecompile() => GrabTodoAttributes();
+
+        public void GrabTodoAttributes()
+        {
+            //Grab all attributes from the Reflection Cache
+            todoAttributes_all = ReflectionCache.GetAttributeUsages<TodoAttribute>();
+            //With the cached attributes refreshed, reapply the search filters
+            ApplyFilterToTodoAttributes();
+            //And regenerate the owner search options (There may be a new unique owner to search for)
+            GenerateOwnerOptions();
+        }
+        public void GenerateSearchFilters()
+        {
+            //Clear the list of search filters
+            searchFilters = new List<SearchFilter>();
+
+            //Get all the values from the search options UI (or, if theyre not assigned, get the option that does not hide results)
+            string searchOwner = VE_SearchOwnerDropdown == null ? "All" : VE_SearchOwnerDropdown.value;
+            bool searchUnowned = VE_SearchOwnerToggle == null ? true : VE_SearchOwnerToggle.value;
+            TodoSeverity searchSeverity = VE_SearchSeverityDropdown == null ? TodoSeverity.Minor : 
+                (TodoSeverity)VE_SearchSeverityDropdown.value;
+            bool searchHigherSeverity = VE_SearchSeverityToggle == null ? true : VE_SearchSeverityToggle.value;
+
+            //With those values, generate and add the search filter objects
+            searchFilters.Add(new OwnerFilter(searchOwner, searchUnowned));
+            searchFilters.Add(new SeverityFilter(searchSeverity, searchHigherSeverity));
+
+            //Apply filters
+            ApplyFilterToTodoAttributes();
+        }
+        public void ApplyFilterToTodoAttributes()
+        {
+            if (searchFilters == null)
             {
-                return new List<SearchFilter>();
-            } 
+                GenerateSearchFilters();
+                if (searchFilters == null)
+                    throw new NullReferenceException($"{nameof(TodoWindow)}: Search filters were still null " +
+                        $"even after calling {nameof(GenerateSearchFilters)}() to regenerate them. " +
+                        $"\nAvoiding infinite loop with by causing this Exception");
+                
+                return; //GenerateSearchFilters() calls this function too, so let that one proceed instead
+            }
+            if (todoAttributes_all == null)
+            {
+                GrabTodoAttributes();
+                if (todoAttributes_all == null)
+                    throw new NullReferenceException($"{nameof(TodoWindow)}: {nameof(todoAttributes_all)} was " +
+                        $"still null even after calling {nameof(GrabTodoAttributes)}() to regenerate them. " +
+                        $"\nAvoiding infinite loop with by causing this Exception");
+
+                return; //GrabTodoAttributes() calls this function too, so let that one proceed instead
+            }
+
+            List<AttributeUsage> filtered = new List<AttributeUsage>();
+            foreach (AttributeUsage todo in todoAttributes_all)
+            {
+                TodoAttribute todoAtt = todo.As<TodoAttribute>();
+                bool passesFilter = true;
+
+                foreach (SearchFilter filter in searchFilters)
+                    passesFilter &= filter.IncludeThroughFilter(todoAtt);
+
+                if (passesFilter)
+                    filtered.Add(todo);
+            }
+            todoAttributes_filtered = filtered.ToArray();
+
+            RefreshTodoListDisplay();
+        }
+        /// <summary>Generates a list of strings meant for the search options, with a string for each unique 
+        /// <see cref="ToDoAttribute"/> owner including "All" as an option</summary>
+        public void GenerateOwnerOptions()
+        {
+            if (todoAttributes_all == null)
+            {
+                GrabTodoAttributes();
+                if (todoAttributes_all == null)
+                    throw new NullReferenceException($"{nameof(TodoWindow)}: {nameof(todoAttributes_all)} was " +
+                        $"still null even after calling {nameof(GrabTodoAttributes)}() to regenerate them. " +
+                        $"\nAvoiding infinite loop with by causing this Exception");
+
+                return; //GrabTodoAttributes() calls this function too, so let that one proceed instead
+            }
+
+            //New empty options list, starting with the "All" option with a divider
+            ownerOptions = new List<string>() { "All", "Unowned", "" };
+            foreach (AttributeUsage todo in todoAttributes_all)
+            {
+                string currentTodoOwner = todo.As<TodoAttribute>().Owner;
+                if (!string.IsNullOrEmpty(currentTodoOwner)) //Only proceed if there is some kind of string
+                {
+                    //Drop names to lowercase for consistency
+                    currentTodoOwner = currentTodoOwner.ToLower();
+                    //Add to options if this is a unique owner
+                    if (!ownerOptions.Contains(currentTodoOwner))
+                        ownerOptions.Add(currentTodoOwner);
+                }
+            }
+        }
+        private void RefreshTodoListDisplay()
+        {
+            todoListDisplay = new TodoItemsDisplay(todoAttributes_filtered);
+        }
+        private void OnDrawTodoListDisplay()
+        {
+            if (todoListDisplay == null)
+            {
+                GrabTodoAttributes();
+                if (todoListDisplay == null)
+                    throw new Exception($"{nameof(TodoWindow)}: Grabbing {nameof(TodoAttribute)}s should have " +
+                        $"eventually caused {nameof(todoListDisplay)} to get updated too, I am relying on this");
+            }
+
+            todoListDisplay.Draw(position);
         }
 
-        [MenuItem("Neverway/Todo List")]
-        public static void ShowWindow() => GetWindow<TodoWindow>("Todo List");
+        public void ClearSearch()
+        {
+            //Directly set the value of each of these search option UI items, which will notify them of the change, and thus..
+            //..EditorPrefs should automatically be updated too. Unfortunately "OnUpdatedSearch()" gets called 4 times, but oh well
+            if (VE_SearchOwnerDropdown != null)    VE_SearchOwnerDropdown.value    = "All";
+            if (VE_SearchOwnerToggle != null)      VE_SearchOwnerToggle.value      = true;
+            if (VE_SearchSeverityDropdown != null) VE_SearchSeverityDropdown.value = TodoSeverity.Moderate;
+            if (VE_SearchSeverityToggle != null)   VE_SearchSeverityToggle.value   = true;
+        }
 
         //Called by Unity to set up rootVisualELement which contains all window information
         private void CreateGUI()
         {
+            //Grab all the todoAttributes for this window (might not be necessary, and might happen again later, but it doesnt hurt)
+            GrabTodoAttributes();
+
             //Attempt to clone the UI template for the rootVisualElement 
-            if (CloneEUITemplateToRootVisualElement())
+            if (RootVisualElementFromCloningUITemplate())
                 //if successful, pull VisualElements from the cloned template and setup their functions
-                SetupAllVisualElements(); 
+                SetupAllVisualElements();
             else
                 //if not successful, fallback on old IMGUI display of ToDo items (There will be no search functionality)
-                UseIMGUIContainerTodoListForRootVisualElement();
+                RootVisualElementFromNewIMGUIContainer();
         }
 
         #region VisualElement initialization setup and references
@@ -77,10 +188,9 @@ namespace RivenFramework
         /// <summary>Contains all visual information for the window. Cloned from <see cref="EUITemplate_TodoWindow"/>.
         /// <br/>Is used to pull certain <see cref="VisualElement"/>s from to set up the window's functionality.</summary>
         private VisualElement VE_RootWindowContainer;
-
         ///<summary>Clones <c>EUITemplate_TodoWindow</c> to the <c>rootVisualElement</c> and stores that clone 
         ///as <see cref="VE_RootWindowContainer"/></summary>
-        private bool CloneEUITemplateToRootVisualElement()
+        private bool RootVisualElementFromCloningUITemplate()
         {
             //If there is no UI Template for the window, display a warning and return false for a failure
             if (EUITemplate_TodoWindow == null)
@@ -95,6 +205,7 @@ namespace RivenFramework
             //Try to clone the UI template, store reference to it as root window container, and set as only item in rootVisualElement
             try
             {
+                //Set the root visual element to be a clone of the UI template for the window provided
                 rootVisualElement.Clear();
                 VE_RootWindowContainer = EUITemplate_TodoWindow.CloneTree();
                 rootVisualElement.Add(VE_RootWindowContainer);
@@ -115,11 +226,15 @@ namespace RivenFramework
         /// the todo list just as it would have for the <see cref="IMGUIContainer"/> inside of the UI template 
         /// <see cref="EUITemplate_TodoWindow"/>.<br/>This is just a fallback in case there was no UI template provided,
         /// there will be no search functions if this is used</summary>
-        private void UseIMGUIContainerTodoListForRootVisualElement()
+        private void RootVisualElementFromNewIMGUIContainer()
         {
+            //set root visual element to be a new IMGUI container with the draw function for the todo list display
             rootVisualElement.Clear();
-            VE_ListContainer = new IMGUIContainer(() => TodoItemsDisplay.DrawInstance(position));
+            VE_ListContainer = new IMGUIContainer(OnDrawTodoListDisplay);
             rootVisualElement.Add(VE_ListContainer);
+
+            //Refresh the todo list display (might not be necessary, but doesnt hurt)
+            RefreshTodoListDisplay();
         }
         
         /// <summary>Pulls a <see cref="VisualElement"/> of a certain type from <see cref="EUITemplate_TodoWindow"/> 
@@ -146,7 +261,7 @@ namespace RivenFramework
             //Check if the root window container has not been set up. This should not ever happen so throw an error
             if (VE_RootWindowContainer == null)
                 throw new NullReferenceException($"{nameof(TodoWindow)}: {nameof(VE_RootWindowContainer)} is null. " +
-                    $"Make sure you are calling {nameof(CloneEUITemplateToRootVisualElement)}() before calling " +
+                    $"Make sure you are calling {nameof(RootVisualElementFromCloningUITemplate)}() before calling " +
                     $"{nameof(SetupAllVisualElements)} to initialize {nameof(VE_RootWindowContainer)} (since that is " +
                     $"where all the {nameof(VisualElement)}s in this window pull their references from for setup).\n");
 
@@ -156,8 +271,10 @@ namespace RivenFramework
             Setup_VE_SearchOwnerToggle();
             Setup_VE_SearchSeverityDropdown();
             Setup_VE_SearchSeverityToggle();
+            Setup_VE_SearchClearButton();
         }
-
+        //-----------------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------- List Container ---------------------------------------------------------
 
         /// <summary>Container for displaying all of the TodoAttributes in a nice organized list with JumpTo buttons</summary>
         private IMGUIContainer VE_ListContainer;
@@ -168,9 +285,14 @@ namespace RivenFramework
             //Get List Container from root, and escape function if it was not found
             if (!FindVisualElement(ID_VE_LIST_CONTAINER, out VE_ListContainer)) return;
             //setup gui of IMGUI container to call the draw function of the todo List
-            VE_ListContainer.onGUIHandler = () => TodoItemsDisplay.DrawInstance(position);
+            VE_ListContainer.onGUIHandler = OnDrawTodoListDisplay;
+
+            //Refresh the object for the todoListDisplay (might not be necessary, but doesnt hurt)
+            RefreshTodoListDisplay();
         }
 
+        //-----------------------------------------------------------------------------------------------------------------------
+        //-------------------------------------------- Owner Dropdown -----------------------------------------------------------
 
         //Search option: Dropdown for selecting which owner to search for
         private DropdownField VE_SearchOwnerDropdown;
@@ -183,20 +305,23 @@ namespace RivenFramework
             if (!FindVisualElement(ID_VE_SEARCH_OWNER_DROPDOWN, out VE_SearchOwnerDropdown)) return;
 
             //Set dropdown choices to each unique occurance of an owner across all TodoAttributes
-            VE_SearchOwnerDropdown.choices = TodoItemsDisplay.GetOwnerOptions();
+            if (ownerOptions == null) GenerateOwnerOptions();
+            VE_SearchOwnerDropdown.choices = ownerOptions;
 
             //Setup to work with EditorPrefs to save settings per user
-            string prefsSetting = EditorPrefs.GetString(PREFS_SEARCH_OWNER_DROPDOWN, VE_SearchOwnerDropdown.choices[0]);
-            if (!VE_SearchOwnerDropdown.choices.Contains(prefsSetting)) //Fallback to default setting if prefs setting is no longer in options
+            string prefsSetting = EditorPrefs.GetString(
+                PREFS_SEARCH_OWNER_DROPDOWN, VE_SearchOwnerDropdown.choices[0]); //Load from EditorPrefs
+            if (!VE_SearchOwnerDropdown.choices.Contains(prefsSetting))
                 prefsSetting = VE_SearchOwnerDropdown.choices[0];
-            VE_SearchOwnerDropdown.SetValueWithoutNotify(prefsSetting);
-            VE_SearchOwnerDropdown.RegisterValueChangedCallback(changeEvent =>
+            VE_SearchOwnerDropdown.SetValueWithoutNotify(prefsSetting); //Apply loaded value
+            VE_SearchOwnerDropdown.RegisterValueChangedCallback(changeEvent => //On Value changed
             {
-                EditorPrefs.SetString(PREFS_SEARCH_OWNER_DROPDOWN, changeEvent.newValue);
-                OnUpdatedSearch();
+                EditorPrefs.SetString(PREFS_SEARCH_OWNER_DROPDOWN, changeEvent.newValue); //Save change to EditorPrefs
+                OnUpdatedSearch(); //Update the search
             });
         }
-
+        //-----------------------------------------------------------------------------------------------------------------------
+        //------------------------------------ Include Unowned Toggle -----------------------------------------------------------
 
         //Search option: Toggle for showing TodoAttributes with no assigned owner along with 
         private Toggle VE_SearchOwnerToggle;
@@ -209,13 +334,16 @@ namespace RivenFramework
             if (!FindVisualElement(ID_VE_SEARCH_OWNER_TOGGLE, out VE_SearchOwnerToggle)) return;
 
             //Setup to work with EditorPrefs to save settings per user
-            VE_SearchOwnerToggle.SetValueWithoutNotify(EditorPrefs.GetBool(PREFS_SEARCH_OWNER_TOGGLE, true));
-            VE_SearchOwnerToggle.RegisterValueChangedCallback(changeEvent =>
+            VE_SearchOwnerToggle.SetValueWithoutNotify(
+                EditorPrefs.GetBool(PREFS_SEARCH_OWNER_TOGGLE, true)); //Load from EditorPrefs
+            VE_SearchOwnerToggle.RegisterValueChangedCallback(changeEvent => //On Value changed
             {
-                EditorPrefs.SetBool(PREFS_SEARCH_OWNER_TOGGLE, changeEvent.newValue);
-                OnUpdatedSearch();
+                EditorPrefs.SetBool(PREFS_SEARCH_OWNER_TOGGLE, changeEvent.newValue); //Save change to EditorPrefs
+                OnUpdatedSearch(); //Update the search
             });
         }
+        //-----------------------------------------------------------------------------------------------------------------------
+        //--------------------------------------- Severity dropdown -------------------------------------------------------------
 
         //Search option: Dropdown for selecting which minimum severity to search for
         private EnumField VE_SearchSeverityDropdown;
@@ -229,13 +357,16 @@ namespace RivenFramework
 
             //Setup to work with EditorPrefs to save settings per user
             VE_SearchSeverityDropdown.Init((TodoSeverity)
-                EditorPrefs.GetInt(PREFS_SEARCH_SEVERITY_DROPDOWN, (int)TodoSeverity.Moderate));
-            VE_SearchSeverityDropdown.RegisterValueChangedCallback(changeEvent =>
+                EditorPrefs.GetInt(PREFS_SEARCH_SEVERITY_DROPDOWN, (int)TodoSeverity.Moderate)); //Load from EditorPrefs
+            VE_SearchSeverityDropdown.RegisterValueChangedCallback(changeEvent => //On Value changed
             {
-                EditorPrefs.SetInt(PREFS_SEARCH_SEVERITY_DROPDOWN, (int)(TodoSeverity)changeEvent.newValue);
-                OnUpdatedSearch();
+                EditorPrefs.SetInt(PREFS_SEARCH_SEVERITY_DROPDOWN, 
+                    (int)(TodoSeverity)changeEvent.newValue); //Save change to EditorPrefs
+                OnUpdatedSearch(); //Update the search
             });
         }
+        //-----------------------------------------------------------------------------------------------------------------------
+        //----------------------------------- Include Higher Severity Toggle ----------------------------------------------------
 
         //Search option: Toggle for choosing if severities of higher levels should be shown
         private Toggle VE_SearchSeverityToggle;
@@ -249,67 +380,41 @@ namespace RivenFramework
 
             //Setup to work with EditorPrefs to save settings per user
             VE_SearchSeverityToggle.SetValueWithoutNotify(
-                EditorPrefs.GetBool(PREFS_SEARCH_SEVERITY_TOGGLE, true));
-            VE_SearchSeverityToggle.RegisterValueChangedCallback(changeEvent =>
+                EditorPrefs.GetBool(PREFS_SEARCH_SEVERITY_TOGGLE, true)); //Load from EditorPrefs
+            VE_SearchSeverityToggle.RegisterValueChangedCallback(changeEvent => //On Value changed
             {
-                EditorPrefs.SetBool(PREFS_SEARCH_SEVERITY_TOGGLE, changeEvent.newValue);
-                OnUpdatedSearch();
+                EditorPrefs.SetBool(PREFS_SEARCH_SEVERITY_TOGGLE, changeEvent.newValue);  //Save change to EditorPrefs
+                OnUpdatedSearch(); //Update the search
             });
         }
+
+        //-----------------------------------------------------------------------------------------------------------------------
+        //--------------------------------------------- Clear Search Button -----------------------------------------------------
+
+        //Button for clearing the search options
+        private Button VE_SearchClearButton;
+        private const string ID_VE_SEARCH_CLEAR_BUTTON = "Search_Clear_Button";
+        /// <summary>Sets up functionality of <see cref="VE_SearchClearButton"/></summary>
+        private void Setup_VE_SearchClearButton()
+        {
+            //Get "Search Severity Dropdown" from root, and escape function if it was not found
+            if (!FindVisualElement(ID_VE_SEARCH_CLEAR_BUTTON, out VE_SearchClearButton)) return;
+
+            VE_SearchClearButton.clicked += ClearSearch;
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------------
         #endregion
 
-        public void OnUpdatedSearch()
-        {
-            TodoItemsDisplay.RefreshInstance(GetSearchFilters());
-        }
-        public List<SearchFilter> GetSearchFilters()
-        {
-            if (VE_RootWindowContainer == null) return new List<SearchFilter>();
-
-            string searchOwner = "All";
-            if (VE_SearchOwnerDropdown != null) searchOwner = VE_SearchOwnerDropdown.value;
-            bool searchUnowned = true;
-            if (VE_SearchOwnerToggle != null) searchUnowned = VE_SearchOwnerToggle.value;
-            TodoSeverity searchSeverity = TodoSeverity.Moderate;
-            if (VE_SearchSeverityDropdown != null) searchSeverity = (TodoSeverity)VE_SearchSeverityDropdown.value;
-            bool searchHigherSeverity = true;
-            if (VE_SearchSeverityToggle != null) searchHigherSeverity = VE_SearchSeverityToggle.value;
-
-            List<SearchFilter> searchFilters = new List<SearchFilter>();
-            searchFilters.Add(new OwnerFilter(searchOwner, searchUnowned));
-            searchFilters.Add(new SeverityFilter(searchSeverity, searchHigherSeverity));
-            return searchFilters;
-        }
-
-        /// <summary>Returns <see cref="DrawerObject"/> for button that opens your IDE to provided 
-        /// <see cref="TodoAttribute"/></summary>
-        public static EZ.DrawerObject GetOpenCodeButton(TodoAttribute toJumpTo)
-        {
-            if (toJumpTo == null)
-                return new EZ.EmptySpace();
-
-            /* Me just messing around with icons:
-                ♜♝♞♛♚♞♝♜
-                ♟♟♟♟♟♟♟♟
 
 
 
 
-                ♙♙♙♙♙♙♙♙
-                ♖♗♘♕♔♘♗♖
 
-                🕷⏻⚐⚑⌬ */
 
-            bool useJokeIcon = false; //UnityEngine.Random.value < 0.01f;
-
-            GUIStyle buttonStyle = EditorStyles.iconButton;
-            buttonStyle.fontSize = useJokeIcon ? 18 : 13; //↩⟵✏
-
-            return new EZ.Button(useJokeIcon ? "☭" : "↩",
-                            () => { toJumpTo.EDITOR_OpenFileAtAttributeLocation(); })
-                            .SetStyle(buttonStyle);
-        }
-
+        /// <summary>This is an object that contains the information necessary, and logic to, create a DrawerObject
+        /// to draw the entire TodoList.<br/>Also is responsible for grabbing the TodoAttributes and applying the
+        /// given search filters</summary>
         private class TodoItemsDisplay
         {
             private NamespaceGroup noNamespaceGroup = new(null);
@@ -317,71 +422,15 @@ namespace RivenFramework
             private Vector2 scrollViewPos = Vector2.zero;
             public AttributeUsage[] AttributeUsages { get; private set; }
             public static float WindowWidth { get; private set; }
-            private static TodoItemsDisplay itemsDisplayInstance;
 
-            public static List<SearchFilter> searchFilters;
-
-            public TodoItemsDisplay() : this(new List<SearchFilter>()) { }
-            public TodoItemsDisplay(List<SearchFilter> filters)
+            public TodoItemsDisplay(AttributeUsage[] todoAttributes)
             {
-                searchFilters = filters;
-                AttributeUsages = ReflectionCache.GetAttributeUsages<TodoAttribute>();
+                if (todoAttributes == null)
+                    throw new NullReferenceException($"{nameof(TodoItemsDisplay)}: Passing null array of" +
+                        $"attributes into constructor, but we need the attributes to draw the window");
 
-                foreach (AttributeUsage todo in AttributeUsages)
-                {
-                    TodoAttribute todoAtt = todo.As<TodoAttribute>();
-                    bool passesFilter = true;
-                    foreach (SearchFilter filter in searchFilters)
-                        passesFilter &= filter.IncludeThroughFilter(todoAtt);
-
-                    if (passesFilter)
-                        Register(todoAtt, todo.Member);
-                }
-                    
-            }
-
-            /// <summary>Completely resets the <see cref="TodoItemsDisplay"/> instance by reinstantiating it</summary>
-            [InvokeOnReflectionCacheLoad]
-            public static void RefreshInstance() =>
-                itemsDisplayInstance = new TodoItemsDisplay(new List<SearchFilter>());
-            /// <summary>Completely resets the <see cref="TodoItemsDisplay"/> instance by reinstantiating it
-            /// and allows passing in new search filters.<br/>Use this for updating the search filters</summary>
-            public static void RefreshInstance(List<SearchFilter> newSearchFilters)
-            {
-                searchFilters = newSearchFilters;
-                itemsDisplayInstance = new TodoItemsDisplay(searchFilters);
-            }
-
-
-            /// <summary>Creates an instance of <see cref="TodoItemsDisplay"/> if one does not exist
-            /// and calls its <see cref="Draw"/> function</summary>
-            public static void DrawInstance(Rect displayArea)
-            {
-                if (itemsDisplayInstance == null) 
-                    RefreshInstance();
-
-                itemsDisplayInstance.Draw(displayArea);
-            }
-
-            /// <summary>Returns a list of strings meant for the search options, with a string for each unique 
-            /// <see cref="ToDoAttribute"/> owner including "All" as an option</summary>
-            public static List<string> GetOwnerOptions()
-            {
-                //New empty options list, starting with the "All" option with a divider
-                List<string> options = new List<string>() { "All", "Unowned", "" };
-                foreach (AttributeUsage todo in itemsDisplayInstance.AttributeUsages)
-                {
-                    string currentTodoOwner = todo.As<TodoAttribute>().Owner;
-                    if (!string.IsNullOrEmpty(currentTodoOwner)) //Only proceed if there is some kind of string
-                    {
-                        //Drop names to lowercase for consistency
-                        currentTodoOwner = currentTodoOwner.ToLower();
-                        //Add to options if this is a unique owner
-                        if (!options.Contains(currentTodoOwner))
-                            options.Add(currentTodoOwner);
-                    }
-                }
-                return options;
+                foreach (AttributeUsage todo in todoAttributes)
+                    Register(todo.As<TodoAttribute>(), todo.Member);
             }
 
             public void Draw(Rect windowPosition)
@@ -393,8 +442,8 @@ namespace RivenFramework
                 EZ.DrawerObject itemsDisplayDrawerObject = null;
 
                 //Try to get the drawerobject to draw for this todo list
-                try { itemsDisplayDrawerObject = itemsDisplayInstance.GetDrawerObject(); }
-                catch (Exception e)
+                try { itemsDisplayDrawerObject = GetDrawerObject(); }
+                catch (DivideByZeroException e)
                 {
                     //If an error occurs, draw error message in window to avoid loads of errors printed to console every frame
                     GUIStyle richTextLabelStyle = new GUIStyle(EditorStyles.label);
@@ -448,6 +497,37 @@ namespace RivenFramework
                 return contents; 
             }
 
+            /// <summary>Returns <see cref="DrawerObject"/> for button that opens your IDE to provided 
+            /// <see cref="TodoAttribute"/></summary>
+            public static EZ.DrawerObject GetOpenCodeButton(TodoAttribute toJumpTo)
+            {
+                if (toJumpTo == null)
+                    return new EZ.EmptySpace();
+
+                /* Me just messing around with icons:
+                    ♜♝♞♛♚♞♝♜
+                    ♟♟♟♟♟♟♟♟
+
+
+
+
+                    ♙♙♙♙♙♙♙♙
+                    ♖♗♘♕♔♘♗♖
+
+                    🕷⏻⚐⚑⌬ */
+
+                bool useJokeIcon = false; //UnityEngine.Random.value < 0.01f;
+
+                GUIStyle buttonStyle = EditorStyles.iconButton;
+                buttonStyle.fontSize = useJokeIcon ? 18 : 13; //↩⟵✏
+
+                return new EZ.Button(useJokeIcon ? "☭" : "↩",
+                                () => { toJumpTo.EDITOR_OpenFileAtAttributeLocation(); })
+                                .SetStyle(buttonStyle);
+            }
+
+
+            /// <summary>Respresents a subsection of the TodoList, </summary>
             private class NamespaceGroup
             {
                 public string identifier;
