@@ -54,7 +54,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
         if (!subscribedToEjectEvent)
         {
             subscribedToEjectEvent = true;
-            print($"{gameObject.name} subscribed to eject event");
+            //print($"{gameObject.name} subscribed to eject event");
             GI_WorldLoader.OnEjectStreamedActors += EjectStreamedActors;
         }
         
@@ -90,7 +90,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
         if (hasActivated) yield break;
         hasActivated = true;
         
-        print($"[{gameObject.name}] Ejecting {transform.childCount} actors...");
+        //print($"[{gameObject.name}] Ejecting {transform.childCount} actors...");
         
         // Adjust container to its offset
         transform.position += exitPositionOffset;
@@ -105,7 +105,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject actor = transform.GetChild(i).gameObject;
-                print($"[{actor.name}] ejected");
+                //print($"[{actor.name}] ejected");
                 actor.transform.SetParent(null);
             }
         }
@@ -113,7 +113,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
         // I don't think this 'wait' is necessary, but I am terrified of the consequences of removing it! ~Liz
         yield return new WaitForFixedUpdate();
         
-        print($"[{gameObject.name}] My job is done here, self-deleting!");
+        //print($"[{gameObject.name}] My job is done here, self-deleting!");
         Destroy(gameObject); // <= Bye bye :3
     }
 

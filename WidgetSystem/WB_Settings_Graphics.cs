@@ -108,6 +108,10 @@ using UnityEngine.UI;
             {
                 applicationSettings.bufferedSettingsData.targetResolution = targetResolution.value;
             });
+            enableVsync.onValueChanged.AddListener(delegate
+            {
+                applicationSettings.bufferedSettingsData.enableVysnc = enableVsync.isOn;
+            });
             fpslimit.onValueChanged.AddListener(delegate
             {
                 applicationSettings.bufferedSettingsData.fpsLimit = Mathf.RoundToInt(fpslimit.value);

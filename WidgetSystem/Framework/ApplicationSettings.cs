@@ -298,6 +298,7 @@ public class ApplicationSettings : MonoBehaviour
         // Resolution
         Screen.SetResolution(resolutions[currentSettingsData.targetResolution].width,
             resolutions[currentSettingsData.targetResolution].height, GetFullscreenMode());
+        
         // Vsync
         switch (currentSettingsData.enableVysnc)
         {

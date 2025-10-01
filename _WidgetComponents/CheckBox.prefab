@@ -86,7 +86,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!82 &3083222227368265815
 AudioSource:
   m_ObjectHideFlags: 0
@@ -96,7 +96,8 @@ AudioSource:
   m_GameObject: {fileID: 1667281124926646654}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 7148433657624086615, guid: 549b84953554a157688e4ed0cb77d9a7, type: 2}
+  OutputAudioMixerGroup: {fileID: 7148433657624086615, guid: 549b84953554a157688e4ed0cb77d9a7,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1

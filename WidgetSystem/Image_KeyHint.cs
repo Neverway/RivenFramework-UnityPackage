@@ -5,6 +5,7 @@
 //
 //=============================================================================
 
+using RivenFramework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,7 +40,7 @@ public class Image_KeyHint : MonoBehaviour
     //=-----------------=
     private void Start()
     {
-        applicationKeybinds = FindObjectOfType<ApplicationKeybinds>();
+        applicationKeybinds = GameInstance.Get<ApplicationKeybinds>();
         hintImage = GetComponent<Image>();
     }
 
@@ -53,14 +54,10 @@ public class Image_KeyHint : MonoBehaviour
     //=-----------------=
     private void UpdateKeyHint()
     {
-        if (applicationKeybinds == null)
+        if (!applicationKeybinds)
         {
-            applicationKeybinds = FindObjectOfType<ApplicationKeybinds>();
-            if (applicationKeybinds == null)
-            {
-                Debug.LogWarning("Could not find ApplicationKeybinds in scene to update keybinds");
-                return;
-            }
+            Debug.LogWarning("Could not find ApplicationKeybinds in scene to update keybinds");
+            return;
         }
 
         if (!applicationKeybinds.inputActionAsset)
@@ -68,6 +65,7 @@ public class Image_KeyHint : MonoBehaviour
             Debug.LogWarning("The applicationKeybinds script does not have an input action asset set, please assign one on the game instance!");
             return;
         }
+        
         var action = applicationKeybinds.inputActionAsset.FindActionMap(targetActionMap).FindAction(targetAction);
         // If action is null it's probably because the target action is a composite, so we'll need to parse the direction we want
         if (action == null)
