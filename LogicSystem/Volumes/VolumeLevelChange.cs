@@ -57,6 +57,7 @@ public class VolumeLevelChange : Volume
         base.OnTriggerEnter(_other);
         if (GetPlayerInTrigger())
         {
+            
             //if (!_other.GetComponent<Pawn>().isPossessed) return;
             if (!worldLoader) worldLoader = FindObjectOfType<GI_WorldLoader>();
             if (useIndexInsteadOfID)

@@ -17,29 +17,33 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
     //=-----------------=
     // Public Variables
     //=-----------------=
+    [Header("Phys Prop Configuration")]
     [Tooltip("If the prop somehow gets this far away from it's connected attachment point, it will be dropped")]
     public float breakAwayDistance = 3;
     public Vector3 holdPositionOffset;
     public Vector3 holdRotationOffset;
-
     [Tooltip("This is the radius used to check for obstructions to the attachment point. Set this to 1/2 the depth of the prop's collider for best results.")]
     public float checkRadius = 0.25f;
-    
     [Tooltip("These are the layers the phys prop will collide with while being held")]
     public LayerMask layerMask;
+    public Joint breakableAnchorPin;
 
 
     //=-----------------=
     // Private Variables
     //=-----------------=
+    
+    [Header("Debug Variables")]
     public bool isHeld;
     private bool wasGravityEnabled;
-
+    
     private Vector3 parentViewPos;
     private Vector3 parentAttachmentPos;
     private Vector3 directionFromAttachmentToView;
     private float distanceFromAttachmentToView;
     private Vector3 targetPosition;
+
+    private bool wasConnectedToAnchorPin;
     
 
 
@@ -51,6 +55,8 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
     [Tooltip("A reference to the pawn that is holding this prop")]
     private Pawn holdingPawn;
     private Pawn_AttachmentPoint attachmentPoint;
+    [Tooltip("Disable these components when the phys prop is being held (mostly intended to disable special effects like motion smearing)")]
+    [SerializeField] private List<MonoBehaviour> componentsDisabledOnHeld = new List<MonoBehaviour>();
 
 
     //=-----------------=
@@ -59,12 +65,37 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
     private void Start()
     {
         propRigidbody = GetComponent<Rigidbody>();
+
+        if (breakableAnchorPin) wasConnectedToAnchorPin = true;
     }
 
     private void FixedUpdate()
     {
         if (isHeld is false) return;
-        propRigidbody.useGravity = false;
+        
+        if (!attachmentPoint.IsObjectOverweight(this.gameObject))
+        {
+            propRigidbody.useGravity = false;
+        }
+        
+        // Break hold when too far from point
+        else
+        {
+            if (Vector3.Distance(attachmentPoint.transform.position, transform.position) > breakAwayDistance)
+            {
+                Drop();
+            }
+        }
+
+        // Break connected anchors
+        if (wasConnectedToAnchorPin && breakableAnchorPin == null)
+        {
+            wasConnectedToAnchorPin = false;
+            attachmentPoint.heldObjectLooselyPinned = false;
+            attachmentPoint.Detach();
+            attachmentPoint.Attach(this.gameObject);
+        }
+        
         //MoveToHoldingPosition();
     }
 
@@ -95,10 +126,20 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
         if (attachmentPoint.IsOccupied()) return;
         // Okie doke, we are good to go, let's pickup the object
         isHeld = true;
-        holdingPawn.physObjectAttachmentPoint.Attach(this.gameObject);
+        if (breakableAnchorPin)
+        {
+            attachmentPoint.heldObjectLooselyPinned = true;
+        }
+        attachmentPoint.Attach(this.gameObject);
+
         // Store whether gravity was enabled before we got picked up
         // (When a physics prop is picked up, we disable its gravity, so this value keeps track of if the object had gravity to begin with)
         wasGravityEnabled = propRigidbody.useGravity;
+
+        foreach (var component in componentsDisabledOnHeld)
+        {
+            component.enabled = false;
+        }
     }
 
     public void Drop()
@@ -111,6 +152,12 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
         // Clear ourselves from the attachment point
         holdingPawn.physObjectAttachmentPoint.Detach();
         holdingPawn = null;
+        attachmentPoint.heldObjectLooselyPinned = false;
+
+        foreach (var component in componentsDisabledOnHeld)
+        {
+            component.enabled = true;
+        }
     }
 
     public void ToggleHeld()

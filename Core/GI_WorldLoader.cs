@@ -105,9 +105,10 @@ public class GI_WorldLoader : MonoBehaviour
         //print(unloadAsync.progress);
         //if (loadingBar) loadingBar.fillAmount = unloadAsync.progress;
         // END OF OLD GARBAGE (Carry on :3) //
-        
+        //Debug.Log("awaiting to load world");
         isLoading = true;
         yield return new WaitForSeconds(delayBeforeWorldChange);
+        //Debug.Log("loading world: " + _worldName);
         
         // BEWARE THOSE WHO MAY CODE HERE!
         // Traveler, if you find yourself here, I can only say I wish you Good Luck!
@@ -163,6 +164,7 @@ public class GI_WorldLoader : MonoBehaviour
 
         // Finish up by setting any external flags
         isLoading = false;
+        //Debug.Log("completed world loading");
         if (OnWorldLoaded is not null) OnWorldLoaded.Invoke();
     }
 
@@ -195,6 +197,13 @@ public class GI_WorldLoader : MonoBehaviour
     /// <param name="_worldName">The name of the world to load</param>
     public void LoadWorld(string _worldName)
     {
+        if (_worldName == SceneManager.GetActiveScene().name) Debug.LogWarning("Target world is the same as the loaded world, this causes strange issues please dont do this!!!!");
+        
+        if (isLoading)
+        {
+            Debug.LogWarning("failed to load world: " + _worldName + " already loading");
+            return;
+        }
         if (DoesSceneExist(_worldName) is false)
         {
             ForceLoadWorld("_Error");

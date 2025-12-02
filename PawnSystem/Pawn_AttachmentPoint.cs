@@ -6,6 +6,7 @@
 //
 //=============================================================================
 
+using System;
 using UnityEngine;
 
     public class Pawn_AttachmentPoint : MonoBehaviour
@@ -13,10 +14,10 @@ using UnityEngine;
         //=-----------------=
         // Public Variables
         //=-----------------=
-        [Tooltip("The object that is attached to this point, this is set, not assigned, don't touch this")]
-        public GameObject attachedObject;
         [Tooltip("When trying to pickup an object if it's over this mass, the object will be dragged instead")]
         public float pickupMassLimit = 20f;
+
+        public bool heldObjectLooselyPinned;
 
 
         //=-----------------=
@@ -27,13 +28,39 @@ using UnityEngine;
         //=-----------------=
         // Reference Variables
         //=-----------------=
-        [Tooltip("Advanced phys pickups uses a spring joint to drag and hold objects")]
-        public ConfigurableJoint connectionJoint;
+        [Tooltip("The object that is attached to this point, this is set, not assigned, don't touch this")]
+        public GameObject attachedObject;
+        public Rigidbody attachedRigidbody;
+        [Tooltip("The configurable joint that's used when picking up light advanced phys props")]
+        public ConfigurableJoint pickupJoint;
+        [Tooltip("The configurable joint that's used when dragging heavy advanced phys props")]
+        public ConfigurableJoint dragJoint;
+        [Tooltip("When dragging or pulling on objects, this line renderer is used to represent the distance between the attachment point and the anchor point")]
+        public LineRenderer dragLineRenderer;
 
 
         //=-----------------=
         // Mono Functions
         //=-----------------=
+        public void Update()
+        {
+            if (dragJoint.connectedBody)
+            {
+                dragLineRenderer.enabled = true;
+                dragLineRenderer.SetPosition(0, transform.position);
+                dragLineRenderer.SetPosition(1, dragJoint.connectedBody.position+dragJoint.connectedAnchor);
+            }
+            else if (pickupJoint.connectedBody && pickupJoint.connectedBody.isKinematic)
+            {
+                dragLineRenderer.enabled = true;
+                dragLineRenderer.SetPosition(0, transform.position);
+                dragLineRenderer.SetPosition(1, pickupJoint.connectedBody.position+pickupJoint.connectedAnchor);
+            }
+            else
+            {
+                dragLineRenderer.enabled = false;
+            }
+        }
 
 
         //=-----------------=
@@ -60,18 +87,23 @@ using UnityEngine;
         /// <param name="_targetRigidbody">The rigidbody of the physics pickup</param>
         public void Attach(GameObject _targetObject, Rigidbody _targetRigidbody = null)
         {
+            dragLineRenderer.enabled = false;
+            
             // Find the rigidbody of the physics pickup
-            var objectRigidbody = _targetObject.GetComponent<Rigidbody>();
-            if (_targetRigidbody) objectRigidbody = _targetRigidbody;
+            attachedRigidbody = _targetObject.GetComponent<Rigidbody>();
+            if (_targetRigidbody) attachedRigidbody = _targetRigidbody;
 
             // Check mass limitations
-            if (objectRigidbody.mass < pickupMassLimit)
+            if (heldObjectLooselyPinned || attachedRigidbody.mass > pickupMassLimit)
             {
-                
+                dragJoint.connectedBody = attachedRigidbody;
+            }
+            else
+            {
+                pickupJoint.connectedBody = attachedRigidbody;
             }
             
             attachedObject = _targetObject;
-            connectionJoint.connectedBody = objectRigidbody;
 
         }
         
@@ -81,6 +113,24 @@ using UnityEngine;
         public void Detach()
         {
             attachedObject = null;
-            connectionJoint.connectedBody = null;
+            pickupJoint.connectedBody = null;
+            dragJoint.connectedBody = null;
+            dragLineRenderer.enabled = false;
+        }
+
+        public bool IsObjectOverweight(GameObject _targetObject)
+        {
+            if (attachedObject != null)
+            {
+                return true;
+            }
+            
+            // Check mass limitations
+            if (attachedRigidbody.mass > pickupMassLimit)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
