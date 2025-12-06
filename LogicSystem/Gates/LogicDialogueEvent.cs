@@ -8,12 +8,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LogicDialogueEvent : Logic
 {
     //=-----------------=
     // Public Variables
     //=-----------------=
+    public LogicInput<bool> startTextEvent = new(false);
+    public LogicInput<bool> haltTextEvent = new(false);
 
 
     //=-----------------=
@@ -24,6 +27,8 @@ public class LogicDialogueEvent : Logic
     //=-----------------=
     // Reference Variables
     //=-----------------=
+    public UnityEvent onStartTextEvent;
+    public UnityEvent onHaltTextEvent;
 
 
     //=-----------------=
@@ -31,17 +36,27 @@ public class LogicDialogueEvent : Logic
     //=-----------------=
     private void Start()
     {
-    
-    }
-
-    private void Update()
-    {
-    
+        if (startTextEvent.HasLogicOutputSource is true)
+        {
+            startTextEvent.CallOnSourceChanged(StartTextEvent);
+        }
+        if (haltTextEvent.HasLogicOutputSource is true)
+        {
+            haltTextEvent.CallOnSourceChanged(HaltTextEvent);
+        }
     }
 
     //=-----------------=
     // Internal Functions
     //=-----------------=
+    private void StartTextEvent()
+    {
+        if (startTextEvent.Get()) onStartTextEvent.Invoke();
+    }
+    private void HaltTextEvent()
+    {
+        if (haltTextEvent.Get()) onHaltTextEvent.Invoke();
+    }
 
 
     //=-----------------=

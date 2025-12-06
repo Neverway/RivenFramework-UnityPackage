@@ -7,6 +7,7 @@
 //=============================================================================
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,22 +27,29 @@ namespace RivenFramework
         //=-----------------=
         // Reference Variables
         //=-----------------=
-        //[IsDomainReloaded] 
-        private static GameInstance instance;
+        private static GameInstance _instance;
+        public static GameInstance Instance 
+        { 
+            get 
+            {
+                if (_instance == null) throw new NullReferenceException("GameInstance is missing");
+                return _instance;
+            } 
+        }
 
         //=-----------------=
         // Mono Functions
         //=-----------------=
         private void Awake()
         {
-            if (instance != null)
+            if (_instance != null)
             {
                 Destroy(gameObject);
                 return;
             }
 
-            instance = this;
-            DontDestroyOnLoad(instance); //should be DontDestroyOnLoad(gameobject);
+            _instance = this;
+            DontDestroyOnLoad(_instance);
         }
         //=-----------------=
         // Internal Functions
@@ -59,12 +67,12 @@ namespace RivenFramework
         /// <exception cref="NullReferenceException"></exception>
         public static T Get<T>() where T : MonoBehaviour
         {
-            if (instance == null)
+            if (_instance == null)
                 throw new NullReferenceException($"{nameof(GameInstance)}: Trying to get a component from {nameof(GameInstance)} " +
-                    $"but there is no main instance set for it. (Likley has not been instantiated, must have one GameObject with" +
+                    $"but there is no main instance set for it. (Likely has not been instantiated, must have one GameObject with" +
                     $"this component attached in the scene at game start)");
 
-            return instance.GetComponent<T>();
+            return _instance.GetComponent<T>();
         }
 
         /// <summary>
@@ -83,8 +91,10 @@ namespace RivenFramework
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void InitializeStaticFields()
         {
-            instance = null;
+            _instance = null;
         }
+
+        public static Coroutine SendCoroutine(IEnumerator coroutine) => Instance.StartCoroutine(coroutine);
     }
 }
 
