@@ -52,6 +52,7 @@ public class LogicToggle : Logic
     //=-----------------=
     private void Toggle()
     {
+        print("Toggling");
         //Trigger the toggle only when input signal is TRUE
         if (input.Get() is false) return;
 

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RivenFramework;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -78,6 +79,7 @@ public class VolumeTriggerEvent : Volume
     //=-----------------=
     // Internal Functions
     //=-----------------=
+    [Todo("Setting resetsAutomatically to false keeps logic outputs from ever firing??? Errynei hewlp me!!!!!!!", TodoSeverity.Major, Owner = "Errynei")]
     private bool IsOccupied()
     {
         if (hasBeenTriggered && resetsAutomatically is false)
