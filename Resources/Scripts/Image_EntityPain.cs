@@ -6,6 +6,7 @@
 //=============================================================================
 
 using System.Collections;
+using DG.Tweening;
 using RivenFramework;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ public class Image_EntityPain : MonoBehaviour
     public Pawn targetPawn;
     public bool findPossessedPawn;
     public float fadeSpeed=1;
+    public float startAlpha=1;
 
 
     //=-----------------=
@@ -80,7 +82,14 @@ public class Image_EntityPain : MonoBehaviour
     private IEnumerator FadeInPain()
     {
         isInPain = true;
-        animator.Play("PainFlash");
+        DOVirtual.Color(
+            new Color(image.color.r, image.color.g, image.color.b, startAlpha), 
+            new Color(image.color.r, image.color.g, image.color.b, 0),
+            fadeSpeed,
+            (value) =>
+            {
+                image.color = value;
+            });
         yield return new WaitForSeconds(targetPawn.currentStats.invulnerabilityTime);
         isInPain = false;
     }

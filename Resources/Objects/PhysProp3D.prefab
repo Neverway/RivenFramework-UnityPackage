@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 3954347698123193828}
   - component: {fileID: 7267226283918966251}
   - component: {fileID: 67491230044474581}
-  - component: {fileID: 1601334765381139313}
   - component: {fileID: 1248232264559991007}
   - component: {fileID: 8039075810331489572}
   - component: {fileID: 3059039815712871700}
   - component: {fileID: 726477608101505362}
   - component: {fileID: 2239570212592696948}
   - component: {fileID: 6818695576328092640}
+  - component: {fileID: 1934578342547201172}
   m_Layer: 13
   m_Name: PhysProp3D
   m_TagString: PhysProp
@@ -105,26 +105,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &1601334765381139313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2276721478425129573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f67fe09ebdb9f917ba076d7c2ff5880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  breakAwayDistance: 3
-  holdPositionOffset: {x: 0, y: -0.5, z: 0}
-  holdRotationOffset: {x: 0, y: 0, z: 0}
-  checkRadius: 0.5
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 129
-  isHeld: 0
 --- !u!114 &1248232264559991007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stretchFactor: 0.025
-  speedThreshold: 6
+  speedThreshold: 7
 --- !u!114 &2239570212592696948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +292,30 @@ MonoBehaviour:
   - {x: 0, y: 9999}
   - {x: 8, y: 9999}
   - {x: 25, y: 24}
+--- !u!114 &1934578342547201172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276721478425129573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd953ea97cc5ec04aa709b0d1d7e9693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakAwayDistance: 3
+  holdPositionOffset: {x: 0, y: 0, z: 0}
+  holdRotationOffset: {x: 0, y: 0, z: 0}
+  checkRadius: 0.5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 129
+  breakableAnchorPin: {fileID: 0}
+  isHeld: 0
+  componentsDisabledOnHeld:
+  - {fileID: 726477608101505362}
+  - {fileID: 2239570212592696948}
 --- !u!1001 &4783724821653919518
 PrefabInstance:
   m_ObjectHideFlags: 0
