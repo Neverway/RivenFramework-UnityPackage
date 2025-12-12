@@ -46,7 +46,6 @@ public class LogicTimer : Logic
     private void BeginCountdown()
     {
         if (timerRoutine != null) return;
-        print("Started countdown timer");
         timerRoutine = StartCoroutine(Countdown());
     }
 
@@ -60,12 +59,9 @@ public class LogicTimer : Logic
         {
             yield return new WaitForSeconds(1);
             currentTime.Set(currentTime - 1);
-            print(currentTime.Get());
         }
         
-        print("Finished countdown timer");
         timerCompleted.Set(true);
-        print(timerCompleted.Get());
         
         timerRoutine = null;
     }

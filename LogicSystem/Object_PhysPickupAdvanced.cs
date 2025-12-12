@@ -51,7 +51,7 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
     // Reference Variables
     //=-----------------=
     [Tooltip("A reference to this prop's rigidbody (we are assuming this component is attached to the same object that has the rigidbody, and getting the reference in start)")]
-    public LogicOutput<Rigidbody> propRigidbody;
+    public Rigidbody propRigidbody;
     [Tooltip("A reference to the pawn that is holding this prop")]
     private Pawn holdingPawn;
     private Pawn_AttachmentPoint attachmentPoint;
@@ -64,7 +64,7 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
     //=-----------------=
     private void Start()
     {
-        propRigidbody.Set(GetComponent<Rigidbody>());
+        propRigidbody=GetComponent<Rigidbody>();
 
         if (breakableAnchorPin) wasConnectedToAnchorPin = true;
     }
@@ -75,7 +75,7 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
         
         if (!attachmentPoint.IsObjectOverweight(this.gameObject))
         {
-            propRigidbody.Get().useGravity = false;
+            propRigidbody.useGravity = false;
         }
         
         // Break hold when too far from point
@@ -134,7 +134,7 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
 
         // Store whether gravity was enabled before we got picked up
         // (When a physics prop is picked up, we disable its gravity, so this value keeps track of if the object had gravity to begin with)
-        wasGravityEnabled = propRigidbody.Get().useGravity;
+        wasGravityEnabled = propRigidbody.useGravity;
 
         foreach (var component in componentsDisabledOnHeld)
         {
@@ -148,7 +148,7 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
         if (isHeld is false) return;
         isHeld = false;
         // Restore gravity if it was enabled before pickup
-        propRigidbody.Get().useGravity = wasGravityEnabled;
+        propRigidbody.useGravity = wasGravityEnabled;
         // Clear ourselves from the attachment point
         holdingPawn.physObjectAttachmentPoint.Detach();
         holdingPawn = null;
@@ -194,15 +194,15 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
         }
 
         // Snap the prop to match the target position
-        propRigidbody.Get().MovePosition(targetPosition+holdPositionOffset);
+        propRigidbody.MovePosition(targetPosition+holdPositionOffset);
         // Snap the prop to match the attachments rotation
         var targetRotation = holdingPawn.physObjectAttachmentPoint.transform.rotation;
         transform.rotation = new Quaternion(targetRotation.x+holdRotationOffset.x, targetRotation.y+holdRotationOffset.y, targetRotation.z+holdRotationOffset.z, targetRotation.w);
         
         // Remove any existing velocity, so it doesn't bug out while holding it
-        propRigidbody.Get().velocity = Vector3.zero;
-        propRigidbody.Get().angularVelocity = Vector3.zero;
-        propRigidbody.Get().useGravity = false;
+        propRigidbody.velocity = Vector3.zero;
+        propRigidbody.angularVelocity = Vector3.zero;
+        propRigidbody.useGravity = false;
 
         // Drop the object if it's too far away
         if (Vector3.Distance(gameObject.transform.position, targetPosition) > breakAwayDistance)
