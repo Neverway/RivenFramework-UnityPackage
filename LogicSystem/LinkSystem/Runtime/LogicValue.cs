@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using Object = System.Object;
 
     public interface LogicValue
     {
@@ -138,7 +139,7 @@ using UnityEngine.Events;
 
         public void Set(T newValue)
         {
-            if (!value.Equals(newValue))
+            if (!Object.Equals(value, newValue))
             {
                 value = newValue;
                 OnOutputChanged?.Invoke();

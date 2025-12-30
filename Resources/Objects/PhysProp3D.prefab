@@ -313,6 +313,14 @@ MonoBehaviour:
     m_Bits: 129
   breakableAnchorPin: {fileID: 0}
   isHeld: 0
+  propRigidbody:
+    editorHandles_showHandle: 0
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: {fileID: 7267226283918966251}
+    OnOutputChanged:
+      m_PersistentCalls:
+        m_Calls: []
   componentsDisabledOnHeld:
   - {fileID: 726477608101505362}
   - {fileID: 2239570212592696948}
