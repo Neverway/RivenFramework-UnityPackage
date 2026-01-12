@@ -202,38 +202,28 @@ public class ApplicationSettings : MonoBehaviour
     {
         foreach (var texturePath in dynamicallyFilteredTexturePaths)
         {
-            switch (currentSettingsData.quality.textureQuality)
+            var _textures = Resources.LoadAll<Texture>(texturePath);
+            
+            foreach (var _texture in _textures)
             {
-                case 0:
-                    foreach (var texture in Resources.LoadAll<Texture>(texturePath))
-                    {
-                        texture.filterMode = FilterMode.Point;
-                    }
-                    break;
-                case 1:
-                    foreach (var texture in Resources.LoadAll<Texture>(texturePath))
-                    {
-                        texture.filterMode = FilterMode.Point;
-                    }
-                    break;
-                case 2:
-                    foreach (var texture in Resources.LoadAll<Texture>(texturePath))
-                    {
-                        texture.filterMode = FilterMode.Bilinear;
-                    }
-                    break;
-                case 3:
-                    foreach (var texture in Resources.LoadAll<Texture>(texturePath))
-                    {
-                        texture.filterMode = FilterMode.Bilinear;
-                    }
-                    break;
-                case 4:
-                    foreach (var texture in Resources.LoadAll<Texture>(texturePath))
-                    {
-                        texture.filterMode = FilterMode.Trilinear;
-                    }
-                    break;
+                switch (currentSettingsData.quality.textureQuality)
+                {
+                    case 0:
+                        _texture.filterMode = FilterMode.Point;
+                        break;
+                    case 1:
+                        _texture.filterMode = FilterMode.Point;
+                        break;
+                    case 2:
+                        _texture.filterMode = FilterMode.Bilinear;
+                        break;
+                    case 3:
+                        _texture.filterMode = FilterMode.Bilinear;
+                        break;
+                    case 4:
+                        _texture.filterMode = FilterMode.Trilinear;
+                        break;
+                }
             }
         }
     }
