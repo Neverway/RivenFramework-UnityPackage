@@ -98,7 +98,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
         yield return new WaitForEndOfFrame();
         
         // Empty the container into the streaming world then dump into the active scene
-        // The while loop is here since the for loop doesn't finish in time do to... witchcraft probably
+        // The while loop is here since the for loop doesn't finish in time due to... witchcraft probably
         // (Sorry Errynei, the while loop has to stay) ~Liz
         while (transform.childCount != 0)
         {
