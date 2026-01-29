@@ -119,7 +119,7 @@ MonoBehaviour:
   output:
     editorHandles_showHandle: 1
     editorHandles_handleTarget: {fileID: 0}
-    editorHandles_customName: 
+    editorHandles_customName: Not
     value: 0
     OnOutputChanged:
       m_PersistentCalls:
