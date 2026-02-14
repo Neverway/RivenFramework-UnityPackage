@@ -90,7 +90,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
         if (hasActivated) yield break;
         hasActivated = true;
         
-        //print($"[{gameObject.name}] Ejecting {transform.childCount} actors...");
+        print($"[{gameObject.name}] Ejecting {transform.childCount} actors...");
         
         // Adjust container to its offset
         transform.position += exitPositionOffset;
@@ -105,7 +105,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject actor = transform.GetChild(i).gameObject;
-                //print($"[{actor.name}] ejected");
+                print($"[{actor.name}] ejected");
                 actor.transform.SetParent(null);
             }
         }

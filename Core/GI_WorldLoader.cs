@@ -80,6 +80,7 @@ public class GI_WorldLoader : MonoBehaviour
     {
         foreach (var actor in SceneManager.GetSceneByName(streamingWorldID).GetRootGameObjects())
         {
+            print($"found actor {actor.name}");
             SceneManager.MoveGameObjectToScene(actor.gameObject, SceneManager.GetActiveScene());
         }
     }
@@ -152,6 +153,7 @@ public class GI_WorldLoader : MonoBehaviour
         // Empty the stream world into the active scene
         EjectStreamedActors();
         // Call the eject event so containers will empty into their current scene (Needs to be done a bit after eject)
+        print("Called ejection");
         OnEjectStreamedActors?.Invoke();
         
         // Begin async unload of previous level
