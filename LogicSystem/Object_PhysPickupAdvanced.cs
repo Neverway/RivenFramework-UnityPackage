@@ -27,6 +27,7 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
     [Tooltip("These are the layers the phys prop will collide with while being held")]
     public LayerMask layerMask;
     public Joint breakableAnchorPin;
+    public bool allowGrabbingWhileStuck;
 
 
     //=-----------------=
@@ -128,7 +129,7 @@ public class Object_PhysPickupAdvanced : MonoBehaviour
     {
         if (this.isHeld) return;
         if (attachmentPoint.IsOccupied()) return;
-        // Okie doke, we are good to go, let's pickup the object
+        // Okie doke, we are good to go, lets pickup the object
         isHeld = true;
         if (breakableAnchorPin)
         {
