@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3654373127608015460}
   - component: {fileID: 7879513246150196978}
   - component: {fileID: -4140499706226265697}
-  - component: {fileID: -2996426471660395513}
   - component: {fileID: 7882724998090518989}
+  - component: {fileID: 8096158343876525909}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -220,20 +220,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-2996426471660395513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6528802222171230684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e34a365c4df804c849b000c1b9500f28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hover: {fileID: 8300000, guid: 6d51e47f6595f4dd0a12a05ee8014ed3, type: 3}
-  select: {fileID: 8300000, guid: e6123e35019f3e5318619c0745bbcedb, type: 3}
 --- !u!114 &7882724998090518989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,3 +235,21 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &8096158343876525909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6528802222171230684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f5f6110a701ac889e6cdea22efa751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hover:
+    m_PersistentCalls:
+      m_Calls: []
+  select:
+    m_PersistentCalls:
+      m_Calls: []

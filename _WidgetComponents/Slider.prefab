@@ -272,6 +272,7 @@ GameObject:
   - component: {fileID: 7299107173274568802}
   - component: {fileID: 5695590691259572312}
   - component: {fileID: 2041129619026247695}
+  - component: {fileID: 4509795126737746610}
   m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
@@ -364,6 +365,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4509795126737746610}
+        m_TargetAssemblyTypeName: Audio_AudioEventPlayer, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!82 &2041129619026247695
 AudioSource:
   m_ObjectHideFlags: 0
@@ -373,7 +386,8 @@ AudioSource:
   m_GameObject: {fileID: 6548393504484912957}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 7148433657624086615, guid: 549b84953554a157688e4ed0cb77d9a7, type: 2}
+  OutputAudioMixerGroup: {fileID: 7148433657624086615, guid: 549b84953554a157688e4ed0cb77d9a7,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: e9b3f42fe78dd1121aea58c20bd410cc, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.3
@@ -460,6 +474,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4509795126737746610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6548393504484912957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71125d2527a7624aa21a6d5fbf0c7f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventReference:
+    Guid:
+      Data1: 1989118500
+      Data2: 1090157795
+      Data3: 218963848
+      Data4: -674038254
+    Path: event:/SFX/Framework/Slider
 --- !u!1 &8894044710747138178
 GameObject:
   m_ObjectHideFlags: 0
