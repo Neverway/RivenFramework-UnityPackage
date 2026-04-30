@@ -34,6 +34,9 @@ public class GI_WidgetManager : MonoBehaviour
         
     }
 
+    public Action OnNewWidgetCreated;
+    public GameObject lastCreatedWidget;
+
     //=-----------------=
     // Reference Variables
     //=-----------------=
@@ -103,10 +106,10 @@ public class GI_WidgetManager : MonoBehaviour
     /// <p>(The result will also be False if the widget was already present on the UI and allowDuplicates is False)</p> </returns>
     public bool AddWidget(GameObject _widgetObject, bool _allowDuplicates = false)
     {
-        //Do not add widget if no canvas exists
+        // Do not add widget if no canvas exists
         if (Canvas == null) return false;
 
-        //Do not allow adding a new widget if it already exists (unless duplicates are allowed)
+        // Do not allow adding a new widget if it already exists (unless duplicates are allowed)
         if (_allowDuplicates is false)
             if (GetExistingWidget(_widgetObject.name) != null)
                 return false;
@@ -114,6 +117,8 @@ public class GI_WidgetManager : MonoBehaviour
         var newWidget = Instantiate(_widgetObject, Canvas.transform, false);
         newWidget.transform.localScale = Vector3.one;
         newWidget.name = _widgetObject.name;
+        lastCreatedWidget = newWidget;
+        OnNewWidgetCreated.Invoke();
         return true;
     }
 

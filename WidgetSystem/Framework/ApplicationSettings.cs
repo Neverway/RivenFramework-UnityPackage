@@ -47,6 +47,7 @@ public class ApplicationSettings : MonoBehaviour
     //=-----------------=
     private string configurationFilePath;
     public Resolution[] resolutions;
+    private Texture[] filteredTextures;
 
 
     //=-----------------=
@@ -178,7 +179,7 @@ public class ApplicationSettings : MonoBehaviour
 
     private void CheckFPSCounterVisibility()
     {
-        widgetManager = FindObjectOfType<GI_WidgetManager>();
+        widgetManager ??= FindObjectOfType<GI_WidgetManager>();
         switch (currentSettingsData.showFramecounter)
         {
             case true:
@@ -202,9 +203,9 @@ public class ApplicationSettings : MonoBehaviour
     {
         foreach (var texturePath in dynamicallyFilteredTexturePaths)
         {
-            var _textures = Resources.LoadAll<Texture>(texturePath);
+            filteredTextures ??= Resources.LoadAll<Texture>(texturePath);
             
-            foreach (var _texture in _textures)
+            foreach (var _texture in filteredTextures)
             {
                 switch (currentSettingsData.quality.textureQuality)
                 {
@@ -694,11 +695,11 @@ public class ApplicationSettings : MonoBehaviour
         // Dyslexia Assist
         if (currentSettingsData.dyslexicFriendlyFont)
         {
-            GetComponent<ApplicationFontSetter>().currentFont = 1;
+            GetComponent<ApplicationFontSetter>().SetAppFont(true);
         }
         else
         {
-            GetComponent<ApplicationFontSetter>().currentFont = 0;
+            GetComponent<ApplicationFontSetter>().SetAppFont(false);
         }
 
         // Language
