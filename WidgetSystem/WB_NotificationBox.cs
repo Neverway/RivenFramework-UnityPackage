@@ -9,8 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Neverway.Framework.ApplicationManagement
-{
 public class WB_NotificationBox : MonoBehaviour
 {
     //=-----------------=
@@ -74,5 +72,4 @@ public class WB_NotificationBox : MonoBehaviour
         keyhint.GetComponent<WB_NotificationBox_Keyhint>().SetKeyHint(_keyhintText, _targetActionMap, _targetAction);
         Destroy(keyhint, _duration);
     }
-}
 }

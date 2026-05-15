@@ -11,8 +11,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Neverway.Framework.ApplicationManagement
-{
 public class WB_NotificationBox_Keyhint : MonoBehaviour
 {
     //=-----------------=
@@ -68,5 +66,4 @@ public class WB_NotificationBox_Keyhint : MonoBehaviour
         keyHint.targetAction = _targetAction;
         GetComponent<Animator>().Play("WB_NotificationBox_Keyhint_appear");
     }
-}
 }

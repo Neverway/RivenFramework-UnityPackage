@@ -5,6 +5,7 @@
 //
 //=============================================================================
 
+using RivenFramework;
 using UnityEngine;
 
 public class GameplayNotificationManager : MonoBehaviour
@@ -23,6 +24,7 @@ public class GameplayNotificationManager : MonoBehaviour
     // Reference Variables
     //=-----------------=
     [SerializeField] private GameObject notificationBoxWidget;
+    private GI_WidgetManager widgetManager;
 
 
     //=-----------------=
@@ -30,7 +32,7 @@ public class GameplayNotificationManager : MonoBehaviour
     //=-----------------=
     private void Start()
     {
-    
+        widgetManager = GameInstance.Get<GI_WidgetManager>();
     }
 
     private void Update()
@@ -46,21 +48,21 @@ public class GameplayNotificationManager : MonoBehaviour
     //=-----------------=
     // External Functions
     //=-----------------=
-    /*
+    
     public void DisplayKeyHint(float _duration, string _keyhintText, Sprite _keyhintImage)
     {
-        if (!GameInstance.GetWidget(notificationBoxWidget.name))
+        if (!widgetManager.GetExistingWidget(notificationBoxWidget.name))
         {
-            GameInstance.AddWidget(notificationBoxWidget);
+            widgetManager.AddWidget(notificationBoxWidget);
         }
         FindObjectOfType<WB_NotificationBox>().DisplayKeyHint(_duration, _keyhintText, _keyhintImage);
     }
     public void DisplayKeyHint(float _duration, string _keyhintText, string _targetActionMap, string _targetAction)
     {
-        if (!GameInstance.GetWidget(notificationBoxWidget.name))
+        if (!widgetManager.GetExistingWidget(notificationBoxWidget.name))
         {
-            GameInstance.AddWidget(notificationBoxWidget);
+            widgetManager.AddWidget(notificationBoxWidget);
         }
         FindObjectOfType<WB_NotificationBox>().DisplayKeyHint(_duration, _keyhintText, _targetActionMap, _targetAction);
-    }*/
+    }
 }

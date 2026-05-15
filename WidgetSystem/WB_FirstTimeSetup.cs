@@ -8,7 +8,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Neverway.Framework;
-using Neverway.Framework.ApplicationManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
