@@ -1005,8 +1005,8 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
         bool updateSerializedObject = false;
         public Property(SerializedProperty property)
         {
-            if (property == null)
-                throw new NullReferenceException();
+            //if (property == null)
+                //throw new NullReferenceException();
 
             content = new GUIContent(GUIContent.none);
             this.property = property;
@@ -1036,6 +1036,12 @@ public abstract class EasyPropertyDrawer : PropertyDrawer
 
         protected override void OnDraw(Rect area)
         {
+            if (property == null)
+            {
+                EditorGUI.LabelField(area, "null");
+                return;
+            }
+            
             if (updateSerializedObject)
                 property.serializedObject.Update();
 

@@ -17,6 +17,7 @@ public class LogicToggle : Logic
     //=-----------------=
     public LogicInput<bool> input = new(false);
     public LogicOutput<bool> output = new(false);
+    public LogicInput<bool> reset = new(false);
 
     [Space]
     [Tooltip("Output will persist as TRUE as soon as input is TRUE once")]
@@ -45,6 +46,7 @@ public class LogicToggle : Logic
     private void Start()
     {
         input.CallOnSourceChanged(Toggle);
+        reset.CallOnSourceChanged(Reset);
     }
 
     //=-----------------=
@@ -55,13 +57,19 @@ public class LogicToggle : Logic
         print("Toggling");
         //Trigger the toggle only when input signal is TRUE
         if (input.Get() is false) return;
+        if (output.Get() && stayPowered) return;
 
         //Toggle the output state (Always set to TRUE if "stayPowered" is TRUE)
-        output.Set(!output || stayPowered);
+        output.Set(!output);
 
         //Invoke events for change of power state
         if (output) onOutputPowered.Invoke();
         else onOutputUnpowered.Invoke();
+    }
+
+    private void Reset()
+    {
+        output.Set(false);
     }
 
 
