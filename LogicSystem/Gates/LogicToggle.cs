@@ -45,8 +45,8 @@ public class LogicToggle : Logic
     //=-----------------=
     private void Start()
     {
-        input.CallOnSourceChanged(Toggle);
-        reset.CallOnSourceChanged(Reset);
+        if (input.Get()) input.CallOnSourceChanged(Toggle);
+        if (reset.Get()) reset.CallOnSourceChanged(Reset);
     }
 
     //=-----------------=

@@ -133,7 +133,7 @@ MonoBehaviour:
   onStartTextEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2696270868632809149}
         m_TargetAssemblyTypeName: Func_TextEvent, Assembly-CSharp
         m_MethodName: CallEvent
         m_Mode: 1
@@ -162,31 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overrideExistingEvents: 0
   textEvent:
-    frames:
-    - name: Intercom
-      chatContent: Welcome to the Okami Research Station {spd=2} {spd=}
-      portrait: {fileID: 0}
-      chatterVoice: {fileID: 0}
-      OnFrameCompleted:
-        m_PersistentCalls:
-          m_Calls: []
-      displayMode: 0
-      preventTextSkipping: 0
-      preventTextContinuing: 0
-      autoProgressOnComplete: 1
-    - name: Intercom
-      chatContent: Please remember to check for your security keycard. Unauthorized
-        users found in secure levels will be disposed of without warning. {spd=2}
-        {spd=}
-      portrait: {fileID: 0}
-      chatterVoice: {fileID: 0}
-      OnFrameCompleted:
-        m_PersistentCalls:
-          m_Calls: []
-      displayMode: 0
-      preventTextSkipping: 1
-      preventTextContinuing: 1
-      autoProgressOnComplete: 1
+    frames: []
     OnFinish:
       m_PersistentCalls:
         m_Calls: []

@@ -55,7 +55,7 @@ public class Volume : MonoBehaviour
         if (_other.CompareTag("Pawn"))
         {
             // Get a reference to the entity component
-            var targetEntity = _other.gameObject.GetComponent<Pawn>();
+            var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
             // Exit if they are not on the affected team
             //if (!IsOnAffectedTeam(targetEntity)) return;
             // Add the entity to the list if they are not already present
@@ -88,7 +88,7 @@ public class Volume : MonoBehaviour
         if (_other.CompareTag("Pawn"))
         {
             // Get a reference to the entity component
-            var targetEntity = _other.gameObject.GetComponent<Pawn>();
+            var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
             // Remove the entity to the list if they are not already absent
             RemovePawnFromVolume(targetEntity);
         }

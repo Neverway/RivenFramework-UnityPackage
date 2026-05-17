@@ -43,7 +43,7 @@ public class VolumePlatformMagnet : Volume
             if (_other.CompareTag("Pawn"))
             {
                 // Get a reference to the entity component
-                var targetEntity = _other.gameObject.GetComponent<Pawn>();
+                var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
                 
                 // Exit if the object is already parented
                 if (targetEntity.transform.parent == reparentContainer.transform) return;
