@@ -17,14 +17,17 @@ public class VolumeTriggerEvent : Volume
     //=-----------------=
     // Public Variables
     //=-----------------=
-    [Header("Interactable Settings")]
-    [Tooltip("If this is false, this trigger can only be activated once")]
+    [Header("Interactable Settings")] [Tooltip("If this is false, this trigger can only be activated once")]
     public bool resetsAutomatically = true;
+
     public LogicInput<bool> reset;
     public TriggerFilter triggerFilter;
     public LogicOutput<bool> onOccupied;
-    [Tooltip("This event will only fire when something first enters (does not refire for subsequent entries until unoccupied)")]
+
+    [Tooltip(
+        "This event will only fire when something first enters (does not refire for subsequent entries until unoccupied)")]
     public UnityEvent onFirstOccupied;
+
     [Tooltip("This event will only fire when last one leaves")]
     public UnityEvent onFirstUnoccupied;
 
@@ -36,11 +39,12 @@ public class VolumeTriggerEvent : Volume
         Props,
         OnlyPlayer
     }
+
     //=-----------------=
     // Private Variables
     //=-----------------=
-    [Tooltip("A variable to keep track of if this volume has already been trigger")] 
-    [HideInInspector] public bool hasBeenTriggered;
+    [Tooltip("A variable to keep track of if this volume has already been trigger")] [HideInInspector]
+    public bool hasBeenTriggered;
 
 
     //=-----------------=
@@ -51,27 +55,28 @@ public class VolumeTriggerEvent : Volume
     //=-----------------=
     // Mono Functions
     //=-----------------=
-    private void Update()
+    private new void Update()
     {
+        base.Update();
         if (reset) Reset();
     }
 
     private new void OnTriggerEnter(Collider _other)
-    { 
-        // Call the base class method
+    {
+        bool wasOccupied = IsOccupied();
         base.OnTriggerEnter(_other);
-        if (IsOccupied())
+        if (!wasOccupied && IsOccupied() && CanFireEvents())
         {
+            hasBeenTriggered = true;
             onFirstOccupied.Invoke();
         }
         onOccupied.Set(IsOccupied());
     }
 
     private new void OnTriggerExit(Collider _other)
-    { 
-        // Call the base class method
+    {
         base.OnTriggerExit(_other);
-        if (IsOccupied() is false) onFirstUnoccupied.Invoke();
+        if (!IsOccupied()) onFirstUnoccupied.Invoke();
         onOccupied.Set(IsOccupied());
     }
 
@@ -79,58 +84,23 @@ public class VolumeTriggerEvent : Volume
     //=-----------------=
     // Internal Functions
     //=-----------------=
-    [Todo("Setting resetsAutomatically to false keeps logic outputs from ever firing??? Errynei hewlp me!!!!!!!", TodoSeverity.Major, Owner = "Errynei")]
     private bool IsOccupied()
     {
-        if (hasBeenTriggered && resetsAutomatically is false)
-        {
-            return false;
-        }
         switch (triggerFilter)
         {
-            case TriggerFilter.All:
-                if (pawnsInTrigger.Count != 0 || propsInTrigger.Count != 0)
-                {
-                    hasBeenTriggered = true;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            case TriggerFilter.Pawns:
-                if (pawnsInTrigger.Count != 0)
-                {
-                    hasBeenTriggered = true;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            case TriggerFilter.Props:
-                if (propsInTrigger.Count != 0)
-                {
-                    hasBeenTriggered = true;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            case TriggerFilter.OnlyPlayer:
-                if (GetPlayerInTrigger())
-                {
-                    hasBeenTriggered = true;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            case TriggerFilter.All: return pawnsInTrigger.Count != 0 || propsInTrigger.Count != 0;
+            case TriggerFilter.Pawns: return pawnsInTrigger.Count != 0;
+            case TriggerFilter.Props: return propsInTrigger.Count != 0;
+            case TriggerFilter.OnlyPlayer: return GetPlayerInTrigger() != null;
         }
 
         return false;
+    }
+
+    private bool CanFireEvents()
+    {
+        if (hasBeenTriggered && !resetsAutomatically) return false;
+        return true;
     }
 
     private void Reset()

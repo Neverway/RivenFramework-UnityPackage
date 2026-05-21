@@ -45,8 +45,8 @@ public class LogicToggle : Logic
     //=-----------------=
     private void Start()
     {
-        if (input.Get()) input.CallOnSourceChanged(Toggle);
-        if (reset.Get()) reset.CallOnSourceChanged(Reset);
+        if (input != null) input.CallOnSourceChanged(Toggle);
+        if (reset != null) reset.CallOnSourceChanged(Reset);
     }
 
     //=-----------------=
@@ -54,7 +54,6 @@ public class LogicToggle : Logic
     //=-----------------=
     private void Toggle()
     {
-        print("Toggling");
         //Trigger the toggle only when input signal is TRUE
         if (input.Get() is false) return;
         if (output.Get() && stayPowered) return;

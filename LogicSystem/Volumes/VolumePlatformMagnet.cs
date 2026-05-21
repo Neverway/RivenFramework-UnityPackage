@@ -5,6 +5,7 @@
 //
 //=============================================================================
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using RivenFramework;
@@ -16,6 +17,9 @@ public class VolumePlatformMagnet : Volume
     //=-----------------=
     // Public Variables
     //=-----------------=
+    [Header("Rotation Settings")]
+    [Tooltip("If enabled, pawns will be rotated with the platform when the platform spins")]
+    public bool rotatePawnsWithPlatform = false;
 
 
     //=-----------------=
@@ -27,6 +31,7 @@ public class VolumePlatformMagnet : Volume
     // Reference Variables
     //=-----------------=
     public GameObject reparentContainer;
+    private float previousPlatformYRotation;
 
 
     //=-----------------=
@@ -34,6 +39,24 @@ public class VolumePlatformMagnet : Volume
     //=-----------------=
         private void Awake()
         {
+            previousPlatformYRotation = reparentContainer.transform.eulerAngles.y;
+        }
+
+        private void FixedUpdate()
+        {
+            if (!rotatePawnsWithPlatform) return;
+
+            float currentYRot = reparentContainer.transform.eulerAngles.y;
+            float deltaY = Mathf.DeltaAngle(previousPlatformYRotation, currentYRot);
+            previousPlatformYRotation = currentYRot;
+            
+            if (Mathf.Approximately(deltaY, 0f)) return;
+
+            foreach (var pawn in pawnsInTrigger)
+            {
+                if (pawn == null) continue;
+                pawn.platformYOffset += deltaY;
+            }
         }
 
         private new void OnTriggerStay(Collider _other)
@@ -66,7 +89,7 @@ public class VolumePlatformMagnet : Volume
             }
         }
 
-        private new void OnTriggerExit(Collider _other)
+        private void OnTriggerExit(Collider _other)
         {
             
             // Pawn has entered the volume
@@ -74,7 +97,7 @@ public class VolumePlatformMagnet : Volume
             {
                 //print($"{gameObject.name} has triggered a dump");
                 // Get a reference to the entity component
-                var targetEntity = _other.gameObject.GetComponent<Pawn>();
+                var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
                 
                 targetEntity.transform.SetParent(null);
             }
@@ -87,6 +110,7 @@ public class VolumePlatformMagnet : Volume
                 
                 targetProp.transform.SetParent(null);
             }
+            base.OnTriggerEnter(_other);
         }
 
     //=-----------------=

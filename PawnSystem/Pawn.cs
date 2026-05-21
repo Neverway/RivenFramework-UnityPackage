@@ -23,6 +23,8 @@ public class Pawn : Actor
     public bool despawnOnDeath;
     [Tooltip("How long after a pawn dies until it is despawned (if despawnOnDeath is enabled)")]
     public float despawnOnDeathDelay=3f;
+    [Tooltip("This is used for calculating delta offsets for pawns on rotating platforms")]
+    [HideInInspector] public float platformYOffset;
 
 
     //=-----------------=
