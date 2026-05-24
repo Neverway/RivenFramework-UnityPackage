@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 726477608101505362}
   - component: {fileID: 2239570212592696948}
   - component: {fileID: 6818695576328092640}
+  - component: {fileID: 5671819528097564015}
   - component: {fileID: 1934578342547201172}
   m_Layer: 13
   m_Name: PhysProp3D
@@ -127,7 +128,7 @@ MonoBehaviour:
   homeParent: {fileID: 0}
   isHeld: 0
   wasActive: 0
-  space: 0
+  riftSpace: 0
 --- !u!114 &8039075810331489572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +293,29 @@ MonoBehaviour:
   - {x: 0, y: 9999}
   - {x: 8, y: 9999}
   - {x: 25, y: 24}
+--- !u!114 &5671819528097564015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276721478425129573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f44c8fe24e20b6879cb09256dc6e86d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactThreshold: 5
+  repeatDelay: 0.2
+  impactEffect: {fileID: 4490617955887191091, guid: 7a1c613770873d548bd785d3c2c2a54d,
+    type: 3}
+  impactSound:
+    Guid:
+      Data1: 1784229098
+      Data2: 1236084974
+      Data3: 197885845
+      Data4: 1037337918
+    Path: event:/SFX/Physics/MetalImpact
 --- !u!114 &1934578342547201172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +336,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   breakableAnchorPin: {fileID: 0}
+  allowGrabbingWhileStuck: 0
   isHeld: 0
   propRigidbody:
     editorHandles_showHandle: 0
