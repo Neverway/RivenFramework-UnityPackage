@@ -60,29 +60,30 @@ public class VolumeTriggerEvent : Volume
     { 
         // Call the base class method
         base.OnTriggerEnter(_other);
-        if (IsOccupied())
+        bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
+        if (isOccupied)
         {
             onFirstOccupied.Invoke();
         }
-        onOccupied.Set(IsOccupied());
+        onOccupied.Set(isOccupied);
     }
 
     private new void OnTriggerExit(Collider _other)
     { 
         // Call the base class method
         base.OnTriggerExit(_other);
-        if (IsOccupied() is false) onFirstUnoccupied.Invoke();
-        onOccupied.Set(IsOccupied());
+        bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
+        if (isOccupied == false) onFirstUnoccupied.Invoke();
+        onOccupied.Set(isOccupied);
     }
 
 
     //=-----------------=
     // Internal Functions
     //=-----------------=
-    [Todo("Setting resetsAutomatically to false keeps logic outputs from ever firing??? Errynei hewlp me!!!!!!!", TodoSeverity.Major, Owner = "Errynei")]
     private bool IsOccupied()
     {
-        if (hasBeenTriggered && resetsAutomatically is false)
+        if (hasBeenTriggered && resetsAutomatically == false)
         {
             return false;
         }
