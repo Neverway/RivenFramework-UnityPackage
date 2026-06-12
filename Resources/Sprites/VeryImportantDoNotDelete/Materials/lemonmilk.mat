@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: lemonmilk
-  m_Shader: {fileID: 4800000, guid: 0c01bf2700c9e8f47ad68c9e228d2f99, type: 3}
+  m_Shader: {fileID: 4800000, guid: d44cd7bbb42b445a39e14e6b76a11e50, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -59,16 +59,28 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0.5
+    - _AttenuationPowerrr: 0.34
     - _BumpScale: 1
     - _ColorOnly: 0
     - _CullMode: 2
     - _DetailProminence: 0.2
+    - _EmissionDivision: 1
     - _Glossiness: 0.5
     - _Metallic: 0
     - _Parallax: 0
     - _RampSmoothness: 0.1
     - _SpecularMode: 1
+    - _SpecularStrength: 0.5
+    - _StencilComp: 8
+    - _StencilFail: 0
+    - _StencilPass: 0
+    - _StencilReadMask: 255
+    - _StencilRef: 0
+    - _StencilWriteMask: 255
+    - _StencilZFail: 0
     - _UseSlice: 0
+    - _ZTest: 4
+    - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DetailColor: {r: 0, g: 0, b: 0, a: 0}

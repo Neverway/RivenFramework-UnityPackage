@@ -41,7 +41,7 @@ public class VolumeKill : Volume
         base.OnTriggerEnter(_other); // Call the base class method
         if (_other.CompareTag("Pawn"))
         {
-            _other.GetComponent<Pawn>().Kill();
+            _other.GetComponentInParent<Pawn>().Kill();
         }
     }
 

@@ -58,16 +58,25 @@ public class VolumeLevelStream : Volume
 
         private new void OnTriggerStay(Collider _other)
         {
-            if (!initializedExitZone) return;
+            if (!initializedExitZone)
+            {
+                print($"[{gameObject.name}] OnTriggerStay fired but exitZone not initialized yet");
+                return;
+            }
             
             // Pawn has entered the volume
             if (_other.CompareTag("Pawn"))
             {
                 // Get a reference to the entity component
-                var targetEntity = _other.gameObject.GetComponent<Pawn>();
+                var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
+                print($"[{gameObject.name}] Pawn detected: {targetEntity.gameObject.name}, parent is: {(targetEntity.transform.parent == null ? "NULL" : targetEntity.transform.parent.gameObject.name)}");
                 
                 // Exit if the object is already parented
-                if (targetEntity.transform.parent == streamContainer.transform) return;
+                if (targetEntity.transform.parent == streamContainer.transform)
+                {
+                    print($"[{gameObject.name}] Pawn already in container, skipping");
+                    return;
+                }
                 
                 // Add the entity to the list if they are not already present
                 MoveObjectToStreamContainer(targetEntity.gameObject);
@@ -78,9 +87,14 @@ public class VolumeLevelStream : Volume
             {
                 // Get a reference to the entity component
                 var targetProp = _other.gameObject.GetComponentInParent<Actor>().gameObject;
+                print($"[{gameObject.name}] PhysProp detected: {targetProp.gameObject.name}, parent is: {(targetProp.transform.parent == null ? "NULL" : targetProp.transform.parent.gameObject.name)}");
                 
                 // Exit if the object is already parented
-                if (targetProp.transform.parent == streamContainer.transform) return;
+                if (targetProp.transform.parent == streamContainer.transform)
+                {
+                    print($"[{gameObject.name}] PhysProp already in container, skipping");
+                    return;
+                }
                 
                 // Add the entity to the list if they are not already present
                 MoveObjectToStreamContainer(targetProp);
@@ -91,12 +105,14 @@ public class VolumeLevelStream : Volume
         {
             if (!initializedExitZone) return;
             
+            if (worldLoader.isLoading) return;
+            
             // Pawn has entered the volume
             if (_other.CompareTag("Pawn"))
             {
                 //print($"{gameObject.name} has triggered a dump");
                 // Get a reference to the entity component
-                var targetEntity = _other.gameObject.GetComponent<Pawn>();
+                var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
                 
                 targetEntity.transform.SetParent(null);
                 SceneManager.MoveGameObjectToScene(targetEntity.gameObject, SceneManager.GetActiveScene());
@@ -139,6 +155,7 @@ public class VolumeLevelStream : Volume
     {
         //print($"{gameObject.name} has triggered a move event");
         // Clear its parent to avoid random bugs
+        print($"[{gameObject.name}] Attempting to move {_targetObject.name} to stream container");
         _targetObject.transform.SetParent(null);
         
         // Ensure the stream scene is loaded
@@ -146,8 +163,14 @@ public class VolumeLevelStream : Volume
         {
             //print($"{gameObject.name} move event succeded");
             // Move the object to the scene and set its parent properly, so it can be ejected if need be
+            print($"[{gameObject.name}] Streaming scene is loaded, moving {_targetObject.name}...");
             SceneManager.MoveGameObjectToScene(_targetObject, SceneManager.GetSceneByName(worldLoader.streamingWorldID));
             _targetObject.transform.SetParent(streamContainer.transform);
+            print($"[{gameObject.name}] {_targetObject.name} moved. Container now has {streamContainer.transform.childCount} children. streamContainer scene: {streamContainer.gameObject.scene.name}");
+        }
+        else
+        {
+            print($"[{gameObject.name}] FAILED: Streaming scene is NOT loaded!");
         }
     }
 

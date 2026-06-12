@@ -67,6 +67,11 @@ public class VolumeLevelStreamContainer : MonoBehaviour
                 StartCoroutine(EjectStreamedActors());
             }
         }*/
+        
+        if (initializedExitZone && subscribedToEjectEvent)
+        {
+            //print($"[{gameObject.name}] Container has {transform.childCount} children, scene: {gameObject.scene.name}");
+        }
     }
 
     private void OnDestroy()
@@ -83,38 +88,32 @@ public class VolumeLevelStreamContainer : MonoBehaviour
     {
         StartCoroutine(EjectStreamedActorsCoroutine());
     }
-    
         
     public IEnumerator EjectStreamedActorsCoroutine()
     {
         if (hasActivated) yield break;
         hasActivated = true;
-        
+    
         print($"[{gameObject.name}] Ejecting {transform.childCount} actors...");
-        
-        // Adjust container to its offset
-        transform.position += exitPositionOffset;
-        transform.Rotate(exitRotationOffset);
-        yield return new WaitForEndOfFrame();
-        
-        // Empty the container into the streaming world then dump into the active scene
-        // The while loop is here since the for loop doesn't finish in time due to... witchcraft probably
-        // (Sorry Errynei, the while loop has to stay) ~Liz
+
         while (transform.childCount != 0)
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                GameObject actor = transform.GetChild(i).gameObject;
-                print($"[{actor.name}] ejected");
-                actor.transform.SetParent(null);
+                Transform actor = transform.GetChild(i);
+            
+                // Apply offsets directly to each actor in world space
+                actor.position += exitPositionOffset;
+                actor.Rotate(exitRotationOffset);
+            
+                actor.SetParent(null);
+                SceneManager.MoveGameObjectToScene(actor.gameObject, SceneManager.GetActiveScene());
+                print($"[{actor.name}] ejected to {actor.position}");
             }
         }
-        
-        // I don't think this 'wait' is necessary, but I am terrified of the consequences of removing it! ~Liz
-        yield return new WaitForFixedUpdate();
-        
-        //print($"[{gameObject.name}] My job is done here, self-deleting!");
-        Destroy(gameObject); // <= Bye bye :3
+
+        yield return null;
+        Destroy(gameObject);
     }
 
 

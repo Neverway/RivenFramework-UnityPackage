@@ -151,7 +151,7 @@ public class GI_WorldLoader : MonoBehaviour
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(_worldName));
         
         // Empty the stream world into the active scene
-        EjectStreamedActors();
+        //EjectStreamedActors();
         // Call the eject event so containers will empty into their current scene (Needs to be done a bit after eject)
         print("Called ejection");
         OnEjectStreamedActors?.Invoke();
