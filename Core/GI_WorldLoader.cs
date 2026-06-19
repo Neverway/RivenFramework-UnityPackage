@@ -49,7 +49,7 @@ public class GI_WorldLoader : MonoBehaviour
     private void Update()
     {
         // Make sure the streaming world is loaded, so we can store actors there if needed
-        if (!SceneManager.GetSceneByName(streamingWorldID).isLoaded)
+        /*if (!SceneManager.GetSceneByName(streamingWorldID).isLoaded)
         {
             //print("Streaming world wasn't found, initializing...");
             
@@ -66,7 +66,7 @@ public class GI_WorldLoader : MonoBehaviour
                 print($" =^@ m @^= WorldLoader sanity check failed: active scene is {SceneManager.GetActiveScene().name}, active scene should be {activeScene.name}. Resetting...");
                 SceneManager.SetActiveScene(activeScene);
             }
-        }
+        }*/
     }
     
 
@@ -85,7 +85,7 @@ public class GI_WorldLoader : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadWorldCoroutine(string _worldName)
+    /*private IEnumerator LoadWorldCoroutine(string _worldName)
     {
         // WARNING OLD GARBAGE BELOW //
         // Load the transition level over top everything else
@@ -101,7 +101,7 @@ public class GI_WorldLoader : MonoBehaviour
             //print(loadAsync.progress);
             //if (loadingBar) loadingBar.fillAmount = loadAsync.progress;
             yield return null;
-        }*/
+        }*//*
         
         //print(unloadAsync.progress);
         //if (loadingBar) loadingBar.fillAmount = unloadAsync.progress;
@@ -168,6 +168,33 @@ public class GI_WorldLoader : MonoBehaviour
         isLoading = false;
         //Debug.Log("completed world loading");
         if (OnWorldLoaded is not null) OnWorldLoaded.Invoke();
+    }*/
+    
+    private IEnumerator LoadWorldCoroutine(string _worldName)
+    {
+        isLoading = true;
+        yield return new WaitForSeconds(delayBeforeWorldChange);
+    
+        var previousScene = SceneManager.GetActiveScene();
+
+        var originalTimescale = Time.timeScale;
+        Time.timeScale = 0;
+    
+        AsyncOperation loadAsync = SceneManager.LoadSceneAsync(_worldName, LoadSceneMode.Additive);
+        while (!loadAsync.isDone) { yield return new WaitForEndOfFrame(); }
+    
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(_worldName));
+    
+        //print("Called ejection");
+        //yield return StartCoroutine(WaitForEjectCompletion());
+    
+        AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync(previousScene);
+        while (!unloadAsync.isDone) { yield return new WaitForEndOfFrame(); }
+
+        Time.timeScale = originalTimescale;
+
+        isLoading = false;
+        if (OnWorldLoaded is not null) OnWorldLoaded.Invoke();
     }
 
     // This code was expertly copied from @Yagero on github.com
@@ -187,6 +214,13 @@ public class GI_WorldLoader : MonoBehaviour
         }
 
         return false;
+    }
+    
+    private IEnumerator WaitForEjectCompletion()
+    {
+        OnEjectStreamedActors?.Invoke();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
     }
 
 

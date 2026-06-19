@@ -119,8 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d38ebc75abf70f9db6ec8356845e1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitOffset: {x: 0, y: 0, z: 0}
-  initializedExitZone: 0
+  exitPositionOffset: {x: 0, y: 0, z: 0}
+  exitRotationOffset: {x: 0, y: 0, z: 0}
   parentStreamVolume: {fileID: 2772247697769048211}
 --- !u!114 &4726423943619741238
 MonoBehaviour:
@@ -251,8 +251,10 @@ MonoBehaviour:
   disabledObjectsExitVolume: 1
   pawnsInTrigger: []
   propsInTrigger: []
-  exitOffset: {x: 0, y: 0, z: 0}
+  exitPositionOffset: {x: 0, y: 0, z: 0}
+  exitRotationOffset: {x: 0, y: 0, z: 0}
   debugDrawExitZone: 1
+  streamContainer: {fileID: 2003284490898505612}
 --- !u!4 &4456509976819765838 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6254356106251211785, guid: 438f8222c1217a93b97132e8300c5b7f,

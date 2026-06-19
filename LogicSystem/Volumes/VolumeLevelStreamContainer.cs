@@ -1,4 +1,4 @@
-//==========================================( Neverway 2025 )=========================================================//
+//==========================================( Neverway 2026 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -20,16 +20,14 @@ public class VolumeLevelStreamContainer : MonoBehaviour
     /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
     public Vector3 exitPositionOffset;
     public Vector3 exitRotationOffset;
-    public bool initializedExitZone;
     public GameObject parentStreamVolume;
-    private bool hasActivated;
 
 
     /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
 
 
     /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-    private bool subscribedToEjectEvent;
+    private Vector3 cachedExitWorldPosition;
 
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
@@ -41,80 +39,98 @@ public class VolumeLevelStreamContainer : MonoBehaviour
 
     #region=======================================( Functions )=======================================================//
     /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
-    private void FixedUpdate()
+    private void Awake()
     {
-        if (!initializedExitZone) return;
-        if (!worldLoader)
-        {
-            worldLoader = FindObjectOfType<GI_WorldLoader>();
-            return;
-        }
-        
-        // Subscribe to eject event
-        if (!subscribedToEjectEvent)
-        {
-            subscribedToEjectEvent = true;
-            //print($"{gameObject.name} subscribed to eject event");
-            GI_WorldLoader.OnEjectStreamedActors += EjectStreamedActors;
-        }
-        
-        /*if (!parentStreamVolume && !hasActivated && !worldLoader.isLoading)
-        {
-            print($"[{gameObject.name}] Link to parent is broken, scene must have changed");
-            if (SceneManager.GetSceneByName(worldLoader.streamingWorldID).isLoaded)
-            {
-                print($"[{gameObject.name}] {worldLoader.streamingWorldID} returned isLoaded as true");
-                StartCoroutine(EjectStreamedActors());
-            }
-        }*/
-        
-        if (initializedExitZone && subscribedToEjectEvent)
-        {
-            //print($"[{gameObject.name}] Container has {transform.childCount} children, scene: {gameObject.scene.name}");
-        }
+        transform.SetParent(null);
+        DontDestroyOnLoad(gameObject);
+        GI_WorldLoader.OnWorldLoaded += EjectActors;
     }
 
     private void OnDestroy()
     {
-        GI_WorldLoader.OnEjectStreamedActors -= EjectStreamedActors;
+        GI_WorldLoader.OnWorldLoaded -= EjectActors;
     }
+
 
 
     /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
+    /// <summary>
+    /// Cache the position of the streaming container before the old scene unloads
+    /// </summary>
+    public void PrepareForLoad()
+    {
+        //cachedExitWorldPosition = transform.position + exitPositionOffset;
+    }
+
+    /// <summary>
+    /// Move all the actors out of the stream container and to the new scene once the new scene is loaded
+    /// </summary>
+    private void EjectActors()
+    {
+        print($"[{gameObject.name}] Ejecting to {cachedExitWorldPosition}, childCount={transform.childCount}");
+        
+        // Move the container and its contents to the exit poisiton
+        transform.position += exitPositionOffset;
+
+        // Put the children into a list so we can modify them without the list breaking
+        List<GameObject> childActors = new List<GameObject>();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            childActors.Add(transform.GetChild(i).gameObject);
+        }
+        
+        // Eject the children into the new scene
+        StartCoroutine(EjectChildrenIntoNewLevel(childActors));
+    }
+
+    private IEnumerator EjectChildrenIntoNewLevel(List<GameObject> childActors)
+    {
+        var anchor = SceneManager.GetActiveScene().GetRootGameObjects()[0];
+        List<ValueTuple<Rigidbody, bool>> rigidbodyStates = new List<(Rigidbody, bool)>();
+        
+        for (int i = 0; i < childActors.Count; i++)
+        {
+            var actor = childActors[i].gameObject;
+            actor.transform.SetParent(anchor.transform);
+            actor.transform.SetParent(null);
+            print($"[{actor.gameObject.name}] EJECTED");
+
+            // Get all rigidbody components on this actor
+            var rigidbodies = actor.GetComponentsInChildren<Rigidbody>();
+            for (int j = 0; j < rigidbodies.Length; j++)
+            {
+                // Store their current kinematic state
+                rigidbodyStates.Add((rigidbodies[j], rigidbodies[j].isKinematic));
+                // Set all rigidbody components to kinematic
+                rigidbodies[j].isKinematic = true;
+            }
+            
+            // Move those little bastards to their offset transforms
+            //actor.root.position = cachedExitWorldPosition;
+            //actor.root.Rotate(exitRotationOffset);
+        }
+        
+        worldLoader = GameInstance.Get<GI_WorldLoader>();
+        
+        // Wait for the worldloader to finish loading the scene
+        if (worldLoader.isLoading)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+            
+        // Restore kinematic states
+        for (int j = 0; j < rigidbodyStates.Count; j++)
+        {
+            rigidbodyStates[j].Item1.isKinematic = rigidbodyStates[j].Item2;
+        }
+        
+        yield return new WaitForEndOfFrame();
+        
+        //Destroy(gameObject);
+    }
 
 
     /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
-    private void EjectStreamedActors()
-    {
-        StartCoroutine(EjectStreamedActorsCoroutine());
-    }
-        
-    public IEnumerator EjectStreamedActorsCoroutine()
-    {
-        if (hasActivated) yield break;
-        hasActivated = true;
-    
-        print($"[{gameObject.name}] Ejecting {transform.childCount} actors...");
-
-        while (transform.childCount != 0)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                Transform actor = transform.GetChild(i);
-            
-                // Apply offsets directly to each actor in world space
-                actor.position += exitPositionOffset;
-                actor.Rotate(exitRotationOffset);
-            
-                actor.SetParent(null);
-                SceneManager.MoveGameObjectToScene(actor.gameObject, SceneManager.GetActiveScene());
-                print($"[{actor.name}] ejected to {actor.position}");
-            }
-        }
-
-        yield return null;
-        Destroy(gameObject);
-    }
 
 
     #endregion

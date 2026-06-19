@@ -1,10 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2026 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose:
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+//====================================================================================================================//
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using RivenFramework;
@@ -13,32 +16,89 @@ using UnityEngine.SceneManagement;
 
 public class VolumeLevelStream : Volume
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
+    #region========================================( Variables )======================================================//
+    /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
     [Tooltip("This is the offset that will be applied to objects within this volume when the level changes")]
     [SerializeField] private Vector3 exitPositionOffset;
     [SerializeField] private Vector3 exitRotationOffset;
     [SerializeField] private bool debugDrawExitZone;
-    private bool initializedExitZone;
+
     
+    /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
 
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-    private GI_WorldLoader worldLoader;
+
+    /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
+
+
+    /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
     [Tooltip("This is the empty game object that streamed actors are stored in, (to save them from being destroyed on map changes)")]
-    private VolumeLevelStreamContainer streamContainer;
+    [SerializeField] private VolumeLevelStreamContainer streamContainer;
 
 
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
+    #endregion
+
+
+    #region=======================================( Functions )=======================================================//
+    /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
+    private void OnTriggerEnter(Collider _other)
+    {
+        if (_other.CompareTag("Pawn"))
+        {
+            var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
+            targetEntity.transform.SetParent(streamContainer.transform);
+        }
+        if (_other.CompareTag("PhysProp"))
+        {
+            var targetEntity = _other.gameObject.GetComponentInParent<Actor>();
+            targetEntity.transform.SetParent(streamContainer.transform);
+        }
+    }
+    
+    private void OnTriggerExit(Collider _other)
+    {
+        if (_other.CompareTag("Pawn"))
+        {
+            var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
+            if (targetEntity.transform.parent == streamContainer.transform)
+            {
+                var anchor = SceneManager.GetActiveScene().GetRootGameObjects()[0];
+                targetEntity.transform.SetParent(anchor.transform);
+                targetEntity.transform.SetParent(null);
+            }
+        }
+        if (_other.CompareTag("PhysProp"))
+        {
+            var targetEntity = _other.gameObject.GetComponentInParent<Actor>();
+            if (targetEntity.transform.parent == streamContainer.transform)
+            {
+                var anchor = SceneManager.GetActiveScene().GetRootGameObjects()[0];
+                targetEntity.transform.SetParent(anchor.transform);
+                targetEntity.transform.SetParent(null);
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!debugDrawExitZone) return;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(transform.position+exitPositionOffset, transform.localScale);
+    }
+
+
+    /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
+    public void PrepareForLoad()
+    {
+        streamContainer.exitPositionOffset = exitPositionOffset;
+        streamContainer.exitRotationOffset = exitRotationOffset;
+        streamContainer.parentStreamVolume = gameObject;
+        streamContainer.PrepareForLoad();
+    }
+
+    
+    /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
+    /*
+    
         private void Awake()
         {
             worldLoader = FindObjectOfType<GI_WorldLoader>();
@@ -128,10 +188,6 @@ public class VolumeLevelStream : Volume
                 SceneManager.MoveGameObjectToScene(targetProp.gameObject, SceneManager.GetActiveScene());
             }
         }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
     private IEnumerator InitializeStreamContainer()
     {
         if (initializedExitZone) yield break;
@@ -174,8 +230,10 @@ public class VolumeLevelStream : Volume
         }
     }
 
+    
+    
+    private bool initializedExitZone;*/
+    
 
-    //=-----------------=
-    // External Functions
-    //=-----------------=
+    #endregion
 }

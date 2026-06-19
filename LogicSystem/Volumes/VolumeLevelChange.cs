@@ -1,9 +1,11 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2026 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose:
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+//====================================================================================================================//
 
 using System;
 using System.Collections;
@@ -14,42 +16,30 @@ using UnityEngine.SceneManagement;
 
 public class VolumeLevelChange : Volume
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
+    #region========================================( Variables )======================================================//
+    /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
     public SceneReference targetScene;
-    public string worldID;
-    public bool useIndexInsteadOfID;
-    public bool indexBackwards;
 
 
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
+    /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
 
 
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
+    /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
+
+
+    /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
     private GI_WorldLoader worldLoader;
 
 
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
+    #endregion
+
+
+    #region=======================================( Functions )=======================================================//
+    /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
     private void OnValidate()
     {
         // Todo: This is a temporary implementation! ~Liz
         targetScene.RefreshSceneName();
-    }
-
-    private new void OnTriggerEnter2D(Collider2D _other)
-    {
-        if (GetPlayerInTrigger())
-        {
-            if (!worldLoader) worldLoader = FindObjectOfType<GI_WorldLoader>();
-            worldLoader.LoadWorld(worldID);
-        }
     }
 
     private new void OnTriggerEnter(Collider _other)
@@ -57,33 +47,23 @@ public class VolumeLevelChange : Volume
         base.OnTriggerEnter(_other);
         if (GetPlayerInTrigger())
         {
-            
-            //if (!_other.GetComponent<Pawn>().isPossessed) return;
-            if (!worldLoader) worldLoader = FindObjectOfType<GI_WorldLoader>();
-            if (useIndexInsteadOfID)
-            {
-                int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-                string scenePath = SceneUtility.GetScenePathByBuildIndex(nextSceneIndex);
+            if (!worldLoader) worldLoader = GameInstance.Get<GI_WorldLoader>();
 
-                if (!string.IsNullOrEmpty(scenePath))
-                {
-                    string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
-                    worldLoader.LoadWorld(sceneName);
-                }
-            }
-            else if (!useIndexInsteadOfID)
+            foreach (var streamVolume in FindObjectsOfType<VolumeLevelStream>())
             {
-                worldLoader.LoadWorld(targetScene.sceneName);
+                streamVolume.PrepareForLoad();
             }
+
+            worldLoader.LoadWorld(targetScene.sceneName);
         }
     }
 
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
+
+    /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
 
 
-    //=-----------------=
-    // External Functions
-    //=-----------------=
+    /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
+
+
+    #endregion
 }

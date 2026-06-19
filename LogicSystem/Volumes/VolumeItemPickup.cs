@@ -25,6 +25,7 @@ public class VolumeItemPickup : Volume
     }
 
     public UnityEvent OnAttemptPickup;
+    public LogicOutput<bool> OnSuccessfulPickup;
     
     /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
 
@@ -55,7 +56,8 @@ public class VolumeItemPickup : Volume
                         OnAttemptPickup.Invoke();
                         if (inventory.AddItem(transform.GetChild(1).gameObject))
                         {
-                            Destroy(gameObject);
+                            OnSuccessfulPickup.Set(true);
+                            gameObject.SetActive(false);
                         }
                     }
                 }
@@ -69,7 +71,8 @@ public class VolumeItemPickup : Volume
                         OnAttemptPickup.Invoke();
                         if (inventory.AddItem(transform.GetChild(1).gameObject))
                         {
-                            Destroy(gameObject);
+                            OnSuccessfulPickup.Set(true);
+                            gameObject.SetActive(false);
                         }
                     }
                 }
