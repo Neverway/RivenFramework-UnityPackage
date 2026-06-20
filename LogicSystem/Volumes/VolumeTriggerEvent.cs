@@ -65,19 +65,21 @@ public class VolumeTriggerEvent : Volume
     {
         bool wasOccupied = IsOccupied();
         base.OnTriggerEnter(_other);
-        if (!wasOccupied && IsOccupied() && CanFireEvents())
+        bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
+        if (isOccupied)
         {
             hasBeenTriggered = true;
             onFirstOccupied.Invoke();
         }
-        onOccupied.Set(IsOccupied());
+        onOccupied.Set(isOccupied);
     }
 
     private new void OnTriggerExit(Collider _other)
     {
         base.OnTriggerExit(_other);
-        if (!IsOccupied()) onFirstUnoccupied.Invoke();
-        onOccupied.Set(IsOccupied());
+        bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
+        if (isOccupied == false) onFirstUnoccupied.Invoke();
+        onOccupied.Set(isOccupied);
     }
 
 
@@ -86,6 +88,10 @@ public class VolumeTriggerEvent : Volume
     //=-----------------=
     private bool IsOccupied()
     {
+        if (hasBeenTriggered && resetsAutomatically == false)
+        {
+            return false;
+        }
         switch (triggerFilter)
         {
             case TriggerFilter.All: return pawnsInTrigger.Count != 0 || propsInTrigger.Count != 0;
