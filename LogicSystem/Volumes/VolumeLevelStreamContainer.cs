@@ -86,7 +86,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
     private IEnumerator EjectChildrenIntoNewLevel(List<GameObject> childActors)
     {
         var anchor = SceneManager.GetActiveScene().GetRootGameObjects()[0];
-        List<ValueTuple<Rigidbody, bool>> rigidbodyStates = new List<(Rigidbody, bool)>();
+        List<ValueTuple<Rigidbody, bool, Vector3, Vector3>> rigidbodyStates = new List<(Rigidbody, bool, Vector3, Vector3)>();
         
         for (int i = 0; i < childActors.Count; i++)
         {
@@ -99,8 +99,8 @@ public class VolumeLevelStreamContainer : MonoBehaviour
             var rigidbodies = actor.GetComponentsInChildren<Rigidbody>();
             for (int j = 0; j < rigidbodies.Length; j++)
             {
-                // Store their current kinematic state
-                rigidbodyStates.Add((rigidbodies[j], rigidbodies[j].isKinematic));
+                // Store their current kinematic state and velocity
+                rigidbodyStates.Add((rigidbodies[j], rigidbodies[j].isKinematic, rigidbodies[j].velocity, rigidbodies[j].angularVelocity));
                 // Set all rigidbody components to kinematic
                 rigidbodies[j].isKinematic = true;
             }
@@ -118,10 +118,12 @@ public class VolumeLevelStreamContainer : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
             
-        // Restore kinematic states
+        // Restore kinematic states and velocity
         for (int j = 0; j < rigidbodyStates.Count; j++)
         {
             rigidbodyStates[j].Item1.isKinematic = rigidbodyStates[j].Item2;
+            rigidbodyStates[j].Item1.velocity = rigidbodyStates[j].Item3;
+            rigidbodyStates[j].Item1.angularVelocity = rigidbodyStates[j].Item4;
         }
         
         yield return new WaitForEndOfFrame();
