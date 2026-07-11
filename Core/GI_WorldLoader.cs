@@ -242,6 +242,7 @@ public class GI_WorldLoader : MonoBehaviour
         }
         if (DoesSceneExist(_worldName) is false)
         {
+            Debug.LogError($"Could not find scene '{_worldName}'");
             ForceLoadWorld("_Error");
             return;
         }

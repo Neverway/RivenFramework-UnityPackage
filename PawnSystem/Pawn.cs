@@ -26,6 +26,8 @@ public class Pawn : Actor
     [Tooltip("This is used for calculating delta offsets for pawns on rotating platforms")]
     [HideInInspector] public float platformYOffset;
 
+    public bool isPlayerControlled;
+
 
     //=-----------------=
     // Private Variables
