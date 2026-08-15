@@ -2,6 +2,7 @@ fileFormatVersion: 2
 guid: 149f851dea151502c95b9cfa11c2852a
 labels:
 - Actor
+- Pickup
 PrefabImporter:
   externalObjects: {}
   userData: 

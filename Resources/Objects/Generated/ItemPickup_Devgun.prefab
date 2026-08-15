@@ -85,7 +85,7 @@ PrefabInstance:
     - target: {fileID: 3282653597122486272, guid: 088b9b5f0f8ae0ed3b25dc0cd5962b6c,
         type: 3}
       propertyPath: m_Name
-      value: VolumeItemPickup (1) Variant
+      value: ItemPickup_Devgun
       objectReference: {fileID: 0}
     - target: {fileID: 3904586432997251805, guid: 088b9b5f0f8ae0ed3b25dc0cd5962b6c,
         type: 3}

@@ -113,15 +113,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca3b513376942e2884b9afb4babceef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dynamic: 0
+  isParentedIgnoreOffsets: 0
   activeInNullSpace: 1
   destroyedInKillTrigger: 1
+  debugLogSpaceData: 0
   homePosition: {x: 0, y: 0, z: 0}
   homeScale: {x: 0, y: 0, z: 0}
   homeParent: {fileID: 0}
-  dynamic: 0
-  crushInNullSpace: 1
-  isParentedIgnoreOffsets: 0
   isHeld: 0
-  space: 0
   wasActive: 0
-  debugLogData: 0
+  riftSpace: 0

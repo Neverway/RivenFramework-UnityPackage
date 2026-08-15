@@ -132,7 +132,7 @@ PrefabInstance:
     - target: {fileID: 5578371265734815444, guid: 438f8222c1217a93b97132e8300c5b7f,
         type: 3}
       propertyPath: m_Name
-      value: VolumeItemPickup
+      value: ItemPickup
       objectReference: {fileID: 0}
     - target: {fileID: 5578371265734815444, guid: 438f8222c1217a93b97132e8300c5b7f,
         type: 3}
@@ -255,6 +255,17 @@ MonoBehaviour:
   pawnsInTrigger: []
   propsInTrigger: []
   triggerFilter: 1
+  OnAttemptPickup:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSuccessfulPickup:
+    editorHandles_showHandle: 0
+    editorHandles_handleTarget: {fileID: 0}
+    editorHandles_customName: 
+    value: 0
+    OnOutputChanged:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!54 &3291334530249350354
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -300,7 +311,7 @@ MonoBehaviour:
   checkRadius: 0.25
   layerMask:
     serializedVersion: 2
-    m_Bits: 1921
+    m_Bits: 0
   isHeld: 0
 --- !u!4 &3904586432997251805 stripped
 Transform:

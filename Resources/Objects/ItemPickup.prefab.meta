@@ -3,6 +3,7 @@ guid: 088b9b5f0f8ae0ed3b25dc0cd5962b6c
 labels:
 - Actor3D
 - Framework
+- Pickup
 PrefabImporter:
   externalObjects: {}
   userData: 
