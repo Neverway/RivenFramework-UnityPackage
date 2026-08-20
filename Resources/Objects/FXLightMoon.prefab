@@ -92,7 +92,7 @@ PrefabInstance:
     - target: {fileID: 8708653398650843528, guid: af916707fd7b43c85a571e1f53d42590,
         type: 3}
       propertyPath: displayName
-      value: FX Light Moon
+      value: FXLight Moon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

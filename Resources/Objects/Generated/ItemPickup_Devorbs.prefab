@@ -82,6 +82,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 897925124927374832, guid: 088b9b5f0f8ae0ed3b25dc0cd5962b6c,
+        type: 3}
+      propertyPath: id
+      value: ItemPickup_Devorbs
+      objectReference: {fileID: 0}
+    - target: {fileID: 897925124927374832, guid: 088b9b5f0f8ae0ed3b25dc0cd5962b6c,
+        type: 3}
+      propertyPath: displayName
+      value: Devorbs
+      objectReference: {fileID: 0}
     - target: {fileID: 3282653597122486272, guid: 088b9b5f0f8ae0ed3b25dc0cd5962b6c,
         type: 3}
       propertyPath: m_Name

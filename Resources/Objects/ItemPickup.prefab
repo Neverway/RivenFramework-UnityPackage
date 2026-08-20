@@ -192,12 +192,12 @@ PrefabInstance:
     - target: {fileID: 7823347618117552932, guid: 438f8222c1217a93b97132e8300c5b7f,
         type: 3}
       propertyPath: id
-      value: VolumeTriggerEvent
+      value: ItemPickup
       objectReference: {fileID: 0}
     - target: {fileID: 7823347618117552932, guid: 438f8222c1217a93b97132e8300c5b7f,
         type: 3}
       propertyPath: displayName
-      value: Volume Trigger Event
+      value: Item Pickup
       objectReference: {fileID: 0}
     - target: {fileID: 8070034792371159625, guid: 438f8222c1217a93b97132e8300c5b7f,
         type: 3}

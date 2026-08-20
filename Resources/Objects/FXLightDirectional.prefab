@@ -76,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 3916811779814400609, guid: 80686b42061c7f07096f99705a5f4957,
         type: 3}
       propertyPath: displayName
-      value: FX Light Directional
+      value: FXLight Directional
       objectReference: {fileID: 0}
     - target: {fileID: 4729760362686423890, guid: 80686b42061c7f07096f99705a5f4957,
         type: 3}

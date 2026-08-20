@@ -128,7 +128,7 @@ PrefabInstance:
     - target: {fileID: -7579489438798369143, guid: 6eaa804f787a93fe7b99f2159ecaf200,
         type: 3}
       propertyPath: displayName
-      value: FX Light
+      value: FXLight
       objectReference: {fileID: 0}
     - target: {fileID: 1134847039480085226, guid: 6eaa804f787a93fe7b99f2159ecaf200,
         type: 3}
