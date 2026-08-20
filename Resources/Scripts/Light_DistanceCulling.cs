@@ -1,21 +1,25 @@
 //===================== (Neverway 2024) Written by Liz M. =====================
 //
 // Purpose: Optimizes real-time lights by slowly fading them out when the local
-//  player is too far away
+//  player is too far away, and reporting to the GI_LightShadowBudgetManager so
+//  only a limited number of in-range lights can cast real-time shadows at the same time
 // Notes:
 //
 //=============================================================================
 
+using System;
 using System.Collections;
 using RivenFramework;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-    [RequireComponent(typeof(Light))]
+[RequireComponent(typeof(Light))]
     public class Light_DistanceCulling : MonoBehaviour
     {
         //=-----------------=
         // Public Variables
         //=-----------------=
+        [Header("Range Culling")]
         [Tooltip("If enabled, the light will be disabled when the local player is out of range")]
         [SerializeField] private bool cullWhenOutOfRange;
         [Tooltip("The range of the light is used to determine the range of culling, this multiplier expands that range")]
@@ -24,8 +28,16 @@ using UnityEngine;
         [SerializeField] private bool fadeLightWhenCulled = true;
         [Tooltip("The duration, in seconds, it takes to fade the light in and out")]
         [SerializeField] private float fadeSpeed = 0.2f;
-        [Tooltip("If enabled, a sphere will be drawn around the light representing the culling range of the light")]
+        [Tooltip("If enabled, a sphere will be drawn around the light representing the culling range of the light in the editor")]
         [SerializeField] private bool debugDrawCullRange;
+        
+        [Header("Shadow Budgeting")]
+        [Tooltip("If enabled, this light will never cast shadows, so it won't take up any available shadow caster slots and won't harm performance as much")]
+        [SerializeField] private bool neverCastShadows;
+        [Tooltip("If enabled, this light will always cast shadows and won't take up a slot in the available shadow caster slots (Once again, use sparingly, shadows are effin expensive man!)")]
+        [SerializeField] private bool alwaysCastShadows;
+        [Tooltip("The higher this value, the higher the importance of this light when being ranked for available shadow caster slots (So set this value higher for lights you wanna keep casting shadows, but use is sparingly!)")]
+        [SerializeField] private float shadowPriorityBias;
         
         
         //=-----------------=
@@ -33,14 +45,25 @@ using UnityEngine;
         //=-----------------=
         // The original intensity of the light before we began fading it out
         private float storedLightIntensity;
+        // The original intensity of the lights shadows before we began fading it out
+        private float storedShadowStrength;
+        // The original shadow type this light uses before it may have been culled out
+        private LightShadows storedShadowType;
+        // Stored value of the range this light culls at so it doesn't get recalculated constantly
+        private float cachedCullRange;
+        
         
         
         //=-----------------=
         // Reference Variables
         //=-----------------=
         private Light targetLight;
+        private Coroutine intensityFadeRoutine;
+        private Coroutine shadowFadeRoutine;
         private Transform localPlayer;
-        private GI_PawnManager pawnManager;
+        // GI_LightShadowBudgetManager stuffs
+        public bool CanCastShadows => !neverCastShadows && storedShadowType != LightShadows.None;
+        public bool IsInRange { get; private set; }
         
         
         
@@ -50,8 +73,21 @@ using UnityEngine;
         private void Start()
         {
             targetLight = GetComponent<Light>();
-            pawnManager = FindObjectOfType<GI_PawnManager>();
             storedLightIntensity = targetLight.intensity;
+            storedShadowStrength = targetLight.shadowStrength;
+            storedShadowType = targetLight.shadows;
+            RecalculateCullRange();
+        }
+
+        private void OnEnable()
+        {
+            float randomScanStaggerOffset = Random.Range(0f, 0.15f);
+            InvokeRepeating(nameof(CheckCulling), randomScanStaggerOffset, 0.1f);
+        }
+
+        private void OnDisable()
+        {
+            CancelInvoke(nameof(CheckCulling));
         }
 
         private void OnDrawGizmosSelected()
@@ -65,19 +101,21 @@ using UnityEngine;
             Gizmos.DrawWireSphere(transform.position, targetLight.range * rangeMultiplier);
         }
 
-        private void FixedUpdate()
+        private void CheckCulling()
         {
             if (GetLocalPlayer() is false || cullWhenOutOfRange is false) return;
+            bool inRange = LightIsInActiveRange();
+            
             if (fadeLightWhenCulled)
             {
                 // Light is out of range & intensity is full
-                if (LightIsInActiveRange() is false && targetLight.intensity >= storedLightIntensity)
+                if (inRange is false && targetLight.intensity >= storedLightIntensity)
                 {
                     // Fadeout
                     StartCoroutine(FadeLight("out"));
                 }
                 // Light is in range & intensity is zero
-                if (LightIsInActiveRange() && targetLight.intensity <= 0f)
+                if (inRange && targetLight.intensity <= 0f)
                 {
                     // Fadein
                     StartCoroutine(FadeLight("in"));
@@ -85,7 +123,7 @@ using UnityEngine;
             }
             else
             {
-                targetLight.enabled = LightIsInActiveRange();
+                targetLight.enabled = inRange;
             }
         }
 
@@ -96,36 +134,23 @@ using UnityEngine;
         private bool GetLocalPlayer()
         {
             if (localPlayer) return true;
-            if (pawnManager is null)
-            {
-                pawnManager = FindObjectOfType<GI_PawnManager>();
-                if (pawnManager is null)
-                {
-                    return false;
-                }
-            }
 
-            if (!pawnManager.localPlayerCharacter)
-            {
-                return false;
-            }
+            var manager = GI_PawnManager.Instance;
+            if (manager == null || !manager.localPlayerCharacter) return false;
 
-                
-            localPlayer = pawnManager.localPlayerCharacter.transform;
-            if (localPlayer is null) return false;
-
-            return true;
+            localPlayer = manager.localPlayerCharacter.transform;
+            return localPlayer != null;
         }
 
         private bool LightIsInActiveRange()
         {
             if (!localPlayer)
             {
-                if (pawnManager && pawnManager.localPlayerCharacter) localPlayer = pawnManager.localPlayerCharacter.transform;
+                GetLocalPlayer();
                 return false;
             }
-                
-            return Vector3.Distance(transform.position, localPlayer.position) <= targetLight.range * rangeMultiplier;
+
+            return (transform.position - localPlayer.position).sqrMagnitude <= cachedCullRange;
         }
 
         private IEnumerator FadeLight(string _fadeDirection)
@@ -155,11 +180,17 @@ using UnityEngine;
                 targetLight.intensity = 0;
             }
         }
-        
-        
+
+        private void RecalculateCullRange()
+        {
+            float range = targetLight.range * rangeMultiplier;
+            cachedCullRange = range * range;
+        }
+
+
         //=-----------------=
         // External Functions
         //=-----------------=
-        
-        
+
+
     }

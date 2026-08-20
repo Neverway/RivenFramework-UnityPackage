@@ -28,11 +28,16 @@ public class GI_PawnManager : MonoBehaviour
     //=-----------------=
     // Reference Variables
     //=-----------------=
+    public static GI_PawnManager Instance { get; private set; }
 
 
     //=-----------------=
     // Mono Functions
     //=-----------------=
+    private void Awake()
+    {
+        Instance = this;
+    }
 
 
     //=-----------------=
