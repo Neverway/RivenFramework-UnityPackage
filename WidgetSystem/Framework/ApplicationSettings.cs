@@ -9,6 +9,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using RivenFramework;
 using UnityEngine;
 using UnityEngine.Audio;
 //using UnityEngine.Localization.Settings;
@@ -385,6 +386,9 @@ public class ApplicationSettings : MonoBehaviour
                 QualitySettings.shadowDistance = 150;
                 break;
         }
+        
+        // Max Shadow Casters
+        GameInstance.Get<GI_LightShadowBudgetManager>().maxShadowCasters = currentSettingsData.quality.maxShadowCasters;
 
         // Effects Quality
         switch (currentSettingsData.quality.effectsQuality)
@@ -718,37 +722,47 @@ public class ApplicationSettings : MonoBehaviour
             case 0:
                 bufferedSettingsData.quality.resolutionScale = retroQuality.resolutionScale;
                 bufferedSettingsData.quality.shadowQuality = retroQuality.shadowQuality;
+                bufferedSettingsData.quality.maxShadowCasters = retroQuality.maxShadowCasters;
                 bufferedSettingsData.quality.effectsQuality = retroQuality.effectsQuality;
                 bufferedSettingsData.quality.textureQuality = retroQuality.textureQuality;
                 bufferedSettingsData.quality.postprocessingQuality = retroQuality.postprocessingQuality;
+                bufferedSettingsData.quality.dynamicBones = retroQuality.dynamicBones;
                 break;
             case 1:
                 bufferedSettingsData.quality.resolutionScale = lowQuality.resolutionScale;
                 bufferedSettingsData.quality.shadowQuality = lowQuality.shadowQuality;
+                bufferedSettingsData.quality.maxShadowCasters = lowQuality.maxShadowCasters;
                 bufferedSettingsData.quality.effectsQuality = lowQuality.effectsQuality;
                 bufferedSettingsData.quality.textureQuality = lowQuality.textureQuality;
                 bufferedSettingsData.quality.postprocessingQuality = lowQuality.postprocessingQuality;
+                bufferedSettingsData.quality.dynamicBones = lowQuality.dynamicBones;
                 break;
             case 2:
                 bufferedSettingsData.quality.resolutionScale = mediumQuality.resolutionScale;
                 bufferedSettingsData.quality.shadowQuality = mediumQuality.shadowQuality;
+                bufferedSettingsData.quality.maxShadowCasters = mediumQuality.maxShadowCasters;
                 bufferedSettingsData.quality.effectsQuality = mediumQuality.effectsQuality;
                 bufferedSettingsData.quality.textureQuality = mediumQuality.textureQuality;
                 bufferedSettingsData.quality.postprocessingQuality = mediumQuality.postprocessingQuality;
+                bufferedSettingsData.quality.dynamicBones = mediumQuality.dynamicBones;
                 break;
             case 3:
                 bufferedSettingsData.quality.resolutionScale = highQuality.resolutionScale;
                 bufferedSettingsData.quality.shadowQuality = highQuality.shadowQuality;
+                bufferedSettingsData.quality.maxShadowCasters = highQuality.maxShadowCasters;
                 bufferedSettingsData.quality.effectsQuality = highQuality.effectsQuality;
                 bufferedSettingsData.quality.textureQuality = highQuality.textureQuality;
                 bufferedSettingsData.quality.postprocessingQuality = highQuality.postprocessingQuality;
+                bufferedSettingsData.quality.dynamicBones = highQuality.dynamicBones;
                 break;
             case 4:
                 bufferedSettingsData.quality.resolutionScale = fantasticQuality.resolutionScale;
                 bufferedSettingsData.quality.shadowQuality = fantasticQuality.shadowQuality;
+                bufferedSettingsData.quality.maxShadowCasters = fantasticQuality.maxShadowCasters;
                 bufferedSettingsData.quality.effectsQuality = fantasticQuality.effectsQuality;
                 bufferedSettingsData.quality.textureQuality = fantasticQuality.textureQuality;
                 bufferedSettingsData.quality.postprocessingQuality = fantasticQuality.postprocessingQuality;
+                bufferedSettingsData.quality.dynamicBones = fantasticQuality.dynamicBones;
                 break;
         }
     }

@@ -38,9 +38,11 @@ using UnityEngine.UI;
         [SerializeField] public Button_Selector qualityPreset;
         [SerializeField] public Button_Selector resolutionScale;
         [SerializeField] public Button_Selector shadowQuality;
+        [SerializeField] public Slider maxShadowCasters;
         [SerializeField] public Button_Selector effectsQuality;
         [SerializeField] public Button_Selector textureQuality;
         [SerializeField] public Button_Selector postprocessingQuality;
+        [SerializeField] public Button_Selector dynamicBones;
 
         // Effects
         [SerializeField] public Button_Selector antialiasing;
@@ -69,6 +71,7 @@ using UnityEngine.UI;
             applicationSettings.bufferedSettingsData.quality.effectsQuality = effectsQuality.currentIndex;
             applicationSettings.bufferedSettingsData.quality.textureQuality = textureQuality.currentIndex;
             applicationSettings.bufferedSettingsData.quality.postprocessingQuality = postprocessingQuality.currentIndex;
+            applicationSettings.bufferedSettingsData.quality.dynamicBones = dynamicBones.currentIndex;
 
             applicationSettings.bufferedSettingsData.antialiasing = antialiasing.currentIndex;
             applicationSettings.bufferedSettingsData.motionBlur = motionBlur.currentIndex;
@@ -92,9 +95,11 @@ using UnityEngine.UI;
             qualityPreset.currentIndex = applicationSettings.bufferedSettingsData.qualityPreset;
             resolutionScale.currentIndex = applicationSettings.bufferedSettingsData.quality.resolutionScale;
             shadowQuality.currentIndex = applicationSettings.bufferedSettingsData.quality.shadowQuality;
+            maxShadowCasters.value = applicationSettings.bufferedSettingsData.quality.maxShadowCasters;
             effectsQuality.currentIndex = applicationSettings.bufferedSettingsData.quality.effectsQuality;
             textureQuality.currentIndex = applicationSettings.bufferedSettingsData.quality.textureQuality;
             postprocessingQuality.currentIndex = applicationSettings.bufferedSettingsData.quality.postprocessingQuality;
+            dynamicBones.currentIndex = applicationSettings.bufferedSettingsData.quality.dynamicBones;
 
             antialiasing.currentIndex = applicationSettings.bufferedSettingsData.antialiasing;
             motionBlur.currentIndex = applicationSettings.bufferedSettingsData.motionBlur;
@@ -116,6 +121,10 @@ using UnityEngine.UI;
             {
                 applicationSettings.bufferedSettingsData.fpsLimit = Mathf.RoundToInt(fpslimit.value);
             });
+            maxShadowCasters.onValueChanged.AddListener(delegate
+            {
+                applicationSettings.bufferedSettingsData.quality.maxShadowCasters = Mathf.RoundToInt(maxShadowCasters.value);
+            });
             showFramecounter.onValueChanged.AddListener(delegate
             {
                 applicationSettings.bufferedSettingsData.showFramecounter = showFramecounter.isOn;
@@ -127,37 +136,47 @@ using UnityEngine.UI;
                     case 0:
                         resolutionScale.currentIndex = applicationSettings.retroQuality.resolutionScale;
                         shadowQuality.currentIndex = applicationSettings.retroQuality.shadowQuality;
+                        maxShadowCasters.value = applicationSettings.retroQuality.maxShadowCasters;
                         effectsQuality.currentIndex = applicationSettings.retroQuality.effectsQuality;
                         textureQuality.currentIndex = applicationSettings.retroQuality.textureQuality;
                         postprocessingQuality.currentIndex = applicationSettings.retroQuality.postprocessingQuality;
+                        dynamicBones.currentIndex = applicationSettings.retroQuality.dynamicBones;
                         break;
                     case 1:
                         resolutionScale.currentIndex = applicationSettings.lowQuality.resolutionScale;
                         shadowQuality.currentIndex = applicationSettings.lowQuality.shadowQuality;
+                        maxShadowCasters.value = applicationSettings.lowQuality.maxShadowCasters;
                         effectsQuality.currentIndex = applicationSettings.lowQuality.effectsQuality;
                         textureQuality.currentIndex = applicationSettings.lowQuality.textureQuality;
                         postprocessingQuality.currentIndex = applicationSettings.lowQuality.postprocessingQuality;
+                        dynamicBones.currentIndex = applicationSettings.lowQuality.dynamicBones;
                         break;
                     case 2:
                         resolutionScale.currentIndex = applicationSettings.mediumQuality.resolutionScale;
                         shadowQuality.currentIndex = applicationSettings.mediumQuality.shadowQuality;
+                        maxShadowCasters.value = applicationSettings.mediumQuality.maxShadowCasters;
                         effectsQuality.currentIndex = applicationSettings.mediumQuality.effectsQuality;
                         textureQuality.currentIndex = applicationSettings.mediumQuality.textureQuality;
                         postprocessingQuality.currentIndex = applicationSettings.mediumQuality.postprocessingQuality;
+                        dynamicBones.currentIndex = applicationSettings.mediumQuality.dynamicBones;
                         break;
                     case 3:
                         resolutionScale.currentIndex = applicationSettings.highQuality.resolutionScale;
                         shadowQuality.currentIndex = applicationSettings.highQuality.shadowQuality;
+                        maxShadowCasters.value = applicationSettings.highQuality.maxShadowCasters;
                         effectsQuality.currentIndex = applicationSettings.highQuality.effectsQuality;
                         textureQuality.currentIndex = applicationSettings.highQuality.textureQuality;
                         postprocessingQuality.currentIndex = applicationSettings.highQuality.postprocessingQuality;
+                        dynamicBones.currentIndex = applicationSettings.highQuality.dynamicBones;
                         break;
                     case 4:
                         resolutionScale.currentIndex = applicationSettings.fantasticQuality.resolutionScale;
                         shadowQuality.currentIndex = applicationSettings.fantasticQuality.shadowQuality;
+                        maxShadowCasters.value = applicationSettings.fantasticQuality.maxShadowCasters;
                         effectsQuality.currentIndex = applicationSettings.fantasticQuality.effectsQuality;
                         textureQuality.currentIndex = applicationSettings.fantasticQuality.textureQuality;
                         postprocessingQuality.currentIndex = applicationSettings.fantasticQuality.postprocessingQuality;
+                        dynamicBones.currentIndex = applicationSettings.fantasticQuality.dynamicBones;
                         break;
                 }
             });

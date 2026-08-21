@@ -229,6 +229,9 @@ public class ApplicationSettingsData_Quality
     [Tooltip("0-Lowest, 4-Highest")] [Range(0, 4)]
     public int shadowQuality;
 
+    [Tooltip("0-Lowest, 100-Highest")] [Range(0, 100)]
+    public int maxShadowCasters;
+
     [Tooltip("0-Lowest, 4-Highest")] [Range(0, 4)]
     public int effectsQuality;
 
@@ -237,15 +240,20 @@ public class ApplicationSettingsData_Quality
 
     [Tooltip("0-Lowest, 4-Highest")] [Range(0, 4)]
     public int postprocessingQuality;
+
+    [Tooltip("0 - Off, 1 - Limited, 2 - Enabled")] [Range(0, 2)]
+    public int dynamicBones;
     
     // Default Constructor
     public ApplicationSettingsData_Quality()
     {
         resolutionScale = 3;
         shadowQuality = 2;
+        maxShadowCasters = 6;
         effectsQuality = 2;
         textureQuality = 4;
         postprocessingQuality = 2;
+        dynamicBones = 2;
     }
     
     // Clone Constructor
@@ -253,9 +261,11 @@ public class ApplicationSettingsData_Quality
     {
         resolutionScale = other.resolutionScale;
         shadowQuality = other.shadowQuality;
+        maxShadowCasters = other.maxShadowCasters;
         effectsQuality = other.effectsQuality;
         textureQuality = other.textureQuality;
         postprocessingQuality = other.postprocessingQuality;
+        dynamicBones = other.dynamicBones;
     }
 }
 

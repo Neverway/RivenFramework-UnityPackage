@@ -81,13 +81,12 @@ using Random = UnityEngine.Random;
 
         private void OnEnable()
         {
-            float randomScanStaggerOffset = Random.Range(0f, 0.15f);
-            InvokeRepeating(nameof(CheckCulling), randomScanStaggerOffset, 0.1f);
+            if (GI_LightShadowBudgetManager.Instance) GI_LightShadowBudgetManager.Instance.Register(this);
         }
 
         private void OnDisable()
         {
-            CancelInvoke(nameof(CheckCulling));
+            if (GI_LightShadowBudgetManager.Instance) GI_LightShadowBudgetManager.Instance.Unregister(this);
         }
 
         private void OnDrawGizmosSelected()
@@ -101,96 +100,125 @@ using Random = UnityEngine.Random;
             Gizmos.DrawWireSphere(transform.position, targetLight.range * rangeMultiplier);
         }
 
-        private void CheckCulling()
-        {
-            if (GetLocalPlayer() is false || cullWhenOutOfRange is false) return;
-            bool inRange = LightIsInActiveRange();
-            
-            if (fadeLightWhenCulled)
-            {
-                // Light is out of range & intensity is full
-                if (inRange is false && targetLight.intensity >= storedLightIntensity)
-                {
-                    // Fadeout
-                    StartCoroutine(FadeLight("out"));
-                }
-                // Light is in range & intensity is zero
-                if (inRange && targetLight.intensity <= 0f)
-                {
-                    // Fadein
-                    StartCoroutine(FadeLight("in"));
-                }
-            }
-            else
-            {
-                targetLight.enabled = inRange;
-            }
-        }
 
         
         //=-----------------=
         // Internal Functions
         //=-----------------=
-        private bool GetLocalPlayer()
+        private void RecalculateCullRange()
         {
-            if (localPlayer) return true;
-
-            var manager = GI_PawnManager.Instance;
-            if (manager == null || !manager.localPlayerCharacter) return false;
-
-            localPlayer = manager.localPlayerCharacter.transform;
-            return localPlayer != null;
+            float r = targetLight.range * rangeMultiplier;
+            cachedCullRange = r * r;
         }
 
-        private bool LightIsInActiveRange()
+        private void StartIntensityFade(bool fadeIn)
         {
-            if (!localPlayer)
-            {
-                GetLocalPlayer();
-                return false;
-            }
-
-            return (transform.position - localPlayer.position).sqrMagnitude <= cachedCullRange;
+            if (intensityFadeRoutine != null) StopCoroutine(intensityFadeRoutine);
+            intensityFadeRoutine = StartCoroutine(IntensityFadeRoutine(fadeIn));
         }
 
-        private IEnumerator FadeLight(string _fadeDirection)
+        private IEnumerator IntensityFadeRoutine(bool fadeIn)
         {
-            float timeElapsed = 0;
-            if (_fadeDirection is "in")
+            float timeElapsed = 0f;
+
+            if (fadeIn)
             {
                 targetLight.enabled = true;
                 while (timeElapsed < fadeSpeed)
                 {
-                    targetLight.intensity = Mathf.Lerp(0, storedLightIntensity, timeElapsed / fadeSpeed);
+                    targetLight.intensity = Mathf.Lerp(0f, storedLightIntensity, timeElapsed / fadeSpeed);
                     timeElapsed += Time.deltaTime;
                     yield return null;
                 }
-                
                 targetLight.intensity = storedLightIntensity;
             }
-            else if (_fadeDirection is "out")
+            else
             {
                 while (timeElapsed < fadeSpeed)
                 {
-                    targetLight.intensity = Mathf.Lerp(storedLightIntensity, 0, timeElapsed / fadeSpeed);
+                    targetLight.intensity = Mathf.Lerp(storedLightIntensity, 0f, timeElapsed / fadeSpeed);
                     timeElapsed += Time.deltaTime;
                     yield return null;
                 }
                 targetLight.enabled = false;
-                targetLight.intensity = 0;
+                targetLight.intensity = 0f;
             }
         }
 
-        private void RecalculateCullRange()
+        private IEnumerator ShadowFadeRoutine(bool enable, float fadeDuration)
         {
-            float range = targetLight.range * rangeMultiplier;
-            cachedCullRange = range * range;
+            float timeElapsed = 0f;
+
+            if (enable)
+            {
+                targetLight.shadows = storedShadowType;
+                targetLight.shadowStrength = 0f;
+                while (timeElapsed < fadeDuration)
+                {
+                    targetLight.shadowStrength = Mathf.Lerp(0f, storedShadowStrength, timeElapsed / fadeDuration);
+                    timeElapsed += Time.deltaTime;
+                    yield return null;
+                }
+                targetLight.shadowStrength = storedShadowStrength;
+            }
+            else
+            {
+                float startStrength = targetLight.shadowStrength;
+                while (timeElapsed < fadeDuration)
+                {
+                    targetLight.shadowStrength = Mathf.Lerp(startStrength, 0f, timeElapsed / fadeDuration);
+                    timeElapsed += Time.deltaTime;
+                    yield return null;
+                }
+                targetLight.shadowStrength = 0f;
+                targetLight.shadows = LightShadows.None;
+            }
         }
 
 
         //=-----------------=
         // External Functions
         //=-----------------=
+        public bool EvaluateCulling(Vector3 playerPos)
+        {
+            if (!cullWhenOutOfRange)
+            {
+                IsInRange = true;
+                return true;
+            }
+
+            IsInRange = (transform.position - playerPos).sqrMagnitude <= cachedCullRange;
+
+            if (fadeLightWhenCulled)
+            {
+                if (!IsInRange && targetLight.intensity >= storedLightIntensity)
+                    StartIntensityFade(false);
+                if (IsInRange && targetLight.intensity <= 0f)
+                    StartIntensityFade(true);
+            }
+            else
+            {
+                targetLight.enabled = IsInRange;
+            }
+
+            return IsInRange;
+        }    
+        
+        public float GetShadowImportanceScore(Vector3 playerPos)
+        {
+            if (alwaysCastShadows) return float.MaxValue;
+
+            float distSq = Mathf.Max((transform.position - playerPos).sqrMagnitude, 0.01f);
+            float sizeWeight = targetLight.range * Mathf.Max(targetLight.intensity, 0.01f);
+            return (sizeWeight * shadowPriorityBias) / distSq;
+        }
+        
+        public void SetShadowCasting(bool enable, float fadeDuration)
+        {
+            if (enable && !CanCastShadows) return;
+            if (shadowFadeRoutine != null) StopCoroutine(shadowFadeRoutine);
+            shadowFadeRoutine = StartCoroutine(ShadowFadeRoutine(enable, fadeDuration));
+        }
 
 
     }
