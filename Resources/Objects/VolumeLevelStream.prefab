@@ -254,6 +254,7 @@ MonoBehaviour:
   exitPositionOffset: {x: 0, y: 0, z: 0}
   exitRotationOffset: {x: 0, y: 0, z: 0}
   debugDrawExitZone: 1
+  linkTarget: {fileID: 0}
   streamContainer: {fileID: 2003284490898505612}
 --- !u!4 &4456509976819765838 stripped
 Transform:

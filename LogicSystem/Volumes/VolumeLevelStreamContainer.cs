@@ -28,6 +28,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
 
     /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
     private Vector3 cachedExitWorldPosition;
+    private Quaternion cachedOriginRotation;  
 
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
@@ -60,6 +61,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
     public void PrepareForLoad()
     {
         //cachedExitWorldPosition = transform.position + exitPositionOffset;
+        cachedOriginRotation = parentStreamVolume.transform.rotation;
     }
 
     /// <summary>
@@ -67,10 +69,12 @@ public class VolumeLevelStreamContainer : MonoBehaviour
     /// </summary>
     private void EjectActors()
     {
-        print($"[{gameObject.name}] Ejecting to {cachedExitWorldPosition}, childCount={transform.childCount}");
+        //print($"[{gameObject.name}] Ejecting to {cachedExitWorldPosition}, childCount={transform.childCount}");
         
         // Move the container and its contents to the exit poisiton
-        transform.position += exitPositionOffset;
+        transform.position += cachedOriginRotation * exitPositionOffset;
+        transform.rotation = cachedOriginRotation * Quaternion.Euler(exitRotationOffset);
+
 
         // Put the children into a list so we can modify them without the list breaking
         List<GameObject> childActors = new List<GameObject>();
@@ -93,7 +97,7 @@ public class VolumeLevelStreamContainer : MonoBehaviour
             var actor = childActors[i].gameObject;
             actor.transform.SetParent(anchor.transform);
             actor.transform.SetParent(null);
-            print($"[{actor.gameObject.name}] EJECTED");
+            //print($"[{actor.gameObject.name}] EJECTED");
 
             // Get all rigidbody components on this actor
             var rigidbodies = actor.GetComponentsInChildren<Rigidbody>();
