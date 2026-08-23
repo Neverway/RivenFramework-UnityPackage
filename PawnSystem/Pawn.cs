@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Pawn : Actor
@@ -15,25 +16,27 @@ public class Pawn : Actor
     // Public Variables
     //=-----------------=
     [Header("Pawn Data")]
-    [Tooltip("If true, the pawn will not be able to perform any actions")]
-    public bool isPaused;
     [Tooltip("If true, the pawn will be considered dead and will be queued for despawning if enabled")]
     public bool isDead;
     [Tooltip("If enabled, the pawn will be despawned when it dies after the despawnOnDeathDelay time passes")]
     public bool despawnOnDeath;
     [Tooltip("How long after a pawn dies until it is despawned (if despawnOnDeath is enabled)")]
-    public float despawnOnDeathDelay=3f;
+    public float despawnOnDeathDelay = 3f;
     [Tooltip("This is used for calculating delta offsets for pawns on rotating platforms")]
     [HideInInspector] public float platformYOffset;
 
     public bool isPlayerControlled;
 
 
+    [Tooltip("Whether or not the pawn is being paused from some source")]
+    public bool IsPaused => pauseTokens.Count > 0;
+
+
     //=-----------------=
     // Private Variables
     //=-----------------=
     private bool isInvulnerable;
-
+    private HashSet<object> pauseTokens = new HashSet<object>();
 
     //=-----------------=
     // Reference Variables
@@ -98,10 +101,11 @@ public class Pawn : Actor
         else if (currentStats.health + _value < 0) currentStats.health = 0;
         else currentStats.health += _value;
     }
-    
-    public void Kill()
-    {
-        // Instantly sets the pawns health to zero, firing its onDeath event
-        ModifyHealth(-999999);
-    }
+
+    // Instantly sets the pawns health to zero, firing its onDeath event
+    public void Kill() => ModifyHealth(-float.MaxValue);
+
+    public void Pause(out object token) => Pause(token = new());
+    public void Pause(object token) => pauseTokens.Add(token);
+    public void Unpause(object token) => pauseTokens.Remove(token);
 }

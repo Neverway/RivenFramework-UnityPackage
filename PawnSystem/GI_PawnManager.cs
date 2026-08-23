@@ -11,42 +11,43 @@ using UnityEngine;
 
 namespace RivenFramework
 {
-public class GI_PawnManager : MonoBehaviour
-{
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public GameObject defaultPawn;
-    public GameObject localPlayerCharacter;
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-    public static GI_PawnManager Instance { get; private set; }
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Awake()
+    public class GI_PawnManager : MonoBehaviour
     {
-        Instance = this;
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public GameObject defaultPawn;
+        public GameObject localPlayerCharacter;
+
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+        public static GI_PawnManager Instance { get; private set; }
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        [Todo("Using Awake on GameInstance components does not work", Owner = "Errynei")]
+        private void Awake()
+        {
+            Instance = this;
+        }
+
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
     }
-
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
-}
 }
