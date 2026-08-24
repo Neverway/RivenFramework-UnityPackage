@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3152552973295086229}
   - component: {fileID: 2705181668536080169}
   - component: {fileID: 4224132570510112453}
+  - component: {fileID: 4514788032602249815}
+  - component: {fileID: 8859855578576047285}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -112,6 +114,50 @@ MonoBehaviour:
   fadeLightWhenCulled: 1
   fadeSpeed: 0.2
   debugDrawCullRange: 0
+  neverCastShadows: 0
+  alwaysCastShadows: 0
+  shadowPriorityBias: 0
+--- !u!114 &4514788032602249815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993213290060812357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+--- !u!114 &8859855578576047285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993213290060812357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d71d3b65772834bb9f6811f2c26534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightComponent: {fileID: 2705181668536080169}
+  type: 2
+  color: {r: 1, g: 1, b: 1, a: 1}
+  intensity: 1
+  range: 10
+  renderMode: 0
 --- !u!1001 &2345092330123300072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,17 +179,17 @@ PrefabInstance:
     - target: {fileID: 1134847039480085226, guid: 6eaa804f787a93fe7b99f2159ecaf200,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 1134847039480085226, guid: 6eaa804f787a93fe7b99f2159ecaf200,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.1841679
       objectReference: {fileID: 0}
     - target: {fileID: 1134847039480085226, guid: 6eaa804f787a93fe7b99f2159ecaf200,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 7.47
       objectReference: {fileID: 0}
     - target: {fileID: 1134847039480085226, guid: 6eaa804f787a93fe7b99f2159ecaf200,
         type: 3}
@@ -198,7 +244,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3152552973295086229}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7000857651837644730, guid: 6eaa804f787a93fe7b99f2159ecaf200,
+        type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 5807321262321775063}
   m_SourcePrefab: {fileID: 100100000, guid: 6eaa804f787a93fe7b99f2159ecaf200, type: 3}
 --- !u!4 &3401546280913286658 stripped
 Transform:
@@ -206,3 +256,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2345092330123300072}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4729760362686423890 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7000857651837644730, guid: 6eaa804f787a93fe7b99f2159ecaf200,
+    type: 3}
+  m_PrefabInstance: {fileID: 2345092330123300072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5807321262321775063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4729760362686423890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387309e836e9cd94085c6924bfd13338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fc:
+    categories:
+    - categoryName: Lighting
+      fields:
+      - targetGameObject: {fileID: 993213290060812357}
+        targetComponent: {fileID: 8859855578576047285}
+        fieldName: color
+      - targetGameObject: {fileID: 993213290060812357}
+        targetComponent: {fileID: 8859855578576047285}
+        fieldName: intensity
+      - targetGameObject: {fileID: 993213290060812357}
+        targetComponent: {fileID: 8859855578576047285}
+        fieldName: range
+    - categoryName: Culling
+      fields:
+      - targetGameObject: {fileID: 993213290060812357}
+        targetComponent: {fileID: 4224132570510112453}
+        fieldName: cullWhenOutOfRange
+      - targetGameObject: {fileID: 993213290060812357}
+        targetComponent: {fileID: 4224132570510112453}
+        fieldName: rangeMultiplier
+      - targetGameObject: {fileID: 993213290060812357}
+        targetComponent: {fileID: 4224132570510112453}
+        fieldName: neverCastShadows
+      - targetGameObject: {fileID: 993213290060812357}
+        targetComponent: {fileID: 4224132570510112453}
+        fieldName: alwaysCastShadows
+      - targetGameObject: {fileID: 993213290060812357}
+        targetComponent: {fileID: 4224132570510112453}
+        fieldName: shadowPriorityBias
