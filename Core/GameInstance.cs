@@ -15,6 +15,9 @@ namespace RivenFramework
 {
     public class GameInstance : MonoBehaviour
     {
+        [SerializeReference] public GameInstanceModule[] modules;
+        protected Dictionary<Type, GameInstanceModule> moduleDictionary;
+
         //=-----------------=
         // Public Variables
         //=-----------------=
@@ -37,6 +40,7 @@ namespace RivenFramework
             } 
         }
 
+
         //=-----------------=
         // Mono Functions
         //=-----------------=
@@ -47,10 +51,21 @@ namespace RivenFramework
                 Destroy(gameObject);
                 return;
             }
-
+            
             _instance = this;
             DontDestroyOnLoad(_instance);
+            InitializeGameInstance();
         }
+
+        private void InitializeGameInstance()
+        {
+            GameInstanceModule[] modules = GetComponentsInChildren<GameInstanceModule>();
+            foreach (GameInstanceModule module in modules)
+            {
+
+            }
+        }
+        
         //=-----------------=
         // Internal Functions
         //=-----------------=
@@ -81,7 +96,7 @@ namespace RivenFramework
         /// <typeparam name="T">GameInstance component you wish to retrieve</typeparam>
         /// <param name="gameInstanceModule">outputs component of the given variable type</param>
         /// <returns>True if there was a component of that type on GameInstance</returns>
-        public static bool Get<T>(out T gameInstanceModule) where T : MonoBehaviour
+        public static bool TryGet<T>(out T gameInstanceModule) where T : MonoBehaviour
         {
             gameInstanceModule = Get<T>();
             return gameInstanceModule != null;

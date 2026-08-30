@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement style="flex-grow: 0;">
+        <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+    </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 0; height: 2px; background-color: rgba(255, 255, 255, 0.5); margin-top: 4px; margin-bottom: 2px;" />
+    <ui:VisualElement style="flex-grow: 0;">
+        <ui:VisualElement name="GameInstanceModules" style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="- No Game Instance Modules attached -" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label_NoModulesText" style="-unity-text-align: upper-center;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 0; height: 2px; background-color: rgba(255, 255, 255, 0.5); margin-top: 2px; margin-bottom: 4px;" />
+    <ui:VisualElement style="flex-grow: 0;">
+        <ui:DropdownField label="Add New Module:    " index="-1" choices="System.Collections.Generic.List`1[System.String]" name="Dropdown_AddNewModule" style="font-size: 14px;" />
+    </ui:VisualElement>
+</ui:UXML>
