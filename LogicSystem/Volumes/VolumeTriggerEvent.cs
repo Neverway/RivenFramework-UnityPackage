@@ -66,7 +66,7 @@ public class VolumeTriggerEvent : Volume
         bool wasOccupied = IsOccupied();
         base.OnTriggerEnter(_other);
         bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
-        if (isOccupied)
+        if (isOccupied && wasOccupied == false)
         {
             hasBeenTriggered = true;
             onFirstOccupied.Invoke();
