@@ -15,8 +15,22 @@ namespace RivenFramework
 {
     public class GameInstance : MonoBehaviour
     {
-        public GI_DoCrazyShit crazyShit;
-        public GI_DoMoreCrazyShit moreShit;
+        public GI_DoCrazyShit crazyShit2;
+        public GI_DoMoreCrazyShit moreShit2;
+
+        public SomeClass someClass;
+
+
+        [Serializable]
+        public class SomeClass
+        {
+            public int someInt1;
+            public int someInt3;
+        }
+
+
+
+
 
         [SerializeReference] public GameInstanceModule[] modules;
         protected Dictionary<Type, GameInstanceModule> moduleDictionary;

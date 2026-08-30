@@ -46,6 +46,11 @@ namespace RivenFramework
 
             VisualElement root = tree.Instantiate();
             
+            if (property.boxedValue == null)
+            {
+                root.Q<VisualElement>("PropertyValues");
+            }
+
 
             //Property Values -----------------------------------------------------------------------------------------
 
@@ -93,8 +98,8 @@ namespace RivenFramework
             Color moduleColor = GIModuleColorAttribute.defaultColor;
             try
             {
-                //GIModuleColorAttribute headerColor = property.boxedValue.GetType().GetCustomAttribute<GIModuleColorAttribute>();
-                GIModuleColorAttribute headerColor = fieldInfo.FieldType.GetCustomAttribute<GIModuleColorAttribute>();
+                GIModuleColorAttribute headerColor = property.boxedValue.GetType().GetCustomAttribute<GIModuleColorAttribute>();
+                //GIModuleColorAttribute headerColor = fieldInfo.FieldType.GetCustomAttribute<GIModuleColorAttribute>();
                 if (headerColor != null)
                     moduleColor = headerColor.color;
             }
