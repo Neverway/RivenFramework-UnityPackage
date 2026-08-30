@@ -86,11 +86,22 @@ namespace RivenFramework
                 moduleName.text = moduleName.text.Substring("GI_".Length);
             moduleName.text = ObjectNames.NicifyVariableName(moduleName.text);
 
+
             //Module Color --------------------------------------------------------------------------------------------
             VisualElement moduleHeader = root.Q<VisualElement>("ModuleHeader");
 
-            GIModuleColorAttribute headerColor = property.boxedValue.GetType().GetCustomAttribute<GIModuleColorAttribute>();
-            Color moduleColor = headerColor == null ? GIModuleColorAttribute.defaultColor : headerColor.color;
+            Color moduleColor = GIModuleColorAttribute.defaultColor;
+            try
+            {
+                //GIModuleColorAttribute headerColor = property.boxedValue.GetType().GetCustomAttribute<GIModuleColorAttribute>();
+                GIModuleColorAttribute headerColor = fieldInfo.FieldType.GetCustomAttribute<GIModuleColorAttribute>();
+                if (headerColor != null)
+                    moduleColor = headerColor.color;
+            }
+            catch
+            {
+                Debug.LogWarning("Could not get property type for some reason????");
+            }
 
             moduleHeader.style.backgroundColor = moduleColor;
             moduleColor.a *= 0.35f;

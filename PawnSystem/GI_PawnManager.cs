@@ -37,6 +37,7 @@ namespace RivenFramework
         [Todo("Using Awake on GameInstance components does not work", Owner = "Errynei")]
         private void Awake()
         {
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             Instance = this;
         }
 

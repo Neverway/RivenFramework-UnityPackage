@@ -11,9 +11,7 @@ namespace RivenFramework
         public const float headerAlpha = 0.12f;
         public static readonly Color defaultColor = new Color(1f, 1f, 1f, headerAlpha);
 
-
         public Color color;
-
         public GIModuleColorAttribute(float r, float g, float b)
         {
             color = new Color(r, g, b, headerAlpha);

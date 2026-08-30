@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace RivenFramework
 {
-    [CustomEditor(typeof(GameInstance))]
+    //[CustomEditor(typeof(GameInstance))]
     public class GameInstanceEditor : Editor
     {
         [SerializeField]

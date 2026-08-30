@@ -38,10 +38,23 @@ namespace RivenFramework
 
 
     [Serializable]
-    [GIModuleColor(GIModuleColors.Magenta)]
+    [GIModuleColor(0f, 0f, 0f)]
     public class GI_DoMoreCrazyShit : GameInstanceModule
     {
         public int someField;
         [Polymorphic, SerializeReference] public Actor actor;
+
+
+        public void SomeMethod()
+        {
+            
+        }
     }
+
+
+    public class BelongsToConnorsAttribute : Attribute
+    {
+
+    }
+
 }
