@@ -24,21 +24,17 @@ public class ApplicationSettings : MonoBehaviour
     //=-----------------=
     // Public Variables
     //=-----------------=
-    [Tooltip(
-        "If you have changed the application data structure, update this number so that the game knows to make a new config file for the new version")]
+    [Tooltip("If you have changed the application data structure, update this number so that the game knows to make a new config file for the new version")]
     public int configVersion = 1;
     [Tooltip("The default values for the settings (pulled from the constructor in ApplicationSettingsData, overridden here)")]
     [SerializeField] private ApplicationSettingsData defaultSettingsData;
+    [Tooltip("A list of which folders contain textures that are affected by the dynamic texture filters")]
+    [SerializeField] private List<string> dynamicallyFilteredTexturePaths = new List<string> { "Materials/Textures/DynamicallyFiltered" };
     public ApplicationSettingsData_Quality retroQuality, lowQuality, mediumQuality, highQuality, fantasticQuality;
     [Tooltip("The current values for the settings")]
     public ApplicationSettingsData currentSettingsData;
     [Tooltip("The unapplied values for the settings, current settings gets set to these values right before applying")]
     public ApplicationSettingsData bufferedSettingsData;
-
-    [Tooltip("A list of which folders contain textures that are affected by the dynamic texture filters")]
-    [SerializeField]
-    private List<string> dynamicallyFilteredTexturePaths =
-        new List<string> { "Materials/Textures/DynamicallyFiltered" };
 
     public bool debugForceEnableFirstTimeSetup;
 

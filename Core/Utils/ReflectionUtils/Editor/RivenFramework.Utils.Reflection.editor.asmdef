@@ -1,5 +1,5 @@
 {
-    "name": "RivenFramework.Utils.Reflection.editor",
+    "name": "NewRivenFramework.Utils.Reflection.editor",
     "rootNamespace": "",
     "references": [
         "GUID:f47009f683dcea55fb9faad1db3dd237",

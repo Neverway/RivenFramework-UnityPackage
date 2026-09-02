@@ -76,14 +76,14 @@ namespace RivenFramework
         /// <summary>
         /// When the level is loaded, this will remove any objects we wanted to keep during a level change, from the streaming level
         /// </summary>
-        private void EjectStreamedActors()
+        /*private void EjectStreamedActors()
         {
             foreach (var actor in SceneManager.GetSceneByName(streamingWorldID).GetRootGameObjects())
             {
                 print($"found actor {actor.name}");
                 SceneManager.MoveGameObjectToScene(actor.gameObject, SceneManager.GetActiveScene());
             }
-        }
+        }*/
 
         /*private IEnumerator LoadWorldCoroutine(string _worldName)
         {
