@@ -8,7 +8,6 @@
 //====================================================================================================================//
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using RivenFramework;
 using UnityEngine;
@@ -37,7 +36,7 @@ public class GI_PawnHandler : GameInstanceModule
     public Camera viewCamera;
     [Tooltip("This is a reference to the pawn in the scene that is currently being controlled by the local player.")]
     public Pawn localPlayerPawn;
-    [Tooltip("A list of all pawns that are currently loaded.")]
+    [Tooltip("A list of all pawns that are currently loaded, and have registered themselves to the pawn handler (which should be all of them unless something broke)")]
     public List<Pawn> cachedPawns;
 
 

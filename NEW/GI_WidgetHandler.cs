@@ -8,7 +8,6 @@
 //====================================================================================================================//
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using RivenFramework;
 using UnityEngine;
@@ -19,7 +18,8 @@ public class GI_WidgetHandler : GameInstanceModule
 {
     #region========================================( Variables )======================================================//
     /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-
+    [Tooltip("This is the list of user interface widgets that can be shown and hidden")]
+    public List<WidgetBlueprint> widgets;
 
     /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
 
@@ -28,7 +28,20 @@ public class GI_WidgetHandler : GameInstanceModule
 
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
-
+    private const string CANVAS_GAMEOBJECT_TAG = "UserInterface";
+    private GameObject _canvas;
+    private GameObject Canvas
+    {
+        get
+        {
+            if (_canvas == null)
+                _canvas = GameObject.FindWithTag(CANVAS_GAMEOBJECT_TAG);
+            return _canvas;
+        }
+        
+    }
+    public Action OnNewWidgetCreated;
+    public WidgetBlueprint lastCreatedWidget;
 
 
     #endregion
@@ -37,7 +50,7 @@ public class GI_WidgetHandler : GameInstanceModule
     #region=======================================( Functions )======================================================= //
 
     /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
-    
+
 
     /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
 

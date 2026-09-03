@@ -8,7 +8,6 @@
 //====================================================================================================================//
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using RivenFramework;
 using UnityEngine;
@@ -30,7 +29,9 @@ public class GI_ApplicationSettings : GameInstanceModule
     [SerializeField] private List<string> dynamicallyFilteredTexturePaths = new List<string> { "Materials/Textures/DynamicallyFiltered" };
 
     [Header("Quality Levels")] 
+    [Tooltip("Quality setting presets")]
     public ApplicationSettingsData_Quality retroQuality;
+    [Tooltip("Quality setting presets")]
     public ApplicationSettingsData_Quality lowQuality, mediumQuality, highQuality, fantasticQuality;
     
     [Header("Debugging")]
@@ -38,6 +39,7 @@ public class GI_ApplicationSettings : GameInstanceModule
     public ApplicationSettingsData currentSettingsData;
     [Tooltip("The unapplied values for the settings, current settings gets set to these values right before applying")]
     public ApplicationSettingsData bufferedSettingsData;
+    [Tooltip("If enabled, force the first-time-setup screen to appear when starting the game from the splash screen scene")]
     public bool debugForceEnableFirstTimeSetup;
 
 
