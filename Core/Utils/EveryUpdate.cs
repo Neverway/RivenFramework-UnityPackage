@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
+
 
 namespace ErryLib.MonoTasks
 {
@@ -22,6 +23,13 @@ namespace ErryLib.MonoTasks
         protected virtual void AfterCompleted() { }
 
         public static For Seconds(float seconds) => new ForSeconds(seconds);
+        public static For Coroutine(IEnumerator coroutine) => new ForCoroutine(coroutine);
+        public static For Coroutine(IEnumerator coroutine, out Coroutine outCoroutine)
+        { 
+            ForCoroutine monotask = new ForCoroutine(coroutine);
+            outCoroutine = monotask;
+            return monotask;
+        }
         public static For NextFrame => new ForNextUpdate();
         public static For NextFixedUpdate => new ForNextFixedUpdate();
         public static For NextUpdate => new ForNextUpdate();
@@ -45,6 +53,7 @@ namespace ErryLib.MonoTasks
     }
     public class ForCoroutine : For
     {
+        public Coroutine currentCoroutine;
         public ForCoroutine(YieldInstruction yieldInfo)
         {
             AwaitForMonoRunner.RegisterCoroutine(CompleteTaskAfterYieldInstruction(yieldInfo));
@@ -54,13 +63,17 @@ namespace ErryLib.MonoTasks
             yield return yieldInfo;
             CompleteTask();
         }
-        public ForCoroutine(IEnumerator enumerator) =>
-            AwaitForMonoRunner.RegisterCoroutine(CompleteTaskAfterCoroutine(enumerator));
+        public ForCoroutine(IEnumerator enumerator)
+        { 
+            currentCoroutine = AwaitForMonoRunner.RegisterCoroutine(CompleteTaskAfterCoroutine(enumerator));
+        }
         private IEnumerator CompleteTaskAfterCoroutine(IEnumerator enumerator)
         {
             yield return enumerator;
             CompleteTask();
         }
+        
+        public static implicit operator Coroutine(ForCoroutine fc) => fc.currentCoroutine;
     }
 
     public class ForSeconds : ForCoroutine { public ForSeconds(float seconds) : base(new WaitForSeconds(seconds)) { } }
