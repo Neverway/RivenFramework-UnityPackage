@@ -16,6 +16,7 @@ namespace RivenFramework
         //=-----------------=
         // Public Variables
         //=-----------------=
+        public static GI_PawnManager Instance => GameInstance.Get<GI_PawnManager>();
         public GameObject defaultPawn;
         public GameObject localPlayerCharacter;
 
@@ -28,18 +29,11 @@ namespace RivenFramework
         //=-----------------=
         // Reference Variables
         //=-----------------=
-        public static GI_PawnManager Instance { get; private set; }
 
 
         //=-----------------=
         // Mono Functions
         //=-----------------=
-        [Todo("Using Awake on GameInstance components does not work", Owner = "Errynei")]
-        private void Awake()
-        {
-            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Instance = this;
-        }
 
 
         //=-----------------=

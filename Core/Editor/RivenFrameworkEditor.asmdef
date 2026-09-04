@@ -2,7 +2,9 @@
     "name": "RivenFrameworkEditor",
     "rootNamespace": "RivenFramework",
     "references": [
-        "GUID:f47009f683dcea55fb9faad1db3dd237"
+        "GUID:f47009f683dcea55fb9faad1db3dd237",
+        "GUID:d3040e716f8936a4f85e3a5eb009cb77",
+        "GUID:f6fff43b61063a145b47159e6e46b6c1"
     ],
     "includePlatforms": [
         "Editor"
