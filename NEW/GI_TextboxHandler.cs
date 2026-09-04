@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MarkupAttributes;
 using RivenFramework;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class GI_TextboxHandler : GameInstanceModule
 
     /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
     [Header("Debugging")]
-    [Box] public TextEvent currentTextEvent;
+    [ErryBox] public TextEvent currentTextEvent;
     public bool HasActiveTextEvent => textEventActive;
     public bool textEventActive;
 
