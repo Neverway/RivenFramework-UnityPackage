@@ -1,9 +1,9 @@
 //==========================================( Neverway 2026 )=========================================================//
 // Author
-//
+//  Liz M.
 //
 // Contributors
-//
+// 
 //
 //====================================================================================================================//
 
@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using RivenFramework;
 using UnityEngine;
 
+/// <summary>
+/// Handles the spawning and possession of controllable actors (Known as pawns) and main camera follow targets
+/// </summary>
 [Serializable]
 [GIModuleColor(_color: GIModuleColors.Blue)]
 public class GI_PawnHandler : GameInstanceModule
@@ -27,7 +30,7 @@ public class GI_PawnHandler : GameInstanceModule
 
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
-    [Header("References")]
+    [Header("Project Configuration")]
     [Tooltip("This is the prefab for the main view camera object that the game renders to. One should always be present while the game is running.")]
     public GameObject viewCameraPrefab;
     

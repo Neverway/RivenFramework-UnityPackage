@@ -18,6 +18,7 @@ public class GI_WidgetHandler : GameInstanceModule
 {
     #region========================================( Variables )======================================================//
     /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
+    [Header("Project Configuration")]
     [Tooltip("This is the list of user interface widgets that can be shown and hidden")]
     public List<WidgetBlueprint> widgets;
 
@@ -40,6 +41,7 @@ public class GI_WidgetHandler : GameInstanceModule
         }
         
     }
+    [Header("Debugging")]
     public Action OnNewWidgetCreated;
     public WidgetBlueprint lastCreatedWidget;
 

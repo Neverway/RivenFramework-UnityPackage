@@ -16,7 +16,7 @@ public class Dummy : MonoBehaviour
 {
     #region========================================( Variables )======================================================//
     /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-    [SerializeField, SerializeReference] public GI_ApplicationSettings ApplicationSettings;
+    [SerializeField] public GI_ApplicationSettings ApplicationSettings;
     [SerializeField] public GI_MapLoader MapLoader;
     [SerializeField] public GI_PawnHandler PawnHandler;
     [SerializeField] public GI_WidgetHandler WidgetHandler;
@@ -29,7 +29,6 @@ public class Dummy : MonoBehaviour
 
 
     /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-
 
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/

@@ -19,11 +19,12 @@ public class GI_TextboxHandler : GameInstanceModule
 {
     #region========================================( Variables )======================================================//
     /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-    [Header("Config")]
+    [Header("Project Configuration")]
     public float normalTextTypeDelay;
     public float skippingTextTypeDelay;
 
     /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
+    [Header("Debugging")]
     [Box] public TextEvent currentTextEvent;
     public bool HasActiveTextEvent => textEventActive;
     public bool textEventActive;
