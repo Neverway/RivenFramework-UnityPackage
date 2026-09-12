@@ -61,12 +61,18 @@ public class VolumeTriggerEvent : Volume
         if (reset) Reset();
     }
 
+    [Todo ("We should update the state of this volume when it's disabled. If an occupant is non-crushable (doesn't get disabled in rift) then it should be removed from the list.")]
+    private void OnDisable ()
+    {
+        
+    }
+
     private new void OnTriggerEnter(Collider _other)
     {
         bool wasOccupied = IsOccupied();
         base.OnTriggerEnter(_other);
         bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
-        if (isOccupied)
+        if (isOccupied && wasOccupied == false)
         {
             hasBeenTriggered = true;
             onFirstOccupied.Invoke();
