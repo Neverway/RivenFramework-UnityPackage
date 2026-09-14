@@ -59,73 +59,81 @@ namespace RivenFramework
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            //If no visualtree is found, use the default property field for this property
-            if (!TryGetVisualTreeAsset(out VisualTreeAsset tree))
-                return new PropertyField(property);
-
-            //Use the visualtree to create the root layout of this property
-            root = tree.Instantiate();
-
-            //Get all UIElement references
-            foldout = root.Q<Toggle>("Toggle_ModuleFoldout");
-            foldoutContent = root.Q<VisualElement>("FoldoutContent");
-            moduleNameLabel = root.Q<Label>("Label_ModuleName");
-            moduleHeader = root.Q<VisualElement>("ModuleHeader");
-            propertyValuesContainer = root.Q<VisualElement>("PropertyValues");
-
-            //If the value of the field is actually NOT null
-            if (property.boxedValue != null)
+            try
             {
-                //Make the text nicer. Example, convert "GI_SomeModuleName" to "Some Module Name"
-                moduleName = GetModuleNameFromType(property.type);
+                //If no visualtree is found, use the default property field for this property
+                if (!TryGetVisualTreeAsset(out VisualTreeAsset tree))
+                    return new PropertyField(property);
 
-                //Setup Foldout
-                foldout.RegisterCallback<ChangeEvent<bool>>(SetIsFoldedOut);
-                GetIsFoldedOut();
+                //Use the visualtree to create the root layout of this property
+                root = tree.Instantiate();
 
-                //Setup Property field inside of propertyValuesContainer
+                //Get all UIElement references
+                foldout = root.Q<Toggle>("Toggle_ModuleFoldout");
+                foldoutContent = root.Q<VisualElement>("FoldoutContent");
+                moduleNameLabel = root.Q<Label>("Label_ModuleName");
+                moduleHeader = root.Q<VisualElement>("ModuleHeader");
+                propertyValuesContainer = root.Q<VisualElement>("PropertyValues");
+
+                //If the value of the field is actually NOT null
+                if (property.boxedValue != null)
                 {
-                    PropertyField propValues = new PropertyField();
-                    propValues.BindProperty(property);
-                    propValues.RegisterCallback<ChangeEvent<string>>(evt =>
+                    //Make the text nicer. Example, convert "GI_SomeModuleName" to "Some Module Name"
+                    moduleName = GetModuleNameFromType(property.type);
+
+                    //Setup Foldout
+                    foldout.RegisterCallback<ChangeEvent<bool>>(SetIsFoldedOut);
+                    GetIsFoldedOut();
+
+                    //Setup Property field inside of propertyValuesContainer
                     {
-                        //Get rid of the toggle label section
-                        propValues.Q<Toggle>().style.display = DisplayStyle.None;
+                        PropertyField propValues = new PropertyField();
+                        propValues.BindProperty(property);
+                        propValues.RegisterCallback<ChangeEvent<string>>(evt =>
+                        {
+                            //Get rid of the toggle label section
+                            propValues.Q<Toggle>().style.display = DisplayStyle.None;
 
-                        //Always show the "Flex" section of the foldout, and remove the margin..
-                        //   ..so its as if the foldout was never there!
-                        var content = propValues.Q<VisualElement>("unity-content");
-                        content.style.display = DisplayStyle.Flex;
-                        content.style.marginLeft = 0;
+                            //Always show the "Flex" section of the foldout, and remove the margin..
+                            //   ..so its as if the foldout was never there!
+                            var content = propValues.Q<VisualElement>("unity-content");
+                            content.style.display = DisplayStyle.Flex;
+                            content.style.marginLeft = 0;
 
-                    });
-                    propertyValuesContainer.Add(propValues);
+                        });
+                        propertyValuesContainer.Add(propValues);
+                    }
+
+                    //Setup Module color
+                    {
+                        try
+                        {
+                            GIModuleColorAttribute headerColor = property.boxedValue.GetType().GetCustomAttribute<GIModuleColorAttribute>();
+                            if (headerColor != null)
+                                moduleColor = headerColor.color;
+                        }
+                        catch
+                        {
+                            Debug.LogWarning("Could not get property type for some reason????");
+                        }
+                    }
                 }
 
-                //Setup Module color
-                {
-                    try
-                    {
-                        GIModuleColorAttribute headerColor = property.boxedValue.GetType().GetCustomAttribute<GIModuleColorAttribute>();
-                        if (headerColor != null)
-                            moduleColor = headerColor.color;
-                    }
-                    catch
-                    {
-                        Debug.LogWarning("Could not get property type for some reason????");
-                    }
-                }
+                //Apply module name
+                moduleNameLabel.text = moduleName;
+
+                //Apply module color
+                moduleHeader.style.backgroundColor = moduleColor;
+                moduleColor.a *= 0.35f;
+                foldoutContent.style.backgroundColor = moduleColor;
+
+                return root;
             }
-
-            //Apply module name
-            moduleNameLabel.text = moduleName;
-
-            //Apply module color
-            moduleHeader.style.backgroundColor = moduleColor;
-            moduleColor.a *= 0.35f;
-            foldoutContent.style.backgroundColor = moduleColor;
-
-            return root;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new Label($"{e}");
+            }
         }
 
         public static readonly string EDITORPREFS_ISFOLDEDOUT_PREFIX = "RivenFramework_ModuleFoldout ";

@@ -28,9 +28,11 @@ public class ApplicationSettingsData
 
     [Tooltip("Vertical sync")] public bool enableVysnc;
 
+    [SettingsEntryInfo("Limit the 'Frames Per Second' to stay under this amount.")]
     [Tooltip("Also referred to as target framerate")] [Range(-1, 300)]
     public int fpsLimit;
 
+    [SettingsEntryInfo("Enable the 'Frames Per Second' counter.")]
     [Tooltip("Also referred to as fps counter")]
     public bool showFramecounter;
 
@@ -218,6 +220,11 @@ public class ApplicationSettingsData
 
         localeID = other.localeID;
     }
+
+    public void TestSomething()
+    {
+        
+    }
 }
 
 [Serializable]
@@ -269,3 +276,12 @@ public class ApplicationSettingsData_Quality
     }
 }
 
+public class SettingsEntryInfo : Attribute
+{
+    public string description;
+
+    public SettingsEntryInfo(string _description)
+    {
+        this.description = _description;
+    }
+}

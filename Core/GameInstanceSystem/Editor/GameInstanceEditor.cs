@@ -112,18 +112,26 @@ namespace RivenFramework
 
         public override VisualElement CreateInspectorGUI()
         {
-            VisualElement root = treeAsset.Instantiate();
+            try
+            {
+                VisualElement root = treeAsset.Instantiate();
 
-            gameInstanceModules = root.Q<VisualElement>("GameInstanceModules");
-            modulesDropdown = root.Q<DropdownField>("Dropdown_AddNewModule");
-            noModulesLabel = root.Q<Label>("Label_NoModulesText");
+                gameInstanceModules = root.Q<VisualElement>("GameInstanceModules");
+                modulesDropdown = root.Q<DropdownField>("Dropdown_AddNewModule");
+                noModulesLabel = root.Q<Label>("Label_NoModulesText");
 
-            RebuildModulesUI();
+                RebuildModulesUI();
 
-            // Rebuild whenever the SerializedObject changes for any reason
-            root.TrackSerializedObjectValue(serializedObject, so => RebuildModulesUI());
+                // Rebuild whenever the SerializedObject changes for any reason
+                root.TrackSerializedObjectValue(serializedObject, so => RebuildModulesUI());
 
-            return root;
+                return root;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new Label($"{e}");
+            }
         }
 
         void RebuildModulesUI()

@@ -24,7 +24,7 @@ public class GI_ApplicationSettings : GameInstanceModule
     [Tooltip("If you have changed the application data structure, update this number so that the game knows to make a new config file for the new version")]
     public int configVersion = 1;
     [Tooltip("The default values for the settings (pulled from the constructor in ApplicationSettingsData, overridden here)")]
-    [SerializeField] private ApplicationSettingsData defaultSettingsData;
+    [SerializeField] public RivenFramework_Revamp.NEW.ApplicationSettingsData defaultSettingsData;
     [Tooltip("A list of which folders contain textures that are affected by the dynamic texture filters")]
     [SerializeField] private List<string> dynamicallyFilteredTexturePaths = new List<string> { "Materials/Textures/DynamicallyFiltered" };
 

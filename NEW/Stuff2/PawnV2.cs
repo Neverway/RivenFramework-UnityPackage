@@ -19,6 +19,7 @@ public class PawnV2 : ActorV2
     #region========================================( Variables )======================================================//
     /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
     [Header("Pawn Params")]
+    [Tooltip("The controller type that is currently possessing this pawn")]
     [SerializeReference, Polymorphic] public PawnController CurrentController;
     [SerializeReference, Polymorphic] public PawnBehaviour[] Behaviours;
 
@@ -29,8 +30,9 @@ public class PawnV2 : ActorV2
     /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
 
 
-
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
+    [Tooltip("The point the primary view camera follows when this pawn is possessed by a local player")]
+    public Transform viewCameraTarget;
 
 
 
