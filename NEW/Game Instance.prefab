@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4537193101236693595}
-  - component: {fileID: -6420832550977358618}
-  - component: {fileID: -1253633960931053511}
+  - component: {fileID: -5258869115509661026}
   m_Layer: 0
   m_Name: Game Instance
   m_TagString: Untagged
@@ -33,587 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6420832550977358618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7072051386136352326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3ad1adaa7d3b3232a9210e925e45ba4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ApplicationSettings:
-    configVersion: 1
-    defaultSettingsData:
-      SliderPrefab: {fileID: 5630518988577390337, guid: 7ecd8d722d06ef70ca1c2dd2f6ec1996,
-        type: 3}
-      CheckboxPrefab: {fileID: 7652884859239954593, guid: 2ac4f1301f7d5e8a6beb9016d3d1b1ce,
-        type: 3}
-      DropdownPrefab: {fileID: 7298689827277899358, guid: dd98e9541f55c47dcbd3c1dbee79a683,
-        type: 3}
-      SelectorPrefab: {fileID: 4419533088390941162, guid: 39c249c5d58ca5985a7c61d8b641ab4b,
-        type: 3}
-      graphics:
-        targetResolution:
-          category: Graphics/Display/Resolution
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        windowMode:
-          category: Graphics/Display/Window Mode
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        enableVsync:
-          category: Graphics/Display/Enable V-Sync
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        fpsLimit:
-          category: Graphics/Display/FPS Limit
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        brightness:
-          category: Graphics/Display/Brightness
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 100
-          value: 0
-        qualityPreset:
-          category: Graphics/Quality/Quality Preset
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 4
-          value: 0
-        resolutionScale:
-          category: Graphics/Quality/Resolution Scale
-          description: How much the rendering is scaled up or down from the target
-            window resolution.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 4
-          value: 0
-        shadowQuality:
-          category: Graphics/Quality/Quality Preset
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 4
-          value: 0
-        maxShadowCaster:
-          category: Graphics/Quality/Max Shadow Casters
-          description: Adjusts how many lights can cast real-time shadows at once.
-            Which lights are given priority casting shadows varies based on the range
-            and intensity of each light source.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 6
-          value: 0
-        effectsQuality:
-          category: Graphics/Quality/Effects Quality
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 4
-          value: 0
-        textureQuality:
-          category: Graphics/Quality/Texture Quality
-          description: Adjusts the resolution of certain textures. Lower values reduce
-            VRAM usage but cause surfaces to appear blurry or pixelated.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 4
-          value: 0
-        postProcessingQuality:
-          category: Graphics/Quality/Post-Processing Quality
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 4
-          value: 0
-        dynamicBones:
-          category: Graphics/Quality/Dynamic Bones
-          description: Adjusts the amount of dynamic bones that are used to add fluidity
-            to things like capes, scarfs, tails, fluff, etc.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 2
-          value: 0
-        antiAliasing:
-          category: Graphics/Effects/Anti-Aliasing
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        screenSpaceReflections:
-          category: Graphics/Effects/Screen-Space Reflections
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 3
-          value: 0
-        depthOfField:
-          category: Graphics/Effects/Depth Of Field
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 3
-          value: 0
-        motionBlur:
-          category: Graphics/Effects/Motion Blur
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 3
-          value: 0
-        ambientOcclusion:
-          category: Graphics/Effects/Ambient Occlusion
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 3
-          value: 0
-        bloom:
-          category: Graphics/Effects/Bloom
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 3
-          value: 0
-      audio:
-        outputDevice:
-          category: Audio/Audio Devices/Output Device
-          description: Which device to play the games audio through.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        inputDevice:
-          category: Audio/Audio Devices/Input Device
-          description: Which device to use as your microphone for voice chat.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        fpsLimit:
-          category: Audio/Audio Devices/Input Volume
-          description: Controls how loud your microphone sounds to other players.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 50
-          value: 0
-        masterVolume:
-          category: Audio/Audio Mixer/Master
-          description: Controls the volume for all sounds.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 50
-          value: 0
-        musicVolume:
-          category: Audio/Audio Mixer/Music
-          description: Controls the volume for music.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 50
-          value: 0
-        soundEffectsVolume:
-          category: Audio/Audio Mixer/Sound Effects
-          description: Controls the volume for all other sounds that don't fit in
-            the other categories.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 50
-          value: 0
-        voiceChatVolume:
-          category: Audio/Audio Mixer/Voice Chat
-          description: Controls the volume for how loud other players sound to you.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 50
-          value: 0
-        characterChatterVolume:
-          category: Audio/Audio Mixer/Character Chatter
-          description: Controls the volume for in-game characters talking.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 50
-          value: 0
-        ambienceVolume:
-          category: Audio/Audio Mixer/Ambience
-          description: Controls the volume for background environmental noises. (Eg.
-            Crickets, ominous humming, flowing water)
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 50
-          value: 0
-        menusVolume:
-          category: Audio/Audio Mixer/Menus
-          description: Controls the volume for anything in the user interface. (Eg.
-            Button clicks, sliders, notifications)
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 50
-          value: 0
-        visualizeSoundEffects:
-          category: Audio/Accessibility/Visualize Sound Effects
-          description: When enabled, key sound effects will be shown as a symbol
-            in a circular ring on the in-game HUD (Heads up display) indicating what
-            direction a certain sound came from.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        closedCaptioning:
-          category: Audio/Accessibility/Closed Captioning
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        minVolumeDb:
-          category: Audio/Accessibility/Min Volume (dB)
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        maxVolumeDb:
-          category: Audio/Accessibility/Max Volume (dB)
-          description: '-'
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 140
-          value: 0
-        maxFrequencyKhz:
-          category: Audio/Accessibility/Max Frequency (kHz)
-          description: The maximum frequency that any game sounds can play, anything
-            above this limit will be pitch shifted down to fall within this range.
-            This is helpful if you can't, or don't want to hear higher pitch sounds.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 17
-          value: 0
-      gameplay:
-        invertHorizontalLook:
-          category: Gameplay/View/Invert Horizontal Look
-          description: When enabled, looking left results in looking right, and looking
-            right results in looking left.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        invertVerticalLook:
-          category: Gameplay/View/Invert Vertical Look
-          description: When enabled, looking up results in looking down, and looking
-            down results in looking up.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        joystickLookSensitivity:
-          category: Gameplay/View/Joystick Look Sensitivity
-          description: How much the controller's joystick movement is multiplied
-            by the look speed.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 6
-          value: 0
-        mouseLookSensitivity:
-          category: Gameplay/View/Mouse Look Sensitivity
-          description: How much the mouse movement is multiplied by the look speed.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 6
-          value: 0
-        horizontalLookSpeed:
-          category: Gameplay/View/Horizontal Look Speed
-          description: How quickly the player turns when looking left and right.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 6
-          value: 0
-        verticalLookSpeed:
-          category: Gameplay/View/Vertical Look Speed
-          description: How quickly the player turns when looking up and down.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 6
-          value: 0
-        fieldOfView:
-          category: Gameplay/View/Field Of View
-          description: 
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 80
-          value: 0
-        colorBlindIntensity:
-          category: Gameplay/Accessibility/Color Blind Filter Intensity
-          description: Adjusts the strength of the color blind filter by shifting
-            the target color values for the active color blind filter further apart.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        colorBlindFilter:
-          category: Gameplay/Accessibility/Color Blind Filter
-          description: Shifts certain color values so they are more distinguishable
-            from one another. This is intended to help people with color blindness,
-            but can make parts of the game look distracting and unnatural. Protanopia
-            reduces sensitivity to reds, Deuteranopia reduces sensitivity to greens,
-            and Tritanopia reduces sensitivity to blues.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        colorBlindSymboling:
-          category: Gameplay/Accessibility/Color Blind Symboling
-          description: Attempts to add symbols, icons, and patterns to distinguish
-            between gameplay elements that normally relly on color for identification.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        dyslexicFriendlyFont:
-          category: Gameplay/Accessibility/Dyslexic Friendly Font
-          description: When enabled, as many text elements as possible will have
-            their fonts replaced with one that is easier to distinguish the difference
-            between letters. Some text, such as on hand painted textures, will not
-            be affected.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        reduceStrobingEffects:
-          category: Gameplay/Accessibility/Reduce Strobing Effects
-          description: Attempts to reduce sudden changes in visuals and light intensities,
-            such as flickering effects or flashing lights. The post-processing method
-            renders several frames ahead to try to detect and smoothly fade-in sudden
-            changes in visuals. The hand-picked method is done by a developer manually
-            marking certain effects as a 'flicker risk' and either replaces the effect
-            or out right removes it.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        screenReader:
-          category: Gameplay/Accessibility/Screen Reader
-          description: Reads aloud the text in menus and user interfaces when hovering
-            over them via a Text-To-Speech (TTS) voice.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-        textChatReader:
-          category: Gameplay/Accessibility/Text Chat Reader
-          description: Reads aloud the text chat in multiplayer games via a Text-To-Speech
-            (TTS) voice.
-          referenceImage: {fileID: 0}
-          hidden: 0
-          defaultValue: 0
-          value: 0
-    dynamicallyFilteredTexturePaths:
-    - Materials/Textures/DynamicallyFiltered
-    retroQuality:
-      resolutionScale: 3
-      shadowQuality: 2
-      maxShadowCasters: 6
-      effectsQuality: 2
-      textureQuality: 4
-      postprocessingQuality: 2
-      dynamicBones: 2
-    lowQuality:
-      resolutionScale: 3
-      shadowQuality: 2
-      maxShadowCasters: 6
-      effectsQuality: 2
-      textureQuality: 4
-      postprocessingQuality: 2
-      dynamicBones: 2
-    mediumQuality:
-      resolutionScale: 3
-      shadowQuality: 2
-      maxShadowCasters: 6
-      effectsQuality: 2
-      textureQuality: 4
-      postprocessingQuality: 2
-      dynamicBones: 2
-    highQuality:
-      resolutionScale: 3
-      shadowQuality: 2
-      maxShadowCasters: 6
-      effectsQuality: 2
-      textureQuality: 4
-      postprocessingQuality: 2
-      dynamicBones: 2
-    fantasticQuality:
-      resolutionScale: 3
-      shadowQuality: 2
-      maxShadowCasters: 6
-      effectsQuality: 2
-      textureQuality: 4
-      postprocessingQuality: 2
-      dynamicBones: 2
-    currentSettingsData:
-      configurationFileCompatibilityVersion: 0
-      targetResolution: 0
-      windowMode: 0
-      enableVysnc: 0
-      fpsLimit: 60
-      showFramecounter: 0
-      qualityPreset: 3
-      quality:
-        resolutionScale: 3
-        shadowQuality: 2
-        maxShadowCasters: 6
-        effectsQuality: 2
-        textureQuality: 4
-        postprocessingQuality: 2
-        dynamicBones: 2
-      antialiasing: 0
-      motionBlur: 0
-      ambientOcclusion: 2
-      bloom: 2
-      outputDevice: 0
-      inputDevice: 0
-      inputVolume: 100
-      masterVolume: 100
-      musicVolume: 100
-      soundVolume: 100
-      voiceVolume: 100
-      chatterVolume: 100
-      ambientVolume: 100
-      menuVolume: 100
-      visualizeSoundEffects: 0
-      closedCaptioning: 0
-      minVolume: 0
-      maxVolume: 140
-      minFrequency: 17
-      invertHorizontalView: 0
-      invertVerticalView: 0
-      horizontalLookSpeed: 1
-      verticalLookSpeed: 0.75
-      joystickLookSensitivity: 0.7
-      mouseLookSensitivity: 0.7
-      cameraFov: 90
-      hideTextChat: 0
-      enablePushToTalk: 0
-      brightness: 1
-      speedrunMode: 0
-      colorBlindIntensity: 1
-      colorBlindFilter: 0
-      dyslexicFriendlyFont: 0
-      reduceStrobing: 0
-      screenReader: 0
-      localeID: 0
-    bufferedSettingsData:
-      configurationFileCompatibilityVersion: 0
-      targetResolution: 0
-      windowMode: 0
-      enableVysnc: 0
-      fpsLimit: 60
-      showFramecounter: 0
-      qualityPreset: 3
-      quality:
-        resolutionScale: 3
-        shadowQuality: 2
-        maxShadowCasters: 6
-        effectsQuality: 2
-        textureQuality: 4
-        postprocessingQuality: 2
-        dynamicBones: 2
-      antialiasing: 0
-      motionBlur: 0
-      ambientOcclusion: 2
-      bloom: 2
-      outputDevice: 0
-      inputDevice: 0
-      inputVolume: 100
-      masterVolume: 100
-      musicVolume: 100
-      soundVolume: 100
-      voiceVolume: 100
-      chatterVolume: 100
-      ambientVolume: 100
-      menuVolume: 100
-      visualizeSoundEffects: 0
-      closedCaptioning: 0
-      minVolume: 0
-      maxVolume: 140
-      minFrequency: 17
-      invertHorizontalView: 0
-      invertVerticalView: 0
-      horizontalLookSpeed: 1
-      verticalLookSpeed: 0.75
-      joystickLookSensitivity: 0.7
-      mouseLookSensitivity: 0.7
-      cameraFov: 90
-      hideTextChat: 0
-      enablePushToTalk: 0
-      brightness: 1
-      speedrunMode: 0
-      colorBlindIntensity: 1
-      colorBlindFilter: 0
-      dyslexicFriendlyFont: 0
-      reduceStrobing: 0
-      screenReader: 0
-      localeID: 0
-    debugForceEnableFirstTimeSetup: 0
-    audioMixer: {fileID: 24100000, guid: 549b84953554a157688e4ed0cb77d9a7, type: 2}
-    cameraPrefab: {fileID: 0}
-    postProcessProfile: {fileID: 0}
-    framecounterWidget: {fileID: 0}
-  MapLoader:
-    delayBeforeWorldChange: 0.25
-    minimumRequiredLoadTime: 0
-    isLoading: 0
-  PawnHandler:
-    viewCameraPrefab: {fileID: 0}
-    viewCamera: {fileID: 0}
-    localPlayerPawn: {fileID: 0}
-    cachedPawns: []
-  WidgetHandler:
-    widgets: []
-    lastCreatedWidget: {fileID: 0}
-  AudioHandler:
-    currentTrackPlayer: {fileID: 0}
-    queuedTrackPlayer: {fileID: 0}
-    currentTrack: {fileID: 0}
-    queuedTrack: {fileID: 0}
-  TextboxHandler:
-    normalTextTypeDelay: 0
-    skippingTextTypeDelay: 0
-    currentTextEvent:
-      frames: []
-      OnFinish:
-        m_PersistentCalls:
-          m_Calls: []
-    textEventActive: 0
-    currentlyPrinting: 0
-    currentTextContent: 
-    currentTextTypeDelay: 0
-    currentFrame: 0
-    performingRegularMarkup: 0
-    performingSpecialMarkup: 0
-    markupStartIndex: 0
-  DeveloperMenu:
-    RatSteaks: 0
-    test: -47
---- !u!114 &-1253633960931053511
+--- !u!114 &-5258869115509661026
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -634,36 +53,595 @@ MonoBehaviour:
     someField: 0
     actor: {fileID: 0}
   modules:
-  - rid: 5065169791841992704
-  - rid: 5065169791841992705
-  - rid: 5065169791841992706
-  - rid: 5065169791841992707
+  - rid: 5065170035678904322
+  - rid: 5065170035678904323
+  - rid: 5065170035678904324
+  - rid: 5065170035678904325
+  - rid: 5065170035678904326
+  - rid: 5065170035678904327
+  - rid: 5065170035678904328
   references:
     version: 2
     RefIds:
-    - rid: 5065169791841992704
+    - rid: 5065170035678904322
+      type: {class: GI_ApplicationSettings, ns: , asm: Assembly-CSharp}
+      data:
+        configVersion: 1
+        defaultSettingsData:
+          SliderPrefab: {fileID: 0}
+          CheckboxPrefab: {fileID: 0}
+          DropdownPrefab: {fileID: 0}
+          SelectorPrefab: {fileID: 0}
+          graphics:
+            targetResolution:
+              category: Graphics/Display/Resolution
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            windowMode:
+              category: Graphics/Display/Window Mode
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            enableVsync:
+              category: Graphics/Display/Enable V-Sync
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            fpsLimit:
+              category: Graphics/Display/FPS Limit
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            brightness:
+              category: Graphics/Display/Brightness
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 100
+              value: 0
+            qualityPreset:
+              category: Graphics/Quality/Quality Preset
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 4
+              value: 0
+            resolutionScale:
+              category: Graphics/Quality/Resolution Scale
+              description: How much the rendering is scaled up or down from the target
+                window resolution.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 4
+              value: 0
+            shadowQuality:
+              category: Graphics/Quality/Quality Preset
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 4
+              value: 0
+            maxShadowCaster:
+              category: Graphics/Quality/Max Shadow Casters
+              description: Adjusts how many lights can cast real-time shadows at
+                once. Which lights are given priority casting shadows varies based
+                on the range and intensity of each light source.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 6
+              value: 0
+            effectsQuality:
+              category: Graphics/Quality/Effects Quality
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 4
+              value: 0
+            textureQuality:
+              category: Graphics/Quality/Texture Quality
+              description: Adjusts the resolution of certain textures. Lower values
+                reduce VRAM usage but cause surfaces to appear blurry or pixelated.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 4
+              value: 0
+            postProcessingQuality:
+              category: Graphics/Quality/Post-Processing Quality
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 4
+              value: 0
+            dynamicBones:
+              category: Graphics/Quality/Dynamic Bones
+              description: Adjusts the amount of dynamic bones that are used to add
+                fluidity to things like capes, scarfs, tails, fluff, etc.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 2
+              value: 0
+            antiAliasing:
+              category: Graphics/Effects/Anti-Aliasing
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            screenSpaceReflections:
+              category: Graphics/Effects/Screen-Space Reflections
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 3
+              value: 0
+            depthOfField:
+              category: Graphics/Effects/Depth Of Field
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 3
+              value: 0
+            motionBlur:
+              category: Graphics/Effects/Motion Blur
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 3
+              value: 0
+            ambientOcclusion:
+              category: Graphics/Effects/Ambient Occlusion
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 3
+              value: 0
+            bloom:
+              category: Graphics/Effects/Bloom
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 3
+              value: 0
+          audio:
+            outputDevice:
+              category: Audio/Audio Devices/Output Device
+              description: Which device to play the games audio through.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            inputDevice:
+              category: Audio/Audio Devices/Input Device
+              description: Which device to use as your microphone for voice chat.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            fpsLimit:
+              category: Audio/Audio Devices/Input Volume
+              description: Controls how loud your microphone sounds to other players.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 50
+              value: 0
+            masterVolume:
+              category: Audio/Audio Mixer/Master
+              description: Controls the volume for all sounds.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 50
+              value: 0
+            musicVolume:
+              category: Audio/Audio Mixer/Music
+              description: Controls the volume for music.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 50
+              value: 0
+            soundEffectsVolume:
+              category: Audio/Audio Mixer/Sound Effects
+              description: Controls the volume for all other sounds that don't fit
+                in the other categories.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 50
+              value: 0
+            voiceChatVolume:
+              category: Audio/Audio Mixer/Voice Chat
+              description: Controls the volume for how loud other players sound to
+                you.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 50
+              value: 0
+            characterChatterVolume:
+              category: Audio/Audio Mixer/Character Chatter
+              description: Controls the volume for in-game characters talking.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 50
+              value: 0
+            ambienceVolume:
+              category: Audio/Audio Mixer/Ambience
+              description: Controls the volume for background environmental noises.
+                (Eg. Crickets, ominous humming, flowing water)
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 50
+              value: 0
+            menusVolume:
+              category: Audio/Audio Mixer/Menus
+              description: Controls the volume for anything in the user interface.
+                (Eg. Button clicks, sliders, notifications)
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 50
+              value: 0
+            visualizeSoundEffects:
+              category: Audio/Accessibility/Visualize Sound Effects
+              description: When enabled, key sound effects will be shown as a symbol
+                in a circular ring on the in-game HUD (Heads up display) indicating
+                what direction a certain sound came from.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            closedCaptioning:
+              category: Audio/Accessibility/Closed Captioning
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            minVolumeDb:
+              category: Audio/Accessibility/Min Volume (dB)
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            maxVolumeDb:
+              category: Audio/Accessibility/Max Volume (dB)
+              description: '-'
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 140
+              value: 0
+            maxFrequencyKhz:
+              category: Audio/Accessibility/Max Frequency (kHz)
+              description: The maximum frequency that any game sounds can play, anything
+                above this limit will be pitch shifted down to fall within this range.
+                This is helpful if you can't, or don't want to hear higher pitch
+                sounds.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 17
+              value: 0
+          gameplay:
+            invertHorizontalLook:
+              category: Gameplay/View/Invert Horizontal Look
+              description: When enabled, looking left results in looking right, and
+                looking right results in looking left.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            invertVerticalLook:
+              category: Gameplay/View/Invert Vertical Look
+              description: When enabled, looking up results in looking down, and
+                looking down results in looking up.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            joystickLookSensitivity:
+              category: Gameplay/View/Joystick Look Sensitivity
+              description: How much the controller's joystick movement is multiplied
+                by the look speed.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 6
+              value: 0
+            mouseLookSensitivity:
+              category: Gameplay/View/Mouse Look Sensitivity
+              description: How much the mouse movement is multiplied by the look
+                speed.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 6
+              value: 0
+            horizontalLookSpeed:
+              category: Gameplay/View/Horizontal Look Speed
+              description: How quickly the player turns when looking left and right.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 6
+              value: 0
+            verticalLookSpeed:
+              category: Gameplay/View/Vertical Look Speed
+              description: How quickly the player turns when looking up and down.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 6
+              value: 0
+            fieldOfView:
+              category: Gameplay/View/Field Of View
+              description: 
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 80
+              value: 0
+            colorBlindIntensity:
+              category: Gameplay/Accessibility/Color Blind Filter Intensity
+              description: Adjusts the strength of the color blind filter by shifting
+                the target color values for the active color blind filter further
+                apart.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            colorBlindFilter:
+              category: Gameplay/Accessibility/Color Blind Filter
+              description: Shifts certain color values so they are more distinguishable
+                from one another. This is intended to help people with color blindness,
+                but can make parts of the game look distracting and unnatural. Protanopia
+                reduces sensitivity to reds, Deuteranopia reduces sensitivity to
+                greens, and Tritanopia reduces sensitivity to blues.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            colorBlindSymboling:
+              category: Gameplay/Accessibility/Color Blind Symboling
+              description: Attempts to add symbols, icons, and patterns to distinguish
+                between gameplay elements that normally relly on color for identification.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            dyslexicFriendlyFont:
+              category: Gameplay/Accessibility/Dyslexic Friendly Font
+              description: When enabled, as many text elements as possible will have
+                their fonts replaced with one that is easier to distinguish the difference
+                between letters. Some text, such as on hand painted textures, will
+                not be affected.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            reduceStrobingEffects:
+              category: Gameplay/Accessibility/Reduce Strobing Effects
+              description: Attempts to reduce sudden changes in visuals and light
+                intensities, such as flickering effects or flashing lights. The post-processing
+                method renders several frames ahead to try to detect and smoothly
+                fade-in sudden changes in visuals. The hand-picked method is done
+                by a developer manually marking certain effects as a 'flicker risk'
+                and either replaces the effect or out right removes it.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            screenReader:
+              category: Gameplay/Accessibility/Screen Reader
+              description: Reads aloud the text in menus and user interfaces when
+                hovering over them via a Text-To-Speech (TTS) voice.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+            textChatReader:
+              category: Gameplay/Accessibility/Text Chat Reader
+              description: Reads aloud the text chat in multiplayer games via a Text-To-Speech
+                (TTS) voice.
+              referenceImage: {fileID: 0}
+              hidden: 0
+              defaultValue: 0
+              value: 0
+        dynamicallyFilteredTexturePaths:
+        - Materials/Textures/DynamicallyFiltered
+        retroQuality:
+          resolutionScale: 3
+          shadowQuality: 2
+          maxShadowCasters: 6
+          effectsQuality: 2
+          textureQuality: 4
+          postprocessingQuality: 2
+          dynamicBones: 2
+        lowQuality:
+          resolutionScale: 3
+          shadowQuality: 2
+          maxShadowCasters: 6
+          effectsQuality: 2
+          textureQuality: 4
+          postprocessingQuality: 2
+          dynamicBones: 2
+        mediumQuality:
+          resolutionScale: 3
+          shadowQuality: 2
+          maxShadowCasters: 6
+          effectsQuality: 2
+          textureQuality: 4
+          postprocessingQuality: 2
+          dynamicBones: 2
+        highQuality:
+          resolutionScale: 3
+          shadowQuality: 2
+          maxShadowCasters: 6
+          effectsQuality: 2
+          textureQuality: 4
+          postprocessingQuality: 2
+          dynamicBones: 2
+        fantasticQuality:
+          resolutionScale: 3
+          shadowQuality: 2
+          maxShadowCasters: 6
+          effectsQuality: 2
+          textureQuality: 4
+          postprocessingQuality: 2
+          dynamicBones: 2
+        currentSettingsData:
+          configurationFileCompatibilityVersion: 0
+          targetResolution: 0
+          windowMode: 0
+          enableVysnc: 0
+          fpsLimit: 60
+          showFramecounter: 0
+          qualityPreset: 3
+          quality:
+            resolutionScale: 3
+            shadowQuality: 2
+            maxShadowCasters: 6
+            effectsQuality: 2
+            textureQuality: 4
+            postprocessingQuality: 2
+            dynamicBones: 2
+          antialiasing: 0
+          motionBlur: 0
+          ambientOcclusion: 2
+          bloom: 2
+          outputDevice: 0
+          inputDevice: 0
+          inputVolume: 100
+          masterVolume: 100
+          musicVolume: 100
+          soundVolume: 100
+          voiceVolume: 100
+          chatterVolume: 100
+          ambientVolume: 100
+          menuVolume: 100
+          visualizeSoundEffects: 0
+          closedCaptioning: 0
+          minVolume: 0
+          maxVolume: 140
+          minFrequency: 17
+          invertHorizontalView: 0
+          invertVerticalView: 0
+          horizontalLookSpeed: 1
+          verticalLookSpeed: 0.75
+          joystickLookSensitivity: 0.7
+          mouseLookSensitivity: 0.7
+          cameraFov: 90
+          hideTextChat: 0
+          enablePushToTalk: 0
+          brightness: 1
+          speedrunMode: 0
+          colorBlindIntensity: 1
+          colorBlindFilter: 0
+          dyslexicFriendlyFont: 0
+          reduceStrobing: 0
+          screenReader: 0
+          localeID: 0
+        bufferedSettingsData:
+          configurationFileCompatibilityVersion: 0
+          targetResolution: 0
+          windowMode: 0
+          enableVysnc: 0
+          fpsLimit: 60
+          showFramecounter: 0
+          qualityPreset: 3
+          quality:
+            resolutionScale: 3
+            shadowQuality: 2
+            maxShadowCasters: 6
+            effectsQuality: 2
+            textureQuality: 4
+            postprocessingQuality: 2
+            dynamicBones: 2
+          antialiasing: 0
+          motionBlur: 0
+          ambientOcclusion: 2
+          bloom: 2
+          outputDevice: 0
+          inputDevice: 0
+          inputVolume: 100
+          masterVolume: 100
+          musicVolume: 100
+          soundVolume: 100
+          voiceVolume: 100
+          chatterVolume: 100
+          ambientVolume: 100
+          menuVolume: 100
+          visualizeSoundEffects: 0
+          closedCaptioning: 0
+          minVolume: 0
+          maxVolume: 140
+          minFrequency: 17
+          invertHorizontalView: 0
+          invertVerticalView: 0
+          horizontalLookSpeed: 1
+          verticalLookSpeed: 0.75
+          joystickLookSensitivity: 0.7
+          mouseLookSensitivity: 0.7
+          cameraFov: 90
+          hideTextChat: 0
+          enablePushToTalk: 0
+          brightness: 1
+          speedrunMode: 0
+          colorBlindIntensity: 1
+          colorBlindFilter: 0
+          dyslexicFriendlyFont: 0
+          reduceStrobing: 0
+          screenReader: 0
+          localeID: 0
+        debugForceEnableFirstTimeSetup: 0
+        audioMixer: {fileID: 24100000, guid: 549b84953554a157688e4ed0cb77d9a7, type: 2}
+        cameraPrefab: {fileID: 0}
+        postProcessProfile: {fileID: 0}
+        framecounterWidget: {fileID: 0}
+    - rid: 5065170035678904323
+      type: {class: GI_MapLoader, ns: , asm: Assembly-CSharp}
+      data:
+        delayBeforeWorldChange: 0.25
+        minimumRequiredLoadTime: 0
+        isLoading: 0
+    - rid: 5065170035678904324
       type: {class: GI_PawnHandler, ns: , asm: Assembly-CSharp}
       data:
         viewCameraPrefab: {fileID: 0}
         viewCamera: {fileID: 0}
         localPlayerPawn: {fileID: 0}
         cachedPawns: []
-    - rid: 5065169791841992705
-      type: {class: GSDFRHSDFI_DoCrazyShit, ns: RivenFramework, asm: RivenFramework}
+    - rid: 5065170035678904325
+      type: {class: GI_WidgetHandler, ns: , asm: Assembly-CSharp}
       data:
-        someField: 0
-        someField2: 0
-        enterTextHere: 
-        actorList: []
-    - rid: 5065169791841992706
-      type: {class: GI_DoMoreCrazyShit, ns: RivenFramework, asm: RivenFramework}
-      data:
-        someField: 0
-        actor: {fileID: 0}
-    - rid: 5065169791841992707
+        widgets: []
+        lastCreatedWidget: {fileID: 0}
+    - rid: 5065170035678904326
       type: {class: GI_AudioHandler, ns: , asm: Assembly-CSharp}
       data:
         currentTrackPlayer: {fileID: 0}
         queuedTrackPlayer: {fileID: 0}
         currentTrack: {fileID: 0}
         queuedTrack: {fileID: 0}
+    - rid: 5065170035678904327
+      type: {class: GI_TextboxHandler, ns: , asm: Assembly-CSharp}
+      data:
+        normalTextTypeDelay: 0
+        skippingTextTypeDelay: 0
+        currentTextEvent:
+          frames: []
+          OnFinish:
+            m_PersistentCalls:
+              m_Calls: []
+        textEventActive: 0
+        currentlyPrinting: 0
+        currentTextContent: 
+        currentTextTypeDelay: 0
+        currentFrame: 0
+        performingRegularMarkup: 0
+        performingSpecialMarkup: 0
+        markupStartIndex: 0
+    - rid: 5065170035678904328
+      type: {class: GI_DeveloperMenu, ns: , asm: Assembly-CSharp}
+      data:
+        RatSteaks: 0
+        test: 0

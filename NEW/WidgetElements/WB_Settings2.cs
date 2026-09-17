@@ -15,6 +15,7 @@ using RivenFramework_Revamp.NEW;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using ReflectionCache = RivenFramework.Utils.Reflection.ReflectionCache;
 
@@ -28,23 +29,27 @@ public class WB_Settings2 : MonoBehaviour
 
 
     /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-    public Dictionary<string, Dictionary<string, List<SettingEntry>>> settingEntriesInOrder;
-    public int currentCategory; // Shows the relative list of entries based on what index is selected
-    public int currentEntry; // Shows the relative image, description header, and description based on what index is selected
-    public List<SettingsElementEntry> SettingsElementEntries;
-    public HashSet<SettingEntry> allSettingEntries = new HashSet<SettingEntry>();
+    // Populated by reflection nonsense, gets all defined setting entries for this project from other classes
+    private HashSet<SettingEntry> allSettingDefinitions = new HashSet<SettingEntry>();
+    // The data from allSettingDefinitions ordered into the proper Category/Group/Entry format
+    private Dictionary<string, Dictionary<string, List<SettingEntry>>> settingsByCategoryAndGroup;
+    // Shows the relative list of entries based on what index is selected
+    private int selectedCategoryIndex; 
+    // Shows the relative image, description header, and description based on what index is selected
+    private int selectedEntryIndex;
+    // All the created settings entries
+    private List<SettingsElementEntry> allEntryElements = new List<SettingsElementEntry>();
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
     public Transform topbarContainer;
-    public Transform settingsEntryContainer;
+    public Transform categoryScrollBoxesContainer;
     public Image referenceImage;
     public TMP_Text descriptionHeaderText;
     public TMP_Text descriptionText;
     public Button applyButton, resetButton, backButton;
-
     public GameObject topbarCategoryButtonPrefab;
-        
-    public GameObject groupPrefab;
+    public GameObject groupPrefab, categoryPrefab;
+    public List<GameObject> categoryRootObjects = new List<GameObject>();
     
 
 
@@ -56,46 +61,18 @@ public class WB_Settings2 : MonoBehaviour
     /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
     private void Start()
     {
-        GetAllSettingEntries();
-        GetSettingCategories();
+        CollectSettingEntriesViaReflection();
+        BuildCategoryLookup();
         CreateCategoryButtons();
-        CreateGroupsAndEntries();
-        
-        // Step 1 - We need to know what categories should exist based on the root categories of all entries and add them to the top bar
-        // Step 3 - We need to create lists of entries for each category and enable only the elements from the list that is currently selected
-        //          (which by default should be the first category since the menu was presumably just opened)
-        // Step 2 - We need to tie click each category button to showing the respective list of entries
-        // Step 4 - We need to tie in hovering over each entry to showing that entry's details
-        // Step 5 - We need to tie in each type of entries interactions to modifying the settings buffer
-        // Step 6 - We need to add in the controls category and screen on the end of the top bar
-        // Pressing Apply needs to dump the buffer into the current settings and save the current settings to the config file
-        // Pressing Reset need to prompt the user to confirm if they want to reset all settings, and pressing confirm
-        //          needs to restore the buffer, current settings, and config to the project defaults
+        CreateCategoryPagesWithGroupsAndEntries();
+        selectedCategoryIndex = 0;
+        SelectCategory(selectedCategoryIndex);
     }
 
     /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
-    public void ShowEntry(int entryIndex)
+    private void CollectSettingEntriesViaReflection()
     {
-        currentEntry = entryIndex;
-        if (currentEntry < 0)
-        {
-            referenceImage.gameObject.SetActive(false);
-            descriptionHeaderText.text = "";
-            descriptionText.text = "";
-        }
-        else
-        {
-            var _currentEntry = SettingsElementEntries[currentEntry];
-            referenceImage.sprite = _currentEntry.cachedReferenceImage;
-            referenceImage.gameObject.SetActive(referenceImage.sprite != null);
-            descriptionHeaderText.text = _currentEntry.text.text;
-            descriptionText.text = _currentEntry.cachedDescription;
-        }
-    }
-    
-    public void GetAllSettingEntries()
-    {
-        allSettingEntries = new HashSet<SettingEntry>();
+        allSettingDefinitions = new HashSet<SettingEntry>();
         
         //Loop through all instances of the use of the "ContainsSettingEntries" Attribute, and loop through them
         foreach(var attributeUsage in ReflectionCache.GetAttributeUsages<ContainsSettingEntries>())
@@ -127,68 +104,81 @@ public class WB_Settings2 : MonoBehaviour
 
             //Then add each one to the list of all settingEntries :D
             foreach (SettingEntry settingEntry in settingEntries)
-                allSettingEntries.Add(settingEntry);
+                allSettingDefinitions.Add(settingEntry);
         }
     }
 
-    public void GetSettingCategories()
+    private void BuildCategoryLookup()
     {
-        settingEntriesInOrder = new Dictionary<string, Dictionary<string, List<SettingEntry>>>();
+        settingsByCategoryAndGroup = new Dictionary<string, Dictionary<string, List<SettingEntry>>>();
         
-        foreach (var entry in allSettingEntries)
+        foreach (var entry in allSettingDefinitions)
         {
             string category = entry.category.Split("/", StringSplitOptions.None)[0];
             string group = entry.category.Split("/", StringSplitOptions.None)[1];
             string name = entry.category.Split("/", StringSplitOptions.None)[2];
             
             // Create category if it doesn't exist
-            if (settingEntriesInOrder.ContainsKey(category) is false) 
-                settingEntriesInOrder.Add(category, new Dictionary<string, List<SettingEntry>>());
+            if (settingsByCategoryAndGroup.ContainsKey(category) is false) 
+                settingsByCategoryAndGroup.Add(category, new Dictionary<string, List<SettingEntry>>());
 
             // Create group if it doesn't exist
-            if (settingEntriesInOrder[category].ContainsKey(group) is false) 
-                settingEntriesInOrder[category].Add(group, new List<SettingEntry>());
+            if (settingsByCategoryAndGroup[category].ContainsKey(group) is false) 
+                settingsByCategoryAndGroup[category].Add(group, new List<SettingEntry>());
 
             // Add entry to group
-            settingEntriesInOrder[category][group].Add(entry);
+            settingsByCategoryAndGroup[category][group].Add(entry);
         }
     }
 
-    public void CreateCategoryButtons()
+    private void CreateCategoryButtons()
     {
-        foreach (var category in settingEntriesInOrder.Keys)
+        int categoryId = 0;
+        foreach (var category in settingsByCategoryAndGroup.Keys)
         {
             var categoryButton = Instantiate(topbarCategoryButtonPrefab, topbarContainer);
             categoryButton.GetComponentInChildren<TMP_Text>().text = category;
+            var categoryButtonButton = categoryButton.GetComponentInChildren<Button>();
+            categoryButtonButton.onClick.RemoveAllListeners();
+            var cachedID = categoryId;
+            categoryButtonButton.onClick.AddListener(() => { SelectCategory(cachedID); });
+            categoryId++;
         }
     }
     
-    public void CreateGroupsAndEntries()
+    private void CreateCategoryPagesWithGroupsAndEntries()
     {
-        SettingsElementEntries.Clear();
-        foreach (var category in settingEntriesInOrder.Keys)
+        allEntryElements.Clear();
+        categoryRootObjects = new List<GameObject>();
+        foreach (var category in settingsByCategoryAndGroup.Keys)
         {
-            foreach (var group in settingEntriesInOrder[category].Keys)
+            var categoryRoot = Instantiate(categoryPrefab, categoryScrollBoxesContainer);
+            var categoryContainer = categoryRoot.transform.GetChild(0).GetChild(0).transform;
+            categoryRoot.name = category;
+            categoryRoot.SetActive(false);
+            categoryRootObjects.Add(categoryRoot);
+            
+            foreach (var group in settingsByCategoryAndGroup[category].Keys)
             {
                 // Create the group header
-                var groupEntry = Instantiate(groupPrefab, settingsEntryContainer);
+                var groupEntry = Instantiate(groupPrefab, categoryContainer);
                 groupEntry.GetComponentInChildren<TMP_Text>().text = group;
                 
                 // Create each of the entries
-                foreach (var setting in settingEntriesInOrder[category][group].ToArray())
+                foreach (var setting in settingsByCategoryAndGroup[category][group].ToArray())
                 {
                     var settingEntry = setting.Instantiate();
-                    settingEntry.transform.parent = settingsEntryContainer;
+                    settingEntry.transform.parent = categoryContainer;
                     var elementEntry = settingEntry.GetComponent<SettingsElementEntry>();
                     if (elementEntry != null)
                     {
-                        SettingsElementEntries.Add(elementEntry);
-                        int capturedIndex = SettingsElementEntries.Count - 1;
+                        allEntryElements.Add(elementEntry);
+                        int capturedIndex = allEntryElements.Count - 1;
 
                         var trigger = elementEntry.GetComponent<EventTrigger>();
 
                         var entryTrigger = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-                        entryTrigger.callback.AddListener((_) => ShowEntry(capturedIndex));
+                        entryTrigger.callback.AddListener((_) => DisplayEntryDetails(capturedIndex));
                         trigger.triggers.Add(entryTrigger);
                     }
                 }
@@ -198,6 +188,35 @@ public class WB_Settings2 : MonoBehaviour
 
 
     /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
+    public void DisplayEntryDetails(int entryIndex)
+    {
+        selectedEntryIndex = entryIndex;
+        if (selectedEntryIndex < 0)
+        {
+            referenceImage.gameObject.SetActive(false);
+            descriptionHeaderText.text = "";
+            descriptionText.text = "";
+        }
+        else
+        {
+            var _currentEntry = allEntryElements[selectedEntryIndex];
+            referenceImage.sprite = _currentEntry.cachedReferenceImage;
+            referenceImage.gameObject.SetActive(referenceImage.sprite != null);
+            descriptionHeaderText.text = _currentEntry.text.text;
+            descriptionText.text = _currentEntry.cachedDescription;
+        }
+    }
+
+    public void SelectCategory(int categoryIndex)
+    {
+        for (int i = 0; i < categoryRootObjects.Count; i++)
+        {
+            categoryRootObjects[i].SetActive(false);
+        }
+
+        Debug.Log(categoryIndex);
+        categoryRootObjects[categoryIndex].SetActive(true);
+    }
 
 
     #endregion
