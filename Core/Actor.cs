@@ -7,6 +7,8 @@
 //
 //====================================================================================================================//
 
+using ErryLib;
+using RivenFramework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,76 +22,31 @@ using UnityEngine;
 /// All placeable assets must contain this component on their root
 /// </summary>
 [Serializable]
-public class Actor : MonoBehaviour
+public class Actor : GUIDComponent
 {
     #region========================================( Variables )====================================================== //
 
     /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-    [Header("Actor Data")]
+    [field: Header("Actor Data")]
     [Tooltip("This ID is how this actor is identified, saved, and loaded from map files")]
-    public string id;
+    public string id { get; private set; }
+
     [Tooltip("This is how this actor is listed in things like an asset browser, or in game like in an inventory")]
-    public string displayName;
-    [Tooltip("This is a unique id to this individual actor, it's used to differentiate between instances of the same type of object in map")]
-    public string uniqueId;
-    [Tooltip("This is what groups this actor is associated with, it's used to filter between different kinds of objects when handling things like logic volumes")]
-    public List<ActorGroup> groups;
+    public string displayName { get; private set; }
+
+    [Tooltip("This is what tags this actor is associated with, it's used to filter between different kinds of objects when handling things like logic volumes")]
+    private List<ActorTag> actorTags;
 
 
     /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
+    
+    [HideInInspector, Tooltip("The current domain this actor is contained in")]
+    public ActorDomain currentDomain { get; private set; }
+
+
 
 
     /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-    [ContextMenu("Generate ID & Name")]
-    private void GenerateIDAndName()
-    {
-        GenerateID();
-        GenerateDisplayName();
-    }
-
-    [ContextMenu("Generate ID")]
-    private void GenerateID()
-    {
-        // Generate a UUID
-        id = gameObject.name;
-    }
-
-    [ContextMenu("Generate Display Name")]
-    private void GenerateDisplayName()
-    {
-        displayName = Regex.Replace(gameObject.name, "([a-z])([A-Z])", "$1 $2");
-        displayName = Regex.Replace(displayName, "^[^_]*_", "");
-    }
-
-    [ContextMenu("Generate UUID")]
-    private void GenerateUID()
-    {
-        // Generate a UUID
-        uniqueId = Guid.NewGuid().ToString();
-
-        // Check if it's taken
-        if (CheckUUID() is false)
-        {
-            Debug.Log("UUID was already taken");
-            GenerateUID();
-        }
-    }
-
-    [ContextMenu("Check UUID")]
-    private bool CheckUUID()
-    {
-        foreach (var actor in FindObjectsOfType<Actor>())
-        {
-            if (actor == this) continue;
-            if (actor.uniqueId == uniqueId)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
 
@@ -102,30 +59,31 @@ public class Actor : MonoBehaviour
 
     /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
 
-    
+
     /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
 
+    [ContextMenu("Generate Display Name")]
+    private void GenerateDisplayName()
+    {
+        displayName = Regex.Replace(gameObject.name, "([a-z])([A-Z])", "$1 $2");
+        displayName = Regex.Replace(displayName, "^[^_]*_", "");
+    }
 
     /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
-    public bool IsInAnyOfGroups(List<ActorGroup> _groups)
+    public void MoveActorToDomain(ActorDomain newDomain)
     {
-        return groups.Intersect(_groups).Any();
+        if (newDomain == currentDomain) return;
+        if (newDomain == null) newDomain = GameInstance.globalActorDomain;
+
+        currentDomain.UnregisterActor(this);
+        currentDomain = newDomain;
+        currentDomain.RegisterActor(this);
     }
 
-    [ContextMenu("Check UUID")]
-    public List<Actor> GetConflictingDuplicateInstancesOfActor()
-    {
-        List<Actor> conflictingActors = new List<Actor>();
-        foreach (var actor in FindObjectsOfType<Actor>())
-        {
-            if (actor.uniqueId == uniqueId)
-            {
-                conflictingActors.Add(this);
-            }
-        }
 
-        return conflictingActors;
-    }
+    public bool HasActorTag(ActorTag _actorTag) => actorTags.Contains(_actorTag);
+    public bool HasAnyActorTag(params ActorTag[] _actorTags) => actorTags.Intersect(_actorTags).Any();
+    public bool HasAllActorTags(params ActorTag[] _actorTags) => !actorTags.Except(_actorTags).Any();
 
 
     #endregion
@@ -160,13 +118,23 @@ public class ActorFilter_IsID : ActorFilter
 }
 
 [Serializable]
-public class ActorFilter_IsInAnyGroup : ActorFilter
+public class ActorFilter_HasAnyActorTag : ActorFilter
 {
-    public List<ActorGroup> groups;
+    public List<ActorTag> tags;
 
     public override bool PassesFilter(Actor _actor)
     {
-        return _actor.IsInAnyOfGroups(groups);
+        return _actor.HasAnyActorTag(tags.ToArray());
     }
 }
 
+[Serializable]
+public class ActorFilter_HasAllActorTags : ActorFilter
+{
+    public List<ActorTag> tags;
+
+    public override bool PassesFilter(Actor _actor)
+    {
+        return _actor.HasAllActorTags(tags.ToArray());
+    }
+}
