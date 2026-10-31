@@ -12,20 +12,20 @@
   "author": {
     "name": "Neverway Studio",
     "url": "https://neverway.github.io"
-  },  "
-  contributors": [
-  {
-    "name": "Liz M.",
-    "email": "lizband.dev@gmail.com"
   },
-  {
-    "name": "Errynei",
-  },
-  {
-    "name": "Connorses",
-  },
-  {
-    "name": "Soulex",
-  }
+  "contributors": [
+    {
+      "name": "Liz M.",
+      "email": "lizband.dev@gmail.com"
+    },
+    {
+      "name": "Errynei"
+    },
+    {
+      "name": "Connorses"
+    },
+    {
+      "name": "Soulex"
+    }
   ]
 }
