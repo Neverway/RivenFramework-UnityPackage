@@ -4,6 +4,11 @@ using System.Text;
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+
+using ErryLib;
+
 
 
 
@@ -110,120 +115,6 @@ namespace RivenFramework.Utils.Reflection
             { typeof(void), "void" }
         };
 
-        public static bool IsLikelyValidVariableName(this Type type, string name)
-        {
-            //TODO: NOT DONEEE
-
-
-
-            string ungenericTypeName = type.NameWithoutGenericOrArray();
-            // 1. Check against alias dictionary
-            if (aliasToType.TryGetValue(name, out var aliasedType))
-                return type == aliasedType;
-
-            // 2. Check simple name (e.g., "Int32")
-            if (type.Name == name)
-                return true;
-
-            // 3. Check full name (e.g., "System.Int32")
-            if (name.EndsWith($".{type.Name}"))
-                return true;
-
-            return false;
-        }
-         /*
-        public class Tree<T> : IEnumerator<T>
-        {
-            private T startPoint;
-            private Func<T, IEnumerator<T>> branchFunc;
-            private Stack<IEnumerator<T>> tree;
-            private int index;
-            public Tree(Func<T, IEnumerator<T>> branchFunc, T startPoint)
-            {
-                tree = new Stack<Queue<IEnumerator<T>>>();
-            }
-
-            public T Current => tree.Peek().Current;
-            object IEnumerator.Current => Current;
-
-            public void Dispose() { }
-
-            public bool MoveNext()
-            {
-                if (tree.TryPeek(out var branch))
-                {
-                    if (branch.MoveNext())
-                        branch.Pop();
-                }
-            }
-            public void Reset()
-            {
-                tree.Clear();
-                tree.Push(branchFunc.Invoke(startPoint));
-            }
-        }
-        public class SingleItem<T> : IEnumerator<T>
-        {
-            private T item;
-            private bool returned = false;
-            public SingleItem(T item) => this.item = item;
-            public T Current => item;
-            object IEnumerator.Current => Current;
-            public void Dispose() { }
-            public bool MoveNext() => returned ? false : returned = true;
-            public void Reset() => returned = false;
-        }
-        
-
-        public static void TreeStep<T>(this T start, 
-            Func<T, T[]> treeFunc,
-            Action<T> onOpen = null, 
-            Action<T> onClose = null,
-            Action<T> onEndPoint = null)
-        {
-
-            Stack<T> closingItems = new Stack<T>();
-            Stack<Queue<T>> stack = new Stack<Queue<T>>();
-            Queue<T> queue = new Queue<T>();
-            T item = start;
-            queue.Enqueue(item);
-            stack.Push(queue);
-
-            while (stack.Count > 0)
-            {
-                queue = stack.Pop();
-
-                if (queue.Count == 0)
-                {
-                    item = closingItems.Pop();
-                    onClose?.Invoke(item);
-                    continue;
-                }
-
-                item = queue.Dequeue();
-
-                T[] subItems = treeFunc.Invoke(item);
-
-                if (subItems.Length > 1)
-                {
-                    onOpen?.Invoke(item);
-                    closingItems.Push(item);
-
-                    stack.Push(queue);
-                    stack.Push(new Queue<T>(subItems));
-                    continue;
-                }
-                else if (subItems.Length == 1)
-                {
-                    onEndPoint?.Invoke(subItems[0]);
-                }
-                else
-                {
-                    onEndPoint?.Invoke(item);
-                }
-            }
-        }
-        // */
         public static string NameWithGenericAndArray(this Type type)
         {
             StringBuilder sb = new StringBuilder();
@@ -308,7 +199,7 @@ namespace RivenFramework.Utils.Reflection
 
         public static IEnumerable<Type> GetAllTypesAssignableTo(this Type type)
         {
-            //beepbopboopbopbeepbop >:3   (credit to Jen, this helps the code work better)
+            //beepbopboopbopbeepbop >:3   (credit to Karsen, this helps the code work better)
             Type baseTypes = type;
             while (baseTypes != null)
             { 
@@ -319,50 +210,66 @@ namespace RivenFramework.Utils.Reflection
                 yield return interfaceType;
         }
 
-        public static bool IsInvokeableParameterlessStatic(this MethodInfo method) =>
-            method.HasParametersNone() && !method.IsAbstract;
-        public static bool IsInvokeableParameterless(this MethodInfo method) =>
-            method.HasParametersNone() && !method.IsAbstract;
 
-        public static bool HasParameters<T1, T2, T3, T4>(this MethodInfo method)
-        {
-            ParameterInfo[] parameters = method.GetParameters();
-            if (parameters.Length != 4) return false;
-            if (!parameters[0].ParameterType.IsAssignableFrom(typeof(T1))) return false;
-            if (!parameters[1].ParameterType.IsAssignableFrom(typeof(T2))) return false;
-            if (!parameters[2].ParameterType.IsAssignableFrom(typeof(T3))) return false;
-            if (!parameters[3].ParameterType.IsAssignableFrom(typeof(T4))) return false;
 
-            return true;
-        }
-        public static bool HasParameters<T1, T2, T3>(this MethodInfo method)
-        {
-            ParameterInfo[] parameters = method.GetParameters();
-            if (parameters.Length != 3) return false;
-            if (!parameters[0].ParameterType.IsAssignableFrom(typeof(T1))) return false;
-            if (!parameters[1].ParameterType.IsAssignableFrom(typeof(T2))) return false;
-            if (!parameters[2].ParameterType.IsAssignableFrom(typeof(T3))) return false;
+        //public static bool IsInvokeableParameterlessStatic(this MethodInfo method) =>
+        //    method.CanAssignParametersNone() && !method.IsAbstract;
+        //public static bool IsInvokeableParameterless(this MethodInfo method) =>
+        //    method.CanAssignParametersNone() && !method.IsAbstract;
 
-            return true;
-        }
-        public static bool HasParameters<T1, T2>(this MethodInfo method)
-        {
-            ParameterInfo[] parameters = method.GetParameters();
-            if (parameters.Length != 2) return false;
-            if (!parameters[0].ParameterType.IsAssignableFrom(typeof(T1))) return false;
-            if (!parameters[1].ParameterType.IsAssignableFrom(typeof(T2))) return false;
 
-            return true;
-        }
-        public static bool HasParameters<T1>(this MethodInfo method)
-        {
-            ParameterInfo[] parameters = method.GetParameters();
-            if (parameters.Length != 1) return false;
-            if (!parameters[0].ParameterType.IsAssignableFrom(typeof(T1))) return false;
+        /// <summary> Just a more readable shorthand of "Type.IsAssignableFrom()" </summary>
+        public static bool IsOfType<T>(this Type thisType) =>
+            typeof(T).IsAssignableFrom(thisType);
 
-            return true;
-        }
-        public static bool HasParametersNone(this MethodInfo method) =>
+        /// <summary> Just a more readable shorthand of "Type.IsAssignableFrom()" </summary>
+        public static bool IsOfType(this Type thisType, Type otherType) =>
+            otherType.IsAssignableFrom(thisType);
+
+
+
+        //public static bool CanAssignParameters<T1, T2, T3, T4>(this MethodInfo method)
+        //{
+        //    ParameterInfo[] parameters = method.GetParameters();
+        //    if (parameters.Length != 4) return false;
+        //    if (!parameters[0].ParameterType.IsAssignableFrom(typeof(T1))) return false;
+        //    if (!parameters[1].ParameterType.IsAssignableFrom(typeof(T2))) return false;
+        //    if (!parameters[2].ParameterType.IsAssignableFrom(typeof(T3))) return false;
+        //    if (!parameters[3].ParameterType.IsAssignableFrom(typeof(T4))) return false;
+        //
+        //    return true;
+        //}
+        //public static bool CanAssignParameters<T1, T2, T3>(this MethodInfo method)
+        //{
+        //    ParameterInfo[] parameters = method.GetParameters();
+        //    if (parameters.Length != 3) return false;
+        //    if (!parameters[0].ParameterType.IsAssignableFrom(typeof(T1))) return false;
+        //    if (!parameters[1].ParameterType.IsAssignableFrom(typeof(T2))) return false;
+        //    if (!parameters[2].ParameterType.IsAssignableFrom(typeof(T3))) return false;
+        //
+        //    return true;
+        //}
+        //public static bool CanAssignParameters<T1, T2>(this MethodInfo method)
+        //{
+        //    ParameterInfo[] parameters = method.GetParameters();
+        //    if (parameters.Length != 2) return false;
+        //    if (!parameters[0].ParameterType.IsAssignableFrom(typeof(T1))) return false;
+        //    if (!parameters[1].ParameterType.IsAssignableFrom(typeof(T2))) return false;
+        //
+        //    return true;
+        //}
+        //public static bool CanAssignParameters<T1>(this MethodInfo method)
+        //{
+        //    ParameterInfo[] parameters = method.GetParameters();
+        //    if (parameters.Length != 1) return false;
+        //    if (!parameters[0].ParameterType.IsAssignableFrom(typeof(T1))) return false;
+        //
+        //    return true;
+        //}
+        //public static bool CanAssignParametersNone(this MethodInfo method) =>
+        //    method.GetParameters().Length == 0;
+
+        public static bool HasNoParams(this MethodInfo method) =>
             method.GetParameters().Length == 0;
 
         #region Assembly Dependency Check Methods

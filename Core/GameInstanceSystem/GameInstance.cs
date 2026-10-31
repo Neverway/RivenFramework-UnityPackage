@@ -16,12 +16,10 @@ namespace RivenFramework
 {
     public class GameInstance : MonoBehaviour
     {
-        public GSDFRHSDFI_DoCrazyShit crazyShit2;
-        public GI_DoMoreCrazyShit moreShit2;
-
+        public static ActorDomain globalActorDomain;
 
         [SerializeReference] public GameInstanceModule[] modules;
-        protected Dictionary<Type, GameInstanceModule> moduleDictionary;
+        //protected Dictionary<Type, GameInstanceModule> moduleDictionary;
 
         //=-----------------=
         // Public Variables
@@ -40,7 +38,8 @@ namespace RivenFramework
         { 
             get 
             {
-                if (_instance == null) throw new NullReferenceException("GameInstance is missing");
+                if (_instance == null) 
+                    throw new NullReferenceException("GameInstance is missing");
                 return _instance;
             } 
         }
@@ -62,23 +61,24 @@ namespace RivenFramework
             InitializeGameInstance();
         }
 
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
         private void InitializeGameInstance()
         {
-            GameInstanceModule[] modules = GetComponentsInChildren<GameInstanceModule>();
+            globalActorDomain = ActorDomain.CreateNewGlobalDomain();
+            globalActorDomain.gameObject.name = "Global Actor Domain";
+
             foreach (GameInstanceModule module in modules)
             {
 
             }
         }
-        
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-
 
         //=-----------------=
         // External Functions
         //=-----------------=
+
         /// <summary>
         /// Directly gets a component from the GameInstance of the type provided
         /// </summary>

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ErryLib;
+using RivenFramework;
 using UnityEngine;
 
 /// <summary>
@@ -30,14 +31,13 @@ public class ActorV2 : GUIDComponent, IActorFunctions
     [Tooltip("This is how this actor is listed in things like an asset browser, or in game like in an inventory")]
     public string displayName;
     [Tooltip("This is what groups this actor is associated with, it's used to filter between different kinds of objects when handling things like logic volumes")]
-    public List<ActorGroup> groups;
+    public List<ActorTag> groups;
 
 
     /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
 
 
     /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-
 
 
     /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
@@ -90,7 +90,7 @@ public class ActorV2 : GUIDComponent, IActorFunctions
 
 
     /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
-    public bool IsInAnyOfGroups(List<ActorGroup> _groups)
+    public bool IsInAnyOfGroups(List<ActorTag> _groups)
     {
         return groups.Intersect(_groups).Any();
     }
@@ -158,7 +158,7 @@ public class ActorFilter_IsID : Filter<ActorV2>
 [Serializable]
 public class ActorFilter_IsInAnyGroup : Filter<ActorV2>
 {
-    public List<ActorGroup> groups;
+    public List<ActorTag> groups;
 
     public override bool PassesFilter(ActorV2 _actor)
     {

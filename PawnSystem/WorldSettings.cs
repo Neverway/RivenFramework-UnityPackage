@@ -86,15 +86,15 @@ public class WorldSettings : MonoBehaviour
 
         foreach (Actor actor in allActors)
         {
-            string uuid = actor.uniqueId;
+            string uuid = actor.GetGUID();
             
             // Actor was not given a UUID, skip them
-            if (actor.uniqueId == "") continue;
+            if (actor.GetGUID() == "") continue;
             
             // UUID is already in use, destory this object
             if (uuidMap.ContainsKey(uuid))
             {
-                Debug.LogWarning($"Duplicate actor with UUID {actor.uniqueId} was found, destroying duplicates! If you are backtracking through level, you can ignore this, otherwise check {actor.displayName}'s on the map for conflicting UUIDs");
+                Debug.LogWarning($"Duplicate actor with UUID {actor.GetGUID()} was found, destroying duplicates! If you are backtracking through level, you can ignore this, otherwise check {actor.displayName}'s on the map for conflicting UUIDs");
                 Destroy(actor.gameObject);
             }
             
