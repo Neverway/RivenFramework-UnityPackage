@@ -1,0 +1,16 @@
+{
+    "name": "RivenFramework.ProjectSetup.Editor",
+    "rootNamespace": "RivenFramework.ProjectSetup",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
