@@ -1,0 +1,6 @@
+# One project-relative scene path per line. Only missing scenes are added.
+Assets/Resources/Maps/_-Start.unity
+Assets/Resources/Maps/_Splash.unity
+Assets/Resources/Maps/_Travel.unity
+Assets/Resources/Maps/_Streaming.unity
+Assets/Resources/Maps/_Error.unity

@@ -1,0 +1,6 @@
+{
+    "displayName": "Widgets",
+    "description": "Menu and HUD widgets: title, settings, pause, loading, language, and more.",
+    "destination": "Resources/Widgets",
+    "requires": []
+}

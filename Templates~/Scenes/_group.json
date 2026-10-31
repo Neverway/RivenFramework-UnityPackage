@@ -1,0 +1,8 @@
+{
+    "displayName": "Framework scenes",
+    "description": "Splash, start, travel, streaming and error scenes. Needs the Widgets group.",
+    "destination": "Resources/Maps",
+    "requires": [
+        "Widgets"
+    ]
+}
