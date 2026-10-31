@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Settings sub-widget for changing gameplay options
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Settings sub-widget for changing gameplay options
+//====================================================================================================================//
 
 using UnityEngine;
 using UnityEngine.UI;

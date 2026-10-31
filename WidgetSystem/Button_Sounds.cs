@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Plays audio clips for button events like hovering or selecting
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Plays audio clips for button events like hovering or selecting
+//====================================================================================================================//
 
 using UnityEngine;
 using UnityEngine.EventSystems;

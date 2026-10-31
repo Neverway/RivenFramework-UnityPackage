@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Handles real-time light shadow culling stuffs
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Handles real-time light shadow culling stuffs
+//====================================================================================================================//
 
 using System;
 using System.Collections;

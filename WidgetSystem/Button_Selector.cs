@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Provide functionality to selector style buttons
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Provide functionality to selector style buttons
+//====================================================================================================================//
 
 using System.Collections.Generic;
 using TMPro;

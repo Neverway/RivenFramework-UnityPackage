@@ -1,10 +1,15 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Gives the pawn the ability to switch between "item" game objects
-// Notes: This component works by adding and removing game objects as children to the object it's attached to
-// For first person games, attach this to an "inventory" empty that is parented to the pawns viewpoint
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Gives the pawn the ability to switch between "item" game objects This component works by adding and removing game
+//  objects as children to the object it's attached to For first person games, attach this to an "inventory" empty
+//  that is parented to the pawns viewpoint
+//====================================================================================================================//
 
 using System.Collections;
 using System.Collections.Generic;

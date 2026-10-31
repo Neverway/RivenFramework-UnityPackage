@@ -1,10 +1,14 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Sets and loads the parameters for the application settings from a file
-// Notes: This is only for the application settings like graphics, audio, gameplay, etc.
-//  This file should not be used to store any game-specific information
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Sets and loads the parameters for the application settings from a file This is only for the application settings
+//  like graphics, audio, gameplay, etc. This file should not be used to store any game-specific information
+//====================================================================================================================//
 
 using System.Collections;
 using System.Collections.Generic;

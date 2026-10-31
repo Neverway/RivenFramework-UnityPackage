@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Data structure class for what's stored in the application settings file
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Data structure class for what's stored in the application settings file
+//====================================================================================================================//
 
 using System;
 using System.Collections;

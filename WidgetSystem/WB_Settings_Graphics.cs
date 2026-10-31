@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Settings sub-widget for changing graphics options
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Settings sub-widget for changing graphics options
+//====================================================================================================================//
 
 using System.Collections.Generic;
 using TMPro;

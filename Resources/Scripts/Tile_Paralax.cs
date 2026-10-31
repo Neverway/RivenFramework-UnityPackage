@@ -1,9 +1,14 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Simulate parallax scrolling on a tilemap for use with orthographic cameras.
-// Notes: This script adjusts the scale and position of the tilemap based on the camera's movement.
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Simulate parallax scrolling on a tilemap for use with orthographic cameras. This script adjusts the scale and
+//  position of the tilemap based on the camera's movement.
+//====================================================================================================================//
 
 using RivenFramework;
 using UnityEngine;

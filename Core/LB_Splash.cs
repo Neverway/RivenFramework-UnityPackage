@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: If any key is pressed, skip forwards to title screen
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  If any key is pressed, skip forwards to title screen
+//====================================================================================================================//
 
 using UnityEngine;
 using UnityEngine.SceneManagement;

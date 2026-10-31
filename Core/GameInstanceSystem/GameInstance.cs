@@ -1,10 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Keeps this object when changing scenes and ensures there is only
-//  ever one of them present in a scene
-// Notes: 
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Keeps this object when changing scenes and ensures there is only ever one of them present in a scene
+//====================================================================================================================//
 
 using MarkupAttributes;
 using System;

@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Display the image for the button for the corresponding action based on the current input device type
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Display the image for the button for the corresponding action based on the current input device type
+//====================================================================================================================//
 
 using RivenFramework;
 using UnityEngine;

@@ -1,10 +1,14 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Defines a consistent default font to all text elements and allows
-//  them to be replaced by the dyslexia friendly font
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Defines a consistent default font to all text elements and allows them to be replaced by the dyslexia friendly
+//  font
+//====================================================================================================================//
 
 using System;
 using TMPro;

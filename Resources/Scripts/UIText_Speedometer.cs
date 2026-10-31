@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Gets the speed of a target object in m/s and displays it to a text element
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Gets the speed of a target object in m/s and displays it to a text element
+//====================================================================================================================//
 
 using RivenFramework;
 using TMPro;

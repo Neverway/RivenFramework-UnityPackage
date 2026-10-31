@@ -1,11 +1,15 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Stores the lists of input actions to button hint sprites.
-//          Also holds functions for rebinding controls
-// Notes: Originally this was supposed to also handel saving and loading the controls
-//        to a file like controls.config, but I guess unity already saves them somewhere?
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Stores the lists of input actions to button hint sprites. Also holds functions for rebinding controls Originally
+//  this was supposed to also handel saving and loading the controls to a file like controls.config, but I guess unity
+//  already saves them somewhere?
+//====================================================================================================================//
 
 using System;
 using System.Collections;
