@@ -1,10 +1,14 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Settings sub-widget for changing graphics options
-// Notes: Since a binding entry has a button for binding keyboard and controller
-//     we'll only create a binding entry for each keyboard binding
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Settings sub-widget for changing graphics options Since a binding entry has a button for binding keyboard and
+//  controller we'll only create a binding entry for each keyboard binding
+//====================================================================================================================//
 
 using System.Collections.Generic;
 using UnityEngine;

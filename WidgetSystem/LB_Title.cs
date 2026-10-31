@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Show the title screen widget and unlock the mouse cursor
-// Notes: 
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Show the title screen widget and unlock the mouse cursor
+//====================================================================================================================//
 
 using UnityEngine;
 

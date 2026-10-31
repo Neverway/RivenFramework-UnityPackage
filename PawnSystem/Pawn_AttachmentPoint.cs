@@ -1,10 +1,14 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Attached to an object on a pawn to be used like a socket for other
-//      objects, such as held physics props, swords on backs, guns on hips, etc.
-// Notes: This was originally created to keep track of held physics objects 
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Attached to an object on a pawn to be used like a socket for other objects, such as held physics props, swords on
+//  backs, guns on hips, etc. This was originally created to keep track of held physics objects
+//====================================================================================================================//
 
 using System;
 using UnityEngine;

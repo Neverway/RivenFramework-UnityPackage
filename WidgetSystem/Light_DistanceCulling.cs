@@ -1,11 +1,15 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Optimizes real-time lights by slowly fading them out when the local
-//  player is too far away, and reporting to the GI_LightShadowBudgetManager so
-//  only a limited number of in-range lights can cast real-time shadows at the same time
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Optimizes real-time lights by slowly fading them out when the local player is too far away, and reporting to the
+//  GI_LightShadowBudgetManager so only a limited number of in-range lights can cast real-time shadows at the same
+//  time
+//====================================================================================================================//
 
 using System;
 using System.Collections;

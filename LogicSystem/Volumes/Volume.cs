@@ -1,9 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Handles the filtering, entry, and exiting of pawns and physics props from a Logic Volume
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Handles the filtering, entry, and exiting of pawns and physics props from a Logic Volume
+//====================================================================================================================//
 
 using System.Collections.Generic;
 using RivenFramework;

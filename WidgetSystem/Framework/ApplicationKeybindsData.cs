@@ -1,10 +1,13 @@
-//===================== (Neverway 2024) Written by Liz M. =====================
+//==========================================( Neverway 2024 )=========================================================//
+// Author
+//  Liz M.
 //
-// Purpose: Data structure used by ??? to find the corresponding keyhint sprites
-//  related to an action binding
-// Notes:
+// Contributors
 //
-//=============================================================================
+//
+// Description
+//  Data structure used by ??? to find the corresponding keyhint sprites related to an action binding
+//====================================================================================================================//
 
 using System;
 using System.Collections;
