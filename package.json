@@ -2,11 +2,30 @@
   "name": "com.neverway.riven",
   "version": "0.1.0",
   "displayName": "Riven Framework",
-  "description": "The Neverway Riven Framework! Created by Lizband, Errynei, Connorses, & Soulex.",
+  "description": "The Neverway Riven Framework! This package provides a sort of project strucutre, game architecture stuffs, and templates acting as a perfect starting point for all your side-project needs! (And non-side-projects too I guess >:P)",
   "unity": "2022.3",
   "dependencies": {
     "com.unity.inputsystem": "1.7.0",
     "com.unity.textmeshpro": "3.0.9",
     "com.unity.ugui": "1.0.0"
+  },
+  "author": {
+    "name": "Neverway Studio",
+    "url": "https://neverway.github.io"
+  },  "
+  contributors": [
+  {
+    "name": "Liz M.",
+    "email": "lizband.dev@gmail.com"
+  },
+  {
+    "name": "Errynei",
+  },
+  {
+    "name": "Connorses",
+  },
+  {
+    "name": "Soulex",
   }
+  ]
 }
