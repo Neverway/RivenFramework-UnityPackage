@@ -1,140 +1,150 @@
-//==========================================( Neverway 2026 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
-// Liz M.
+//  Liz M.
 //
 // Contributors
-//  Errynei, Connorses, Soulex
+//  Errynei
+//  Connorses
+//  Soulex
 //
+// Description
+//  The base class for any asset that can be placed in a map.
+//  This provides the ID, display name, tags, teams, and the actor lifecycle calls like Start, Update, etc.
 //====================================================================================================================//
 
-using ErryLib;
-using RivenFramework;
+using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using UnityEngine;
+using ErryLib;
 
-/// <summary>
-/// Acts as the base identifier for an asset that can be placed in a map
-/// Assigning it an id, what groups it's a part of, and a human-readable display name
-/// All placeable assets must contain this component on their root
-/// </summary>
-[Serializable]
-public class Actor : GUIDComponent
+namespace RivenFramework
 {
-    #region========================================( Variables )====================================================== //
-
-    /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-    [field: Header("Actor Data")]
-    [Tooltip("This ID is how this actor is identified, saved, and loaded from map files")]
-    public string id { get; private set; }
-
-    [Tooltip("This is how this actor is listed in things like an asset browser, or in game like in an inventory")]
-    public string displayName { get; private set; }
-
-    [Tooltip("This is what tags this actor is associated with, it's used to filter between different kinds of objects when handling things like logic volumes")]
-    private List<ActorTag> actorTags;
-
-
-    /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
-    
-    [HideInInspector, Tooltip("The current domain this actor is contained in")]
-    public ActorDomain currentDomain { get; private set; }
-
-
-
-
-    /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-
-    /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
-
-
-
-    #endregion
-
-
-    #region=======================================( Functions )======================================================= //
-
-    /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
-
-
-    /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
-
-    [ContextMenu("Generate Display Name")]
-    private void GenerateDisplayName()
+    /// <summary>
+    /// Acts as the base identifier for an asset that can be placed in a map
+    /// Assigning it an id, what tags it has, what team it's on, and a human-readable display name
+    /// All placeable assets must contain this component on their root
+    /// </summary>
+    [Serializable]
+    public class Actor : GUIDComponent, IActorFunctions
     {
-        displayName = Regex.Replace(gameObject.name, "([a-z])([A-Z])", "$1 $2");
-        displayName = Regex.Replace(displayName, "^[^_]*_", "");
+        #region====================================( Variables )======================================================//
+
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [Header("Actor Data")]
+            [Tooltip("This ID is how this actor is identified, saved, and loaded from map files")]
+            public string id;
+
+            [Tooltip("This is how this actor is listed in things like an asset browser, or in game like in an inventory")]
+            public string displayName;
+
+            [Tooltip("This is what tags this actor is associated with, it's used to filter between different kinds of objects when handling things like logic volumes")]
+            public List<ActorTag> tags = new List<ActorTag>();
+
+            [Tooltip("The team this actor is on (Leave empty for no team)")]
+            public Team team;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+            [HideInInspector, Tooltip("The current domain this actor is contained in")]
+            public ActorDomain currentDomain { get; private set; }
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+
+        #endregion
+
+        #region====================================( Functions )======================================================//
+
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            protected virtual void Start() => OnActorCreated();
+            protected virtual void OnDestroy() => OnActorDestroyed();
+            protected virtual void OnEnable() => OnActorEnabled();
+            protected virtual void OnDisable() => OnActorDisabled();
+            protected virtual void Update() => OnActorUpdate();
+            protected virtual void FixedUpdate() => OnActorFixedUpdate();
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+            public void MoveActorToDomain(ActorDomain newDomain)
+            {
+                if (newDomain == null) newDomain = GameInstance.globalActorDomain;
+                if (newDomain == currentDomain) return;
+
+                if (currentDomain != null) currentDomain.UnregisterActor(this);
+                currentDomain = newDomain;
+                if (currentDomain != null) currentDomain.RegisterActor(this);
+            }
+
+
+            public bool HasActorTag(ActorTag _actorTag) => tags != null && tags.Contains(_actorTag);
+            public bool HasAnyActorTag(params ActorTag[] _actorTags) => tags != null && tags.Intersect(_actorTags).Any();
+            public bool HasAllActorTags(params ActorTag[] _actorTags) => tags != null && _actorTags.All(_tag => tags.Contains(_tag));
+
+
+            /// <summary>
+            /// Finds other actors in the loaded scenes that share this actor's GUID
+            /// </summary>
+            /// <returns>Returns the other actors with the same GUID (The list is empty if the GUID is unique)</returns>
+            public List<Actor> GetConflictingDuplicateInstancesOfActor()
+            {
+                List<Actor> conflictingActors = new List<Actor>();
+                foreach (var actor in FindObjectsOfType<Actor>())
+                {
+                    if (actor != this && actor.GetGUID() == GetGUID()) conflictingActors.Add(actor);
+                }
+
+                return conflictingActors;
+            }
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            public virtual void OnActorCreated() { }
+            public virtual void OnActorDestroyed() { }
+            public virtual void OnActorEnabled() { }
+            public virtual void OnActorDisabled() { }
+            public virtual void OnActorUpdate() { }
+            public virtual void OnActorFixedUpdate() { }
+            
+            [ContextMenu("Generate ID & Name")]
+            private void GenerateIDAndName()
+            {
+                GenerateID();
+                GenerateDisplayName();
+            }
+
+            [ContextMenu("Generate ID")]
+            private void GenerateID()
+            {
+                id = gameObject.name;
+            }
+
+            [ContextMenu("Generate Display Name")]
+            private void GenerateDisplayName()
+            {
+                displayName = Regex.Replace(gameObject.name, "([a-z])([A-Z])", "$1 $2");
+                displayName = Regex.Replace(displayName, "^[^_]*_", "");
+            }
+        #endregion
+
+        #endregion
     }
 
-    /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
-    public void MoveActorToDomain(ActorDomain newDomain)
+    /// <summary>
+    /// The basic logic functions an actor can call
+    /// </summary>
+    public interface IActorFunctions
     {
-        if (newDomain == currentDomain) return;
-        if (newDomain == null) newDomain = GameInstance.globalActorDomain;
-
-        currentDomain.UnregisterActor(this);
-        currentDomain = newDomain;
-        currentDomain.RegisterActor(this);
-    }
-
-
-    public bool HasActorTag(ActorTag _actorTag) => actorTags.Contains(_actorTag);
-    public bool HasAnyActorTag(params ActorTag[] _actorTags) => actorTags.Intersect(_actorTags).Any();
-    public bool HasAllActorTags(params ActorTag[] _actorTags) => !actorTags.Except(_actorTags).Any();
-
-
-    #endregion
-}
-
-[Serializable]
-public abstract class ActorFilter
-{
-    public abstract bool PassesFilter(Actor _actor);
-}
-
-[Serializable]
-public class ActorFilter_IsNamed : ActorFilter
-{
-    public string name;
-
-    public override bool PassesFilter(Actor _actor)
-    {
-        return _actor.displayName == name;
-    }
-}
-
-[Serializable]
-public class ActorFilter_IsID : ActorFilter
-{
-    public string id;
-
-    public override bool PassesFilter(Actor _actor)
-    {
-        return _actor.id == id;
-    }
-}
-
-[Serializable]
-public class ActorFilter_HasAnyActorTag : ActorFilter
-{
-    public List<ActorTag> tags;
-
-    public override bool PassesFilter(Actor _actor)
-    {
-        return _actor.HasAnyActorTag(tags.ToArray());
-    }
-}
-
-[Serializable]
-public class ActorFilter_HasAllActorTags : ActorFilter
-{
-    public List<ActorTag> tags;
-
-    public override bool PassesFilter(Actor _actor)
-    {
-        return _actor.HasAllActorTags(tags.ToArray());
+        public void OnActorCreated();
+        public void OnActorDestroyed();
+        public void OnActorEnabled();
+        public void OnActorDisabled();
+        public void OnActorUpdate();
+        public void OnActorFixedUpdate();
     }
 }

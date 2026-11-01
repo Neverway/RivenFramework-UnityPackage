@@ -1,73 +1,60 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
 // Contributors
-//
+//  Errynei
+//  Connorses
+//  Soulex
 //
 // Description
-//
+//  Hurts or heals pawns in this volume
 //====================================================================================================================//
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class VolumePain : Volume
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    [Tooltip("Negative values will heal pawns")] [SerializeField]
-    private float damageAmount = 10;
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Update()
+    public class VolumePain : Volume
     {
-        foreach (var entity in pawnsInTrigger)
-        {
-            // If no team specified, or self-infliction enabled, hurt everyone (Kinda metal huh)
-            if (unaffectedTeams.Count == 0 || ignoreUnaffectedTeamsFilter)
+        #region====================================( Variables )======================================================//
+
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [Tooltip("Negative values will heal pawns")] 
+            [SerializeField] private float damageAmount = 10;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+
+        #endregion
+
+        #region====================================( Functions )======================================================//
+
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Update()
             {
-                entity.ModifyHealth(-damageAmount);
-            }
-            else
-            {
-                if (ignoreUnaffectedTeamsFilter) return;
-                
-                // If teams match allow healing only
-                if (unaffectedTeams.Contains(entity.currentStats.team) && damageAmount < 0)
+                // Who gets hurt (or healed) is decided by the volume's "Affected Actors" filter
+                foreach (var entity in pawnsInTrigger)
                 {
+                    if (entity == null) continue;
                     entity.ModifyHealth(-damageAmount);
                 }
-                // If teams don't match allow pain only
-                if (!unaffectedTeams.Contains(entity.currentStats.team) && damageAmount > 0)
-                {
-                    entity.ModifyHealth(-damageAmount);
-                }
             }
-        }
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+
+        #endregion
     }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
 }
