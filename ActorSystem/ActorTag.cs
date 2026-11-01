@@ -1,7 +1,53 @@
+//==========================================( Neverway 2027 )=========================================================//
+// Author
+//  
+//  
+// Contributors
+//  Liz M.
+//  Errynei
+//  Connorses
+//  Soulex
+//
+// Description
+//
+//====================================================================================================================//
+
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewActorTag", menuName = "Neverway/Actors/Actor Tag")]
-public class ActorTag : ScriptableObject
+namespace RivenFramework
 {
-    public string name;
+    [CreateAssetMenu(fileName = "NewActorTag", menuName = "Neverway/Actors/Actor Tag")]
+    public class ActorTag : ScriptableObject
+    {
+        #region====================================( Variables )======================================================//
+
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [Tooltip("The name of the actor tag")]
+            public string name;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+
+        #endregion
+
+        #region====================================( Functions )======================================================//
+
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+
+        #endregion
+    }
 }
