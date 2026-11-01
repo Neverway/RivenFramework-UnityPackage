@@ -22,8 +22,8 @@ namespace RivenFramework
         #region====================================( Variables )======================================================//
 
         #region----------------( Inspector )--------------------------------------------------------------------------//
-            [Tooltip("The name of the actor tag")]
-            public string name;
+            [Tooltip("The display name of the actor tag")]
+            public string displayName;
         #endregion
 
         #region----------------( Reference )--------------------------------------------------------------------------//
