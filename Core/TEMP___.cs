@@ -12,10 +12,14 @@
 //====================================================================================================================//
 
 using UnityEngine;
+using System;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace RivenFramework
 {
-    public class Example : MonoBehaviour
+    public struct SceneReference
     {
         #region====================================( Variables )======================================================//
 
