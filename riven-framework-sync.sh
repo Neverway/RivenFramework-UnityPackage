@@ -20,7 +20,7 @@ push_changes() {
     echo
 
     if [ -n "$(git status --porcelain)" ]; then
-        read -r -p "Commit message (leave empty to cancel): " msg
+        read -r -p "Commit message: " msg
         [ -z "$msg" ] && { echo "Cancelled"; return; }
         git add -A || return
         git commit -m "$msg" || return
@@ -33,7 +33,7 @@ push_changes() {
     if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
         git pull --rebase origin "$branch" || {
             echo
-            echo "The pull conflict detected! Run 'git rebase --continue', then run this again to fix it"
+            echo "The pull conflict detected! Run 'git rebase --continue', then run this again to fix it!"
             return
         }
     fi
@@ -41,52 +41,34 @@ push_changes() {
     git push -u origin "$branch" && echo && echo "Pushed '$branch'."
 }
 
+get_branch() {
+    local b
+    b="$(git rev-parse --abbrev-ref HEAD)"
+    if [ "$b" = "HEAD" ]; then
+        read -r -p "No branch checked out!" b
+        b="${b:-refactor}"
+        git checkout "$b" >/dev/null 2>&1 || git checkout -b "$b" "origin/$b" || return 1
+    fi
+    echo "$b"
+}
+
 update_package() {
-    local branch target
-    branch="$(git rev-parse --abbrev-ref HEAD)"
-
-    # If this IS the package folder inside the game project, a plain pull is all that is needed.
-    if [[ "$REPO" == */Packages/com.neverway.riven ]]; then
-        if [ -n "$(git status --porcelain)" ]; then
-            echo "This folder has uncommitted changes! Push them with option 1 before continuing"
-            return
-        fi
-        git fetch origin && git checkout "$branch" && git pull --rebase origin "$branch"
+    if [ -n "$(git status --porcelain)" ]; then
+        echo
+        echo "This folder has uncommitted changes! Please commit them first!"
+        git status --short
         return
     fi
 
-    target=""
-    [ -f "$CONFIG" ] && target="$(cat "$CONFIG")"
-
-    if [ -z "$target" ] || [ ! -d "$target/.git" ] && [ ! -f "$target/.git" ]; then
-        echo
-        echo "Where is the package folder inside your game project?"
-        echo "Example: /c/Projects/CorridorGeodesic/RivenFramework-Unity/Packages/com.neverway.riven"
-        read -r -p "Path: " target
-        target="${target%/}"
-        if [ ! -d "$target/.git" ] && [ ! -f "$target/.git" ]; then
-            echo "That folder is not a git repo! Nothing was changed"
-            return
-        fi
-        echo "$target" > "$CONFIG"
-    fi
-
-    if [ -n "$(git -C "$target" status --porcelain)" ]; then
-        echo
-        echo "The package in the game project has uncommitted changes:"
-        git -C "$target" status --short
-        echo "Commit or push those first (run this script from that folder, option 1)"
-        return
-    fi
-
+    local branch
+    branch="$(get_branch)" || return
     echo
-    echo "Updating $target to '$branch'..."
-    git -C "$target" fetch origin || return
-    git -C "$target" checkout "$branch" || return
-    git -C "$target" pull --rebase origin "$branch" || return
+    echo "Updating '$branch' from origin..."
+    git fetch origin || return
+    git checkout "$branch" || return
+    git pull --rebase origin "$branch" || return
     echo
-    echo "Done! Switch back to Unity to let it reimport"
-    echo "The game project will show the package as modified! Don't forget to commit the package update!"
+    echo "Done."
 }
 
 while true; do
@@ -103,6 +85,5 @@ while true; do
         1) push_changes ;;
         2) update_package ;;
         q|Q) exit 0 ;;
-        *) echo "Pick 1, 2 or q" ;;
     esac
 done
