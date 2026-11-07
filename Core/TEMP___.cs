@@ -19,7 +19,7 @@ using UnityEditor;
 
 namespace RivenFramework
 {
-    public struct SceneReference
+    public struct etea
     {
         #region====================================( Variables )======================================================//
 
