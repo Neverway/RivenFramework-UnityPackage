@@ -42,10 +42,10 @@ namespace RivenFramework
         #endregion
 
         #region----------------( External )---------------------------------------------------------------------------//
+            public abstract bool PassesFilter(T _objectToCheck);
         #endregion
 
         #region----------------( Internal )---------------------------------------------------------------------------//
-            public abstract bool PassesFilter(T _objectToCheck);
         #endregion
 
         #endregion
