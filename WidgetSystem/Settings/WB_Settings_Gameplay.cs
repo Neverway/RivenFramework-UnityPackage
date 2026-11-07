@@ -11,7 +11,6 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using Neverway.Framework;
 
 namespace RivenFramework
 {

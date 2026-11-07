@@ -11,7 +11,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Neverway.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

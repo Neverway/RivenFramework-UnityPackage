@@ -11,7 +11,7 @@
 
 using UnityEngine;
 
-namespace Neverway.Framework.PawnManagement
+namespace RivenFramework
 {
     public class LB_Title : MonoBehaviour
     {
