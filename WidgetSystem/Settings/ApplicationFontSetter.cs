@@ -14,59 +14,62 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class ApplicationFontSetter : MonoBehaviour
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public TMP_FontAsset currentFont;
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-    [SerializeField] private TMP_FontAsset defaultFont, dyslexiaAssistFont;
-    [SerializeField] private GI_WidgetManager widgetManager;
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class ApplicationFontSetter : MonoBehaviour
     {
-        widgetManager.OnNewWidgetCreated += AssignFontToNewWidget;
-    }
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public TMP_FontAsset currentFont;
 
 
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-    private void AssignFontToNewWidget()
-    {
-        foreach (var textElement in widgetManager.lastCreatedWidget.GetComponentsInChildren<TMP_Text>())
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+        [SerializeField] private TMP_FontAsset defaultFont, dyslexiaAssistFont;
+        [SerializeField] private GI_WidgetManager widgetManager;
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
         {
-            if (textElement.gameObject.GetComponent(typeof(Text_DontOverideFont))) continue;
-            textElement.font = currentFont;
+            widgetManager.OnNewWidgetCreated += AssignFontToNewWidget;
         }
-    }
 
 
-    //=-----------------=
-    // External Functions
-    //=-----------------=
-    public void SetAppFont(bool dyslexiaAssistEnabled)
-    {
-        currentFont = dyslexiaAssistEnabled ? dyslexiaAssistFont : defaultFont;
-
-        foreach (var textElement in FindObjectsOfType<TMP_Text>())
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+        private void AssignFontToNewWidget()
         {
-            if (textElement.gameObject.GetComponent(typeof(Text_DontOverideFont))) continue;
-            textElement.font = currentFont;
+            foreach (var textElement in widgetManager.lastCreatedWidget.GetComponentsInChildren<TMP_Text>())
+            {
+                if (textElement.gameObject.GetComponent(typeof(Text_DontOverideFont))) continue;
+                textElement.font = currentFont;
+            }
+        }
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
+        public void SetAppFont(bool dyslexiaAssistEnabled)
+        {
+            currentFont = dyslexiaAssistEnabled ? dyslexiaAssistFont : defaultFont;
+
+            foreach (var textElement in FindObjectsOfType<TMP_Text>())
+            {
+                if (textElement.gameObject.GetComponent(typeof(Text_DontOverideFont))) continue;
+                textElement.font = currentFont;
+            }
         }
     }
 }

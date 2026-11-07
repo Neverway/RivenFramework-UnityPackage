@@ -12,61 +12,64 @@
 using RivenFramework;
 using UnityEngine;
 
-public class GameplayNotificationManager : MonoBehaviour
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-    [SerializeField] private GameObject notificationBoxWidget;
-    private GI_WidgetManager widgetManager;
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class GameplayNotificationManager : MonoBehaviour
     {
-        widgetManager = GameInstance.Get<GI_WidgetManager>();
-    }
-
-    private void Update()
-    {
-    
-    }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
 
 
-    //=-----------------=
-    // External Functions
-    //=-----------------=
-    
-    public void DisplayKeyHint(float _duration, string _keyhintText, Sprite _keyhintImage)
-    {
-        if (!widgetManager.GetExistingWidget(notificationBoxWidget.name))
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+        [SerializeField] private GameObject notificationBoxWidget;
+        private GI_WidgetManager widgetManager;
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
         {
-            widgetManager.AddWidget(notificationBoxWidget);
+            widgetManager = GameInstance.Get<GI_WidgetManager>();
         }
-        FindObjectOfType<WB_NotificationBox>().DisplayKeyHint(_duration, _keyhintText, _keyhintImage);
-    }
-    public void DisplayKeyHint(float _duration, string _keyhintText, string _targetActionMap, string _targetAction)
-    {
-        if (!widgetManager.GetExistingWidget(notificationBoxWidget.name))
+
+        private void Update()
         {
-            widgetManager.AddWidget(notificationBoxWidget);
+    
         }
-        FindObjectOfType<WB_NotificationBox>().DisplayKeyHint(_duration, _keyhintText, _targetActionMap, _targetAction);
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
+    
+        public void DisplayKeyHint(float _duration, string _keyhintText, Sprite _keyhintImage)
+        {
+            if (!widgetManager.GetExistingWidget(notificationBoxWidget.name))
+            {
+                widgetManager.AddWidget(notificationBoxWidget);
+            }
+            FindObjectOfType<WB_NotificationBox>().DisplayKeyHint(_duration, _keyhintText, _keyhintImage);
+        }
+        public void DisplayKeyHint(float _duration, string _keyhintText, string _targetActionMap, string _targetAction)
+        {
+            if (!widgetManager.GetExistingWidget(notificationBoxWidget.name))
+            {
+                widgetManager.AddWidget(notificationBoxWidget);
+            }
+            FindObjectOfType<WB_NotificationBox>().DisplayKeyHint(_duration, _keyhintText, _targetActionMap, _targetAction);
+        }
     }
 }

@@ -14,130 +14,133 @@ using RivenFramework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class VolumeLevelStreamContainer : MonoBehaviour
+namespace RivenFramework
 {
-    #region========================================( Variables )======================================================//
-    /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-    public Vector3 exitPositionOffset;
-    public Vector3 exitRotationOffset;
-    public GameObject parentStreamVolume;
-
-
-    /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
-
-
-    /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-    private Vector3 cachedExitWorldPosition;
-    private Quaternion cachedOriginRotation;  
-
-
-    /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
-    private GI_WorldLoader worldLoader;
-
-
-    #endregion
-
-
-    #region=======================================( Functions )=======================================================//
-    /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
-    private void Awake()
+    public class VolumeLevelStreamContainer : MonoBehaviour
     {
-        transform.SetParent(null);
-        DontDestroyOnLoad(gameObject);
-        GI_WorldLoader.OnWorldLoaded += EjectActors;
-    }
-
-    private void OnDestroy()
-    {
-        GI_WorldLoader.OnWorldLoaded -= EjectActors;
-    }
+        #region========================================( Variables )======================================================//
+        /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
+        public Vector3 exitPositionOffset;
+        public Vector3 exitRotationOffset;
+        public GameObject parentStreamVolume;
 
 
-
-    /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
-    /// <summary>
-    /// Cache the position of the streaming container before the old scene unloads
-    /// </summary>
-    public void PrepareForLoad()
-    {
-        //cachedExitWorldPosition = transform.position + exitPositionOffset;
-        cachedOriginRotation = parentStreamVolume.transform.rotation;
-    }
-
-    /// <summary>
-    /// Move all the actors out of the stream container and to the new scene once the new scene is loaded
-    /// </summary>
-    private void EjectActors()
-    {
-        //print($"[{gameObject.name}] Ejecting to {cachedExitWorldPosition}, childCount={transform.childCount}");
-        
-        // Move the container and its contents to the exit poisiton
-        transform.position += cachedOriginRotation * exitPositionOffset;
-        transform.rotation = cachedOriginRotation * Quaternion.Euler(exitRotationOffset);
+        /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
 
 
-        // Put the children into a list so we can modify them without the list breaking
-        List<GameObject> childActors = new List<GameObject>();
-        for (int i = 0; i < transform.childCount; i++)
+        /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
+        private Vector3 cachedExitWorldPosition;
+        private Quaternion cachedOriginRotation;  
+
+
+        /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
+        private GI_WorldLoader worldLoader;
+
+
+        #endregion
+
+
+        #region=======================================( Functions )=======================================================//
+        /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
+        private void Awake()
         {
-            childActors.Add(transform.GetChild(i).gameObject);
+            transform.SetParent(null);
+            DontDestroyOnLoad(gameObject);
+            GI_WorldLoader.OnWorldLoaded += EjectActors;
         }
-        
-        // Eject the children into the new scene
-        StartCoroutine(EjectChildrenIntoNewLevel(childActors));
-    }
 
-    private IEnumerator EjectChildrenIntoNewLevel(List<GameObject> childActors)
-    {
-        var anchor = SceneManager.GetActiveScene().GetRootGameObjects()[0];
-        List<ValueTuple<Rigidbody, bool, Vector3, Vector3>> rigidbodyStates = new List<(Rigidbody, bool, Vector3, Vector3)>();
-        
-        for (int i = 0; i < childActors.Count; i++)
+        private void OnDestroy()
         {
-            var actor = childActors[i].gameObject;
-            actor.transform.SetParent(anchor.transform);
-            actor.transform.SetParent(null);
-            //print($"[{actor.gameObject.name}] EJECTED");
+            GI_WorldLoader.OnWorldLoaded -= EjectActors;
+        }
 
-            // Get all rigidbody components on this actor
-            var rigidbodies = actor.GetComponentsInChildren<Rigidbody>();
-            for (int j = 0; j < rigidbodies.Length; j++)
+
+
+        /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
+        /// <summary>
+        /// Cache the position of the streaming container before the old scene unloads
+        /// </summary>
+        public void PrepareForLoad()
+        {
+            //cachedExitWorldPosition = transform.position + exitPositionOffset;
+            cachedOriginRotation = parentStreamVolume.transform.rotation;
+        }
+
+        /// <summary>
+        /// Move all the actors out of the stream container and to the new scene once the new scene is loaded
+        /// </summary>
+        private void EjectActors()
+        {
+            //print($"[{gameObject.name}] Ejecting to {cachedExitWorldPosition}, childCount={transform.childCount}");
+        
+            // Move the container and its contents to the exit poisiton
+            transform.position += cachedOriginRotation * exitPositionOffset;
+            transform.rotation = cachedOriginRotation * Quaternion.Euler(exitRotationOffset);
+
+
+            // Put the children into a list so we can modify them without the list breaking
+            List<GameObject> childActors = new List<GameObject>();
+            for (int i = 0; i < transform.childCount; i++)
             {
-                // Store their current kinematic state and velocity
-                rigidbodyStates.Add((rigidbodies[j], rigidbodies[j].isKinematic, rigidbodies[j].velocity, rigidbodies[j].angularVelocity));
-                // Set all rigidbody components to kinematic
-                rigidbodies[j].isKinematic = true;
+                childActors.Add(transform.GetChild(i).gameObject);
+            }
+        
+            // Eject the children into the new scene
+            StartCoroutine(EjectChildrenIntoNewLevel(childActors));
+        }
+
+        private IEnumerator EjectChildrenIntoNewLevel(List<GameObject> childActors)
+        {
+            var anchor = SceneManager.GetActiveScene().GetRootGameObjects()[0];
+            List<ValueTuple<Rigidbody, bool, Vector3, Vector3>> rigidbodyStates = new List<(Rigidbody, bool, Vector3, Vector3)>();
+        
+            for (int i = 0; i < childActors.Count; i++)
+            {
+                var actor = childActors[i].gameObject;
+                actor.transform.SetParent(anchor.transform);
+                actor.transform.SetParent(null);
+                //print($"[{actor.gameObject.name}] EJECTED");
+
+                // Get all rigidbody components on this actor
+                var rigidbodies = actor.GetComponentsInChildren<Rigidbody>();
+                for (int j = 0; j < rigidbodies.Length; j++)
+                {
+                    // Store their current kinematic state and velocity
+                    rigidbodyStates.Add((rigidbodies[j], rigidbodies[j].isKinematic, rigidbodies[j].velocity, rigidbodies[j].angularVelocity));
+                    // Set all rigidbody components to kinematic
+                    rigidbodies[j].isKinematic = true;
+                }
+            
+                // Move those little bastards to their offset transforms
+                //actor.root.position = cachedExitWorldPosition;
+                //actor.root.Rotate(exitRotationOffset);
+            }
+        
+            worldLoader = GameInstance.Get<GI_WorldLoader>();
+        
+            // Wait for the worldloader to finish loading the scene
+            if (worldLoader.isLoading)
+            {
+                yield return new WaitForEndOfFrame();
             }
             
-            // Move those little bastards to their offset transforms
-            //actor.root.position = cachedExitWorldPosition;
-            //actor.root.Rotate(exitRotationOffset);
-        }
+            // Restore kinematic states and velocity
+            for (int j = 0; j < rigidbodyStates.Count; j++)
+            {
+                rigidbodyStates[j].Item1.isKinematic = rigidbodyStates[j].Item2;
+                rigidbodyStates[j].Item1.velocity = rigidbodyStates[j].Item3;
+                rigidbodyStates[j].Item1.angularVelocity = rigidbodyStates[j].Item4;
+            }
         
-        worldLoader = GameInstance.Get<GI_WorldLoader>();
-        
-        // Wait for the worldloader to finish loading the scene
-        if (worldLoader.isLoading)
-        {
             yield return new WaitForEndOfFrame();
-        }
-            
-        // Restore kinematic states and velocity
-        for (int j = 0; j < rigidbodyStates.Count; j++)
-        {
-            rigidbodyStates[j].Item1.isKinematic = rigidbodyStates[j].Item2;
-            rigidbodyStates[j].Item1.velocity = rigidbodyStates[j].Item3;
-            rigidbodyStates[j].Item1.angularVelocity = rigidbodyStates[j].Item4;
-        }
         
-        yield return new WaitForEndOfFrame();
-        
-        //Destroy(gameObject);
+            //Destroy(gameObject);
+        }
+
+
+        /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
+
+
+        #endregion
     }
-
-
-    /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
-
-
-    #endregion
 }

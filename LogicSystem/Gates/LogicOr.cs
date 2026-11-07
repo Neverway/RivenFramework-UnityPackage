@@ -13,46 +13,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogicOr : Logic
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public LogicInput<bool> inputA = new(false);
-    public LogicInput<bool> inputB = new(false);
-    public LogicOutput<bool> output = new(false);
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class LogicOr : Logic
     {
-        //inputA.CallOnSourceChanged(TestInputs);
-        //inputB.CallOnSourceChanged(TestInputs);
-    }
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public LogicInput<bool> inputA = new(false);
+        public LogicInput<bool> inputB = new(false);
+        public LogicOutput<bool> output = new(false);
+
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
+        {
+            //inputA.CallOnSourceChanged(TestInputs);
+            //inputB.CallOnSourceChanged(TestInputs);
+        }
     
 
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-    private void Update()
-    {
-        output.Set(inputA || inputB);
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+        private void Update()
+        {
+            output.Set(inputA || inputB);
+        }
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
     }
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
 }

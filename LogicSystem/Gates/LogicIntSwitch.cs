@@ -13,45 +13,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogicIntSwitch : Logic
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public LogicInput<bool> powered = new(false);
-    public LogicInput<int> unpoweredValue = new(0);
-    public LogicInput<int> poweredValue = new(0);
-    public LogicOutput<int> output = new(0);
-    
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-
-    private void Update()
+    public class LogicIntSwitch : Logic
     {
-        if (powered.Get()) output.Set(poweredValue);
-        else output.Set(unpoweredValue);
-    }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public LogicInput<bool> powered = new(false);
+        public LogicInput<int> unpoweredValue = new(0);
+        public LogicInput<int> poweredValue = new(0);
+        public LogicOutput<int> output = new(0);
     
 
 
-    //=-----------------=
-    // External Functions
-    //=-----------------=
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+
+        private void Update()
+        {
+            if (powered.Get()) output.Set(poweredValue);
+            else output.Set(unpoweredValue);
+        }
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+    
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
+    }
 }

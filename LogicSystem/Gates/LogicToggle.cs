@@ -14,69 +14,72 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LogicToggle : Logic
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public LogicInput<bool> input = new(false);
-    public LogicOutput<bool> output = new(false);
-    public LogicInput<bool> reset = new(false);
-
-    [Space]
-    [Tooltip("Output will persist as TRUE as soon as input is TRUE once")]
-    public bool stayPowered = false;
-
-    [Space]
-    [Tooltip("This event will only fire when the output is powered")]
-    public UnityEvent onOutputPowered;
-    [Tooltip("This event will only fire when the output is unpowered")]
-    public UnityEvent onOutputUnpowered;
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class LogicToggle : Logic
     {
-        if (input != null) input.CallOnSourceChanged(Toggle);
-        if (reset != null) reset.CallOnSourceChanged(Reset);
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public LogicInput<bool> input = new(false);
+        public LogicOutput<bool> output = new(false);
+        public LogicInput<bool> reset = new(false);
+
+        [Space]
+        [Tooltip("Output will persist as TRUE as soon as input is TRUE once")]
+        public bool stayPowered = false;
+
+        [Space]
+        [Tooltip("This event will only fire when the output is powered")]
+        public UnityEvent onOutputPowered;
+        [Tooltip("This event will only fire when the output is unpowered")]
+        public UnityEvent onOutputUnpowered;
+
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
+        {
+            if (input != null) input.CallOnSourceChanged(Toggle);
+            if (reset != null) reset.CallOnSourceChanged(Reset);
+        }
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+        private void Toggle()
+        {
+            //Trigger the toggle only when input signal is TRUE
+            if (input.Get() is false) return;
+            if (output.Get() && stayPowered) return;
+
+            //Toggle the output state (Always set to TRUE if "stayPowered" is TRUE)
+            output.Set(!output);
+
+            //Invoke events for change of power state
+            if (output) onOutputPowered.Invoke();
+            else onOutputUnpowered.Invoke();
+        }
+
+        private void Reset()
+        {
+            output.Set(false);
+        }
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
     }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-    private void Toggle()
-    {
-        //Trigger the toggle only when input signal is TRUE
-        if (input.Get() is false) return;
-        if (output.Get() && stayPowered) return;
-
-        //Toggle the output state (Always set to TRUE if "stayPowered" is TRUE)
-        output.Set(!output);
-
-        //Invoke events for change of power state
-        if (output) onOutputPowered.Invoke();
-        else onOutputUnpowered.Invoke();
-    }
-
-    private void Reset()
-    {
-        output.Set(false);
-    }
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
 }

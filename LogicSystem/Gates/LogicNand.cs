@@ -13,46 +13,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogicNand : Logic
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public LogicInput<bool> inputA = new(false);
-    public LogicInput<bool> inputB = new(false);
-    public LogicOutput<bool> output = new(false);
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class LogicNand : Logic
     {
-        //TestInputs();
-        //inputA.CallOnSourceChanged(TestInputs);
-        //inputB.CallOnSourceChanged(TestInputs);
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public LogicInput<bool> inputA = new(false);
+        public LogicInput<bool> inputB = new(false);
+        public LogicOutput<bool> output = new(false);
+
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
+        {
+            //TestInputs();
+            //inputA.CallOnSourceChanged(TestInputs);
+            //inputB.CallOnSourceChanged(TestInputs);
+        }
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+        private void Update()
+        {
+            output.Set(!(inputA && inputB));
+        }
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
     }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-    private void Update()
-    {
-        output.Set(!(inputA && inputB));
-    }
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
 }

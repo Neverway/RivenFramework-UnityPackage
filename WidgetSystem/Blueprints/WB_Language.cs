@@ -12,47 +12,50 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-    public class WB_Language : MonoBehaviour
-    {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        private ApplicationSettings applicationSettings;
-        [SerializeField] private Button buttonBack;
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Start()
+namespace RivenFramework
+{
+        public class WB_Language : MonoBehaviour
         {
-            applicationSettings = FindObjectOfType<ApplicationSettings>();
-            if (buttonBack) buttonBack.onClick.AddListener(() => { Destroy(gameObject); });
+            //=-----------------=
+            // Public Variables
+            //=-----------------=
+
+
+            //=-----------------=
+            // Private Variables
+            //=-----------------=
+
+
+            //=-----------------=
+            // Reference Variables
+            //=-----------------=
+            private ApplicationSettings applicationSettings;
+            [SerializeField] private Button buttonBack;
+
+
+            //=-----------------=
+            // Mono Functions
+            //=-----------------=
+            private void Start()
+            {
+                applicationSettings = FindObjectOfType<ApplicationSettings>();
+                if (buttonBack) buttonBack.onClick.AddListener(() => { Destroy(gameObject); });
+            }
+
+
+            //=-----------------=
+            // Internal Functions
+            //=-----------------=
+
+
+            //=-----------------=
+            // External Functions
+            //=-----------------=
+            public void SetLocaleID(int _localeID)
+            {
+                applicationSettings.bufferedSettingsData.localeID = _localeID;
+                applicationSettings.currentSettingsData.localeID = _localeID;
+                applicationSettings.ApplySettings();
+            }
         }
-
-
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
-        public void SetLocaleID(int _localeID)
-        {
-            applicationSettings.bufferedSettingsData.localeID = _localeID;
-            applicationSettings.currentSettingsData.localeID = _localeID;
-            applicationSettings.ApplySettings();
-        }
-    }
+}

@@ -16,30 +16,34 @@ using UnityEngine;
 /// <summary>
 /// Strips the word "Variant" from the end of selected prefabs in the project window
 /// </summary>
-public class ToolStripVariant
+
+namespace RivenFramework
 {
-    [MenuItem("Neverway/Tools/Strip 'Variant' from selected prefabs")]
-    private static void StripVariantFromNames()
+    public class ToolStripVariant
     {
-        Object[] selectedAssets = Selection.GetFiltered(typeof(GameObject), SelectionMode.Assets);
-
-        foreach (Object asset in selectedAssets)
+        [MenuItem("Neverway/Tools/Strip 'Variant' from selected prefabs")]
+        private static void StripVariantFromNames()
         {
-            string assetPath = AssetDatabase.GetAssetPath(asset);
-            string fileName = Path.GetFileNameWithoutExtension(assetPath);
-            string directory = Path.GetDirectoryName(assetPath);
+            Object[] selectedAssets = Selection.GetFiltered(typeof(GameObject), SelectionMode.Assets);
 
-            if (fileName.EndsWith("Variant"))
+            foreach (Object asset in selectedAssets)
             {
-                string newFileName = fileName.Substring(0, fileName.Length - "Variant".Length).TrimEnd();
-                string newPath = Path.Combine(directory, newFileName + ".prefab");
+                string assetPath = AssetDatabase.GetAssetPath(asset);
+                string fileName = Path.GetFileNameWithoutExtension(assetPath);
+                string directory = Path.GetDirectoryName(assetPath);
 
-                AssetDatabase.RenameAsset(assetPath, newFileName);
-                Debug.Log($"Renamed '{fileName}' to '{newFileName}'");
+                if (fileName.EndsWith("Variant"))
+                {
+                    string newFileName = fileName.Substring(0, fileName.Length - "Variant".Length).TrimEnd();
+                    string newPath = Path.Combine(directory, newFileName + ".prefab");
+
+                    AssetDatabase.RenameAsset(assetPath, newFileName);
+                    Debug.Log($"Renamed '{fileName}' to '{newFileName}'");
+                }
             }
-        }
 
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
     }
 }

@@ -15,94 +15,97 @@ using RivenFramework;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Image_EntityPain : MonoBehaviour
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public Pawn targetPawn;
-    public bool findPossessedPawn;
-    public float fadeSpeed=1;
-    public float startAlpha=1;
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-    private bool isInPain; // Used to keep track of if we are currently fading the image in or out (Fadeout: Underground reference?)
-    private bool initialized;
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-    private Image image;
-    private Animator animator;
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class Image_EntityPain : MonoBehaviour
     {
-        image = GetComponent<Image>();
-        animator = GetComponent<Animator>();
-    }
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public Pawn targetPawn;
+        public bool findPossessedPawn;
+        public float fadeSpeed=1;
+        public float startAlpha=1;
 
-    private void Update()
-    {
-        if (findPossessedPawn && !targetPawn)
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+        private bool isInPain; // Used to keep track of if we are currently fading the image in or out (Fadeout: Underground reference?)
+        private bool initialized;
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+        private Image image;
+        private Animator animator;
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
         {
-            targetPawn = FindPossessedPawn();
+            image = GetComponent<Image>();
+            animator = GetComponent<Animator>();
         }
-        if (targetPawn && !initialized)
+
+        private void Update()
         {
-            initialized = true;
-            targetPawn.OnPawnHurt -= OnHurt;
-            targetPawn.OnPawnHurt += OnHurt;
-        }
-        else if (!targetPawn)
-        {
-            var color = image.color;
-            image.color = new Color(color.r, color.g, color.b, 0);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (!targetPawn) return;
-        targetPawn.OnPawnHurt -= OnHurt;
-    }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-    private Pawn FindPossessedPawn()
-    {
-        if (FindObjectOfType<GI_PawnManager>().localPlayerCharacter) return FindObjectOfType<GI_PawnManager>().localPlayerCharacter.GetComponent<Pawn>();
-        return null;
-    }
-
-    private IEnumerator FadeInPain()
-    {
-        isInPain = true;
-        DOVirtual.Color(
-            new Color(image.color.r, image.color.g, image.color.b, startAlpha), 
-            new Color(image.color.r, image.color.g, image.color.b, 0),
-            fadeSpeed,
-            (value) =>
+            if (findPossessedPawn && !targetPawn)
             {
-                image.color = value;
-            });
-        yield return new WaitForSeconds(targetPawn.currentStats.invulnerabilityTime);
-        isInPain = false;
-    }
+                targetPawn = FindPossessedPawn();
+            }
+            if (targetPawn && !initialized)
+            {
+                initialized = true;
+                targetPawn.OnPawnHurt -= OnHurt;
+                targetPawn.OnPawnHurt += OnHurt;
+            }
+            else if (!targetPawn)
+            {
+                var color = image.color;
+                image.color = new Color(color.r, color.g, color.b, 0);
+            }
+        }
 
-    private void OnHurt()
-    {
-        if (!isInPain)
+        private void OnDestroy()
         {
-            StartCoroutine(FadeInPain());
+            if (!targetPawn) return;
+            targetPawn.OnPawnHurt -= OnHurt;
+        }
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+        private Pawn FindPossessedPawn()
+        {
+            if (FindObjectOfType<GI_PawnManager>().localPlayerCharacter) return FindObjectOfType<GI_PawnManager>().localPlayerCharacter.GetComponent<Pawn>();
+            return null;
+        }
+
+        private IEnumerator FadeInPain()
+        {
+            isInPain = true;
+            DOVirtual.Color(
+                new Color(image.color.r, image.color.g, image.color.b, startAlpha), 
+                new Color(image.color.r, image.color.g, image.color.b, 0),
+                fadeSpeed,
+                (value) =>
+                {
+                    image.color = value;
+                });
+            yield return new WaitForSeconds(targetPawn.currentStats.invulnerabilityTime);
+            isInPain = false;
+        }
+
+        private void OnHurt()
+        {
+            if (!isInPain)
+            {
+                StartCoroutine(FadeInPain());
+            }
         }
     }
 }

@@ -11,41 +11,44 @@
 
 using UnityEngine;
 
-public class LB_Travel : MonoBehaviour
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-    private GI_WidgetManager widgetManager;
-    private GameObject loadingWidget;
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class LB_Travel : MonoBehaviour
     {
-        widgetManager = FindObjectOfType<GI_WidgetManager>();
-        widgetManager.AddWidget(loadingWidget);
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+        private GI_WidgetManager widgetManager;
+        private GameObject loadingWidget;
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
+        {
+            widgetManager = FindObjectOfType<GI_WidgetManager>();
+            widgetManager.AddWidget(loadingWidget);
+        }
+
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
     }
-
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
 }

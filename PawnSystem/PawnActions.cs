@@ -13,34 +13,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PawnActions
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
+    public abstract class PawnActions
+    {
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
 
 
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
 
 
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
 
 
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
     
 
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
 
 
-    //=-----------------=
-    // External Functions
-    //=-----------------=
+        //=-----------------=
+        // External Functions
+        //=-----------------=
+    }
 }

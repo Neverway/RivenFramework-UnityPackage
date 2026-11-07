@@ -13,35 +13,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VolumeTriggerInteraction : MonoBehaviour
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public Pawn owningPawn;
+    public class VolumeTriggerInteraction : MonoBehaviour
+    {
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public Pawn owningPawn;
 
 
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
 
 
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
 
 
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
     
 
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
 
 
-    //=-----------------=
-    // External Functions
-    //=-----------------=
+        //=-----------------=
+        // External Functions
+        //=-----------------=
+    }
 }

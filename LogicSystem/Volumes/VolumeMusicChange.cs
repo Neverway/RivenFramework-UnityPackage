@@ -14,49 +14,52 @@ using System.Collections.Generic;
 using RivenFramework;
 using UnityEngine;
 
-public class VolumeMusicChange : Volume
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public AudioClip musicTrack;
-    public float transitionTime = 1;
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-    private GI_MusicManager musicManager;
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private new void OnTriggerEnter(Collider _other)
+    public class VolumeMusicChange : Volume
     {
-        base.OnTriggerEnter(_other); // Call the base class method
-        if (!GetPlayerInTrigger())
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public AudioClip musicTrack;
+        public float transitionTime = 1;
+
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+        private GI_MusicManager musicManager;
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private new void OnTriggerEnter(Collider _other)
         {
-            return;
+            base.OnTriggerEnter(_other); // Call the base class method
+            if (!GetPlayerInTrigger())
+            {
+                return;
+            }
+            if (_other.gameObject == GetPlayerInTrigger().gameObject)
+            {
+                    if (!musicManager) musicManager = FindObjectOfType<GI_MusicManager>();
+                    musicManager.CrossFadeToTrack(musicTrack, transitionTime);
+            }
         }
-        if (_other.gameObject == GetPlayerInTrigger().gameObject)
-        {
-                if (!musicManager) musicManager = FindObjectOfType<GI_MusicManager>();
-                musicManager.CrossFadeToTrack(musicTrack, transitionTime);
-        }
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
     }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
 }

@@ -13,77 +13,80 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class VolumeItemPickup : Volume
+namespace RivenFramework
 {
-    #region========================================( Variables )======================================================//
-    /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-    public TriggerFilter triggerFilter;
-    public enum TriggerFilter
+    public class VolumeItemPickup : Volume
     {
-        All,
-        OnlyPlayer
-    }
-
-    public UnityEvent OnAttemptPickup;
-    public LogicOutput<bool> OnSuccessfulPickup;
-    
-    /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
-
-
-    /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-
-
-    /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
-
-
-    #endregion
-
-
-    #region=======================================( Functions )=======================================================//
-    /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
-    private new void OnTriggerEnter(Collider _other)
-    { 
-        // Call the base class method
-        base.OnTriggerEnter(_other);
-        switch (triggerFilter)
+        #region========================================( Variables )======================================================//
+        /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
+        public TriggerFilter triggerFilter;
+        public enum TriggerFilter
         {
-            case TriggerFilter.All:
-                if (pawnsInTrigger.Count != 0)
-                {
-                    var inventory = pawnsInTrigger[0].GetComponentInChildren<Pawn_Inventory>();
-                    if (inventory)
-                    {
-                        OnAttemptPickup.Invoke();
-                        if (inventory.AddItem(transform.GetChild(1).gameObject))
-                        {
-                            OnSuccessfulPickup.Set(true);
-                            gameObject.SetActive(false);
-                        }
-                    }
-                }
-                break;
-            case TriggerFilter.OnlyPlayer:
-                if (GetPlayerInTrigger())
-                {
-                    var inventory = GetPlayerInTrigger().GetComponentInChildren<Pawn_Inventory>();
-                    if (inventory)
-                    {
-                        OnAttemptPickup.Invoke();
-                        if (inventory.AddItem(transform.GetChild(1).gameObject))
-                        {
-                            OnSuccessfulPickup.Set(true);
-                            gameObject.SetActive(false);
-                        }
-                    }
-                }
-                break;
+            All,
+            OnlyPlayer
         }
+
+        public UnityEvent OnAttemptPickup;
+        public LogicOutput<bool> OnSuccessfulPickup;
+    
+        /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
+
+
+        /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
+
+
+        /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
+
+
+        #endregion
+
+
+        #region=======================================( Functions )=======================================================//
+        /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
+        private new void OnTriggerEnter(Collider _other)
+        { 
+            // Call the base class method
+            base.OnTriggerEnter(_other);
+            switch (triggerFilter)
+            {
+                case TriggerFilter.All:
+                    if (pawnsInTrigger.Count != 0)
+                    {
+                        var inventory = pawnsInTrigger[0].GetComponentInChildren<Pawn_Inventory>();
+                        if (inventory)
+                        {
+                            OnAttemptPickup.Invoke();
+                            if (inventory.AddItem(transform.GetChild(1).gameObject))
+                            {
+                                OnSuccessfulPickup.Set(true);
+                                gameObject.SetActive(false);
+                            }
+                        }
+                    }
+                    break;
+                case TriggerFilter.OnlyPlayer:
+                    if (GetPlayerInTrigger())
+                    {
+                        var inventory = GetPlayerInTrigger().GetComponentInChildren<Pawn_Inventory>();
+                        if (inventory)
+                        {
+                            OnAttemptPickup.Invoke();
+                            if (inventory.AddItem(transform.GetChild(1).gameObject))
+                            {
+                                OnSuccessfulPickup.Set(true);
+                                gameObject.SetActive(false);
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+
+        /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
+
+
+        /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
+
+        #endregion
     }
-
-    /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
-
-
-    /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
-
-    #endregion
 }

@@ -13,100 +13,103 @@
 using RivenFramework;
 using UnityEngine;
 
-    public class Tile_Parallax : MonoBehaviour
-    {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        [Tooltip("How much the tiles will shift from their starting position")]
-        [SerializeField] private Vector2 parallaxAmount;
-        [Tooltip("Which gamemode should the parallaxing be active during")]
-        //[SerializeField] private string activeGameMode = "Topdown2D";
-
-
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-        private Vector3 originalPosition;
-        private Vector3 originalScale;
-        private Vector3 parallaxScale;
-
-
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        private GI_PawnManager pawnManager;
-        private Transform localPlayer;
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Start()
+namespace RivenFramework
+{
+        public class Tile_Parallax : MonoBehaviour
         {
-            // Calculate the new local scale based on the parallax amount
-            originalPosition = transform.position;
-            originalScale = transform.localScale;
-            parallaxScale = new Vector3(
-                originalScale.x + (parallaxAmount.x / 2), 
-                originalScale.y + (parallaxAmount.y / 2), 
-                originalScale.z);
-        }
+            //=-----------------=
+            // Public Variables
+            //=-----------------=
+            [Tooltip("How much the tiles will shift from their starting position")]
+            [SerializeField] private Vector2 parallaxAmount;
+            [Tooltip("Which gamemode should the parallaxing be active during")]
+            //[SerializeField] private string activeGameMode = "Topdown2D";
 
-        private void Update()
-        {
-            if (GetLocalPlayer() is false) return;
 
-            // Only set the scale to the parallax scale if the correct gamemode is active
-            //if (pawnManager.GetActiveGamemode("Topdown2D"))
-            //{
-                transform.localScale = parallaxScale;
-            /*}
-            else
+            //=-----------------=
+            // Private Variables
+            //=-----------------=
+            private Vector3 originalPosition;
+            private Vector3 originalScale;
+            private Vector3 parallaxScale;
+
+
+            //=-----------------=
+            // Reference Variables
+            //=-----------------=
+            private GI_PawnManager pawnManager;
+            private Transform localPlayer;
+
+
+            //=-----------------=
+            // Mono Functions
+            //=-----------------=
+            private void Start()
             {
-                transform.localScale = originalScale;
-                transform.position = originalPosition;
-            }*/
+                // Calculate the new local scale based on the parallax amount
+                originalPosition = transform.position;
+                originalScale = transform.localScale;
+                parallaxScale = new Vector3(
+                    originalScale.x + (parallaxAmount.x / 2), 
+                    originalScale.y + (parallaxAmount.y / 2), 
+                    originalScale.z);
+            }
 
-            // Calculate the distance to move based on the parallax amount
-            Vector3 position = localPlayer.position;
-            Vector2 distance = new Vector2(position.x * -parallaxAmount.x, position.y * -parallaxAmount.y);
-            Vector3 newPosition = new Vector3(distance.x, distance.y, originalPosition.z);
-
-            // Set the new position
-            transform.position = newPosition;
-        }
-
-
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-        private bool GetLocalPlayer()
-        {
-            if (localPlayer is null)
+            private void Update()
             {
-                if (pawnManager is null)
+                if (GetLocalPlayer() is false) return;
+
+                // Only set the scale to the parallax scale if the correct gamemode is active
+                //if (pawnManager.GetActiveGamemode("Topdown2D"))
+                //{
+                    transform.localScale = parallaxScale;
+                /*}
+                else
                 {
-                    pawnManager = FindObjectOfType<GI_PawnManager>();
+                    transform.localScale = originalScale;
+                    transform.position = originalPosition;
+                }*/
+
+                // Calculate the distance to move based on the parallax amount
+                Vector3 position = localPlayer.position;
+                Vector2 distance = new Vector2(position.x * -parallaxAmount.x, position.y * -parallaxAmount.y);
+                Vector3 newPosition = new Vector3(distance.x, distance.y, originalPosition.z);
+
+                // Set the new position
+                transform.position = newPosition;
+            }
+
+
+            //=-----------------=
+            // Internal Functions
+            //=-----------------=
+            private bool GetLocalPlayer()
+            {
+                if (localPlayer is null)
+                {
                     if (pawnManager is null)
+                    {
+                        pawnManager = FindObjectOfType<GI_PawnManager>();
+                        if (pawnManager is null)
+                        {
+                            return false;
+                        }
+                    }
+
+                    if (pawnManager.localPlayerCharacter is null)
                     {
                         return false;
                     }
+
+                    localPlayer = pawnManager.localPlayerCharacter.transform;
                 }
 
-                if (pawnManager.localPlayerCharacter is null)
-                {
-                    return false;
-                }
-
-                localPlayer = pawnManager.localPlayerCharacter.transform;
+                return true;
             }
 
-            return true;
+
+            //=-----------------=
+            // External Functions
+            //=-----------------=
         }
-
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
-    }
+}

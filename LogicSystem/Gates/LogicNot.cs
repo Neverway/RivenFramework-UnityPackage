@@ -13,44 +13,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogicNot : MonoBehaviour
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public LogicInput<bool> input = new(false);
-    public LogicOutput<bool> output = new(false);
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class LogicNot : MonoBehaviour
     {
-        //TestInputs();
-        //input.CallOnSourceChanged(TestInputs);
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public LogicInput<bool> input = new(false);
+        public LogicOutput<bool> output = new(false);
+
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
+        {
+            //TestInputs();
+            //input.CallOnSourceChanged(TestInputs);
+        }
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+        private void Update()
+        {
+            output.Set(!input);
+        }
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
     }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-    private void Update()
-    {
-        output.Set(!input);
-    }
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
 }

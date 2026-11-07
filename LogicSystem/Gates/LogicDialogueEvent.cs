@@ -14,56 +14,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LogicDialogueEvent : Logic
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public LogicInput<bool> startTextEvent = new(false);
-    public LogicInput<bool> haltTextEvent = new(false);
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-    public UnityEvent onStartTextEvent;
-    public UnityEvent onHaltTextEvent;
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class LogicDialogueEvent : Logic
     {
-        if (startTextEvent.HasLogicOutputSource is true)
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public LogicInput<bool> startTextEvent = new(false);
+        public LogicInput<bool> haltTextEvent = new(false);
+
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+        public UnityEvent onStartTextEvent;
+        public UnityEvent onHaltTextEvent;
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
         {
-            startTextEvent.CallOnSourceChanged(StartTextEvent);
+            if (startTextEvent.HasLogicOutputSource is true)
+            {
+                startTextEvent.CallOnSourceChanged(StartTextEvent);
+            }
+            if (haltTextEvent.HasLogicOutputSource is true)
+            {
+                haltTextEvent.CallOnSourceChanged(HaltTextEvent);
+            }
         }
-        if (haltTextEvent.HasLogicOutputSource is true)
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+        private void StartTextEvent()
         {
-            haltTextEvent.CallOnSourceChanged(HaltTextEvent);
+            if (startTextEvent.Get()) onStartTextEvent.Invoke();
         }
-    }
-
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-    private void StartTextEvent()
-    {
-        if (startTextEvent.Get()) onStartTextEvent.Invoke();
-    }
-    private void HaltTextEvent()
-    {
-        if (haltTextEvent.Get()) onHaltTextEvent.Invoke();
-    }
+        private void HaltTextEvent()
+        {
+            if (haltTextEvent.Get()) onHaltTextEvent.Invoke();
+        }
 
 
-    //=-----------------=
-    // External Functions
-    //=-----------------=
+        //=-----------------=
+        // External Functions
+        //=-----------------=
+    }
 }

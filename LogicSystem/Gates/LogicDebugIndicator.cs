@@ -13,54 +13,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogicDebugIndicator : Logic
+namespace RivenFramework
 {
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    public LogicInput<bool> input = new(false);
-    public LogicOutput<bool> output = new(false);
-    public Sprite indicatorOn, indicatorOff;
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-    private SpriteRenderer spriteRenderer;
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    private void Start()
+    public class LogicDebugIndicator : Logic
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+        //=-----------------=
+        // Public Variables
+        //=-----------------=
+        public LogicInput<bool> input = new(false);
+        public LogicOutput<bool> output = new(false);
+        public Sprite indicatorOn, indicatorOff;
 
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-    private void Update()
-    {
-        if (input)
+
+        //=-----------------=
+        // Private Variables
+        //=-----------------=
+
+
+        //=-----------------=
+        // Reference Variables
+        //=-----------------=
+        private SpriteRenderer spriteRenderer;
+
+
+        //=-----------------=
+        // Mono Functions
+        //=-----------------=
+        private void Start()
         {
-            output.Set(true);
-            spriteRenderer.sprite = indicatorOn;
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
-        else
+
+        //=-----------------=
+        // Internal Functions
+        //=-----------------=
+        private void Update()
         {
-            output.Set(false);
-            spriteRenderer.sprite = indicatorOff;
+            if (input)
+            {
+                output.Set(true);
+                spriteRenderer.sprite = indicatorOn;
+            }
+            else
+            {
+                output.Set(false);
+                spriteRenderer.sprite = indicatorOff;
+            }
         }
+
+
+        //=-----------------=
+        // External Functions
+        //=-----------------=
     }
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
 }
