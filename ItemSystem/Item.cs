@@ -12,7 +12,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 namespace RivenFramework
 {
 public class Item : MonoBehaviour
@@ -55,3 +55,4 @@ public class Item : MonoBehaviour
     //=-----------------=
 }
 }
+*/
