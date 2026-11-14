@@ -17,8 +17,8 @@ using System;
 using UnityEditor;
 #endif
 
-//namespace RivenFramework
-//{
+namespace RivenFramework
+{
     [Serializable]
     public class ApplicationSettingsData
     {
@@ -288,4 +288,4 @@ using UnityEditor;
             this.description = _description;
         }
     }
-//}
+}
