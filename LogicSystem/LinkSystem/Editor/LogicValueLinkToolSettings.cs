@@ -1,60 +1,95 @@
+//==========================================( Neverway 2027 )=========================================================//
+// Author
+//  Errynei
+//
+// Contributors
+//  Liz M.
+//
+// Description
+//
+//====================================================================================================================//
+
 using System;
 using UnityEditor;
 using UnityEngine;
 
+namespace RivenFramework
+{
     public class LogicValueLinkToolSettings : ScriptableObject
     {
-        public static LogicValueLinkToolSettings _instance;
-        public static LogicValueLinkToolSettings Instance => (_instance != null ? _instance : _instance = LoadOrCreateSettings());
-        public event Action OnSettingsValidate;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            public bool showToolButton = true;
+            public bool showLinksWhenNotUsingTool = true;
+            public bool selectTransformWhenNotUsingTool = true;
+            [Space]
+            public Texture2D toolbarIcon;
+        #endregion
 
-        public bool showToolButton = true;
-        public bool showLinksWhenNotUsingTool = true;
-        public bool selectTransformWhenNotUsingTool = true;
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            public event Action OnSettingsValidate;
+        #endregion
 
-        [Space]
-        public Texture2D toolbarIcon;
+        #region----------------( External )---------------------------------------------------------------------------//
+            public static LogicValueLinkToolSettings _instance;
+            public static LogicValueLinkToolSettings Instance => (_instance != null ? _instance : _instance = LoadOrCreateSettings());
+            [HideInInspector] public bool EditorToolUsesSceneGUI => showToolButton || showLinksWhenNotUsingTool;
+        #endregion
 
-        [HideInInspector] public bool EditorToolUsesSceneGUI => showToolButton || showLinksWhenNotUsingTool;
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
-        public void OnValidate()
-        {
-            OnSettingsValidate?.Invoke();
-        }
 
-        [MenuItem("Neverway/Tools/Logic Value Link Tool/Settings")]
-        private static void SelectSettings()
-        {
-            Selection.activeObject = _instance;
-        }
-        private static LogicValueLinkToolSettings LoadOrCreateSettings()
-        {
-            string path;
-            string[] settings = AssetDatabase.FindAssets($"t:{nameof(LogicValueLinkToolSettings)}");
-            if (settings.Length > 0)
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            public void OnValidate()
             {
-                path = AssetDatabase.GUIDToAssetPath(settings[0]);
-                return AssetDatabase.LoadAssetAtPath<LogicValueLinkToolSettings>(path);
+                OnSettingsValidate?.Invoke();
+            }
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            [MenuItem("Neverway/Tools/Logic Value Link Tool/Settings")]
+            private static void SelectSettings()
+            {
+                Selection.activeObject = _instance;
             }
 
-            LogicValueLinkToolSettings newSettings = ScriptableObject.CreateInstance<LogicValueLinkToolSettings>();
-            try 
+            private static LogicValueLinkToolSettings LoadOrCreateSettings()
             {
-                MonoScript script = MonoScript.FromScriptableObject(newSettings);
-                path = AssetDatabase.GetAssetPath(script);
+                string path;
+                string[] settings = AssetDatabase.FindAssets($"t:{nameof(LogicValueLinkToolSettings)}");
+                if (settings.Length > 0)
+                {
+                    path = AssetDatabase.GUIDToAssetPath(settings[0]);
+                    return AssetDatabase.LoadAssetAtPath<LogicValueLinkToolSettings>(path);
+                }
 
-                path = path.Substring(0, path.LastIndexOf('/'));
-                path += "/LogicValueLinkToolSettings.asset";
+                LogicValueLinkToolSettings newSettings = ScriptableObject.CreateInstance<LogicValueLinkToolSettings>();
+                try 
+                {
+                    MonoScript script = MonoScript.FromScriptableObject(newSettings);
+                    path = AssetDatabase.GetAssetPath(script);
 
-                AssetDatabase.CreateAsset(newSettings, path);
-                AssetDatabase.SaveAssets();
+                    path = path.Substring(0, path.LastIndexOf('/'));
+                    path += "/LogicValueLinkToolSettings.asset";
+
+                    AssetDatabase.CreateAsset(newSettings, path);
+                    AssetDatabase.SaveAssets();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"Could not find nor create {nameof(LogicValueLinkToolSettings)} Asset, using defaults as fallback");
+                    Debug.LogException(e);
+                }
+
+                return newSettings;
             }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"Could not find nor create {nameof(LogicValueLinkToolSettings)} Asset, using defaults as fallback");
-                Debug.LogException(e);
-            }
-        
-            return newSettings;
-        }
+        #endregion
+        #endregion
     }
+}

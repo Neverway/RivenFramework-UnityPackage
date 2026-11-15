@@ -11,15 +11,14 @@
 //  Handles the filtering, entry, and exiting of pawns and physics props from a Logic Volume
 //====================================================================================================================//
 
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace RivenFramework
 {
     public class Volume : MonoBehaviour
     {
         #region====================================( Variables )======================================================//
-
         #region----------------( Inspector )--------------------------------------------------------------------------//
             [Header("Object Filtering")]
             [Tooltip("Decides which actors this volume applies to. Actors that don't pass are ignored completely. If the list is empty, the volume applies to everyone. (For example, to keep a pain volume from hurting its own team, add a Team Relation filter set to Opposed and Neutral)")]
@@ -42,11 +41,10 @@ namespace RivenFramework
             public List<Pawn> pawnsInTrigger = new List<Pawn>();
             public List<GameObject> propsInTrigger = new List<GameObject>();
         #endregion
-
         #endregion
 
-        #region====================================( Functions )======================================================//
 
+        #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
             protected void Update()
             {
@@ -88,7 +86,7 @@ namespace RivenFramework
                     AddPropToVolume(targetActor.gameObject);
                 }
             }
-            
+
             protected void OnTriggerExit(Collider _other)
             {
                 // Pawn has entered the volume
@@ -110,7 +108,7 @@ namespace RivenFramework
                     RemovePropFromVolume(targetActor.gameObject);
                 }
             }
-            
+
             public virtual void OnDisable()
             {
                 pawnsInTrigger.Clear();
@@ -136,7 +134,7 @@ namespace RivenFramework
             {
                 // Ignore null
                 if (_pawn == null) return false;
-                
+
                 // Add to list if it's not already present
                 if (pawnsInTrigger.Contains(_pawn) is false)
                 {
@@ -144,16 +142,16 @@ namespace RivenFramework
                     OnObjectsInVolumeUpdated(VolumeUpdateType.PawnAdded);
                     return true;
                 }
-                
+
                 // Default return
                 return false;
             }
-            
+
             protected virtual bool AddPropToVolume(GameObject _prop)
             {
                 // Ignore null
                 if (_prop == null) return false;
-                
+
                 // Add to list if it's not already present
                 if (propsInTrigger.Contains(_prop) is false)
                 {
@@ -161,7 +159,7 @@ namespace RivenFramework
                     OnObjectsInVolumeUpdated(VolumeUpdateType.PropAdded);
                     return true;
                 }
-                
+
                 // Default return
                 return false;
             }
@@ -175,7 +173,7 @@ namespace RivenFramework
             {
                 // Ignore null
                 if (_pawn == null) return false;
-                
+
                 // Remove from list if it's present
                 if (pawnsInTrigger.Contains(_pawn) is true)
                 {
@@ -183,11 +181,11 @@ namespace RivenFramework
                     OnObjectsInVolumeUpdated(VolumeUpdateType.PawnRemoved);
                     return true;
                 }
-                
+
                 // Default return
                 return false;
             }
-            
+
             /// <summary>
             /// Trys to remove a specified prop from the volume
             /// </summary>
@@ -197,7 +195,7 @@ namespace RivenFramework
             {
                 // Ignore null
                 if (_prop == null) return false;
-                
+
                 // Remove from list if it's present
                 if (propsInTrigger.Contains(_prop) is true)
                 {
@@ -205,7 +203,7 @@ namespace RivenFramework
                     OnObjectsInVolumeUpdated(VolumeUpdateType.PropRemoved);
                     return true;
                 }
-                
+
                 // Default return
                 return false;
             }
@@ -216,7 +214,7 @@ namespace RivenFramework
             protected virtual void CheckPawnsInTrigger()
             {
                 var pawnsToRemove = new List<Pawn>();
-                
+
                 foreach (var _pawn in pawnsInTrigger)
                 {
                     if (_pawn == null)
@@ -239,17 +237,17 @@ namespace RivenFramework
                         pawnsToRemove.Add(_pawn);
                     }
                 }
-                
+
                 foreach (var _pawn in pawnsToRemove) RemovePawnFromVolume(_pawn);
             }
-            
+
             /// <summary>
             /// Cleans up any dead references to props that are no longer inside the volume
             /// </summary>
             protected virtual void CheckPropsInTrigger()
             {
                 var propsToRemove = new List<GameObject>();
-                
+
                 foreach (var _prop in propsInTrigger)
                 {
                     if (_prop == null)
@@ -264,10 +262,10 @@ namespace RivenFramework
                         continue;
                     }
                 }
-                
+
                 foreach (var _prop in propsToRemove) RemovePropFromVolume(_prop);
             }
-            
+
             /// <summary>
             /// Get the local player that's inside this trigger if they are present
             /// </summary>
@@ -284,7 +282,7 @@ namespace RivenFramework
                 { 
                     return null;
                 }
-                
+
                 foreach (var _pawn in pawnsInTrigger)
                 {
                     //print("Cool dogs don't do drugs");
@@ -299,7 +297,7 @@ namespace RivenFramework
 
                 return null;
             }
-            
+
             /// <summary>
             /// Override this method in extended classes to react when any change to the volume contents occurs
             /// </summary>
@@ -331,7 +329,6 @@ namespace RivenFramework
                 AnyUpdate = PawnUpdated | PropUpdated
             }
         #endregion
-
         #endregion
     }
 }

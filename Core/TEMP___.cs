@@ -19,7 +19,7 @@ using UnityEditor;
 
 namespace RivenFramework
 {
-    public struct etea
+    public class TEMP : Logic
     {
         #region====================================( Variables )======================================================//
 

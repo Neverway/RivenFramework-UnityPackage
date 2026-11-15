@@ -1,99 +1,129 @@
+//==========================================( Neverway 2027 )=========================================================//
+// Author
+//  Errynei
+//
+// Contributors
+//  Liz M.
+//
+// Description
+//
+//====================================================================================================================//
 
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
+namespace RivenFramework
+{
     [CustomPropertyDrawer(typeof(LogicInput<>))]
     public class LogicInputDrawer : EasyPropertyDrawer
     {
-        string sourceField = "sourceField";
-        string value = "value";
-        string showHandle = "editorHandles_showHandle";
-        string handle = "editorHandles_handleTarget";
-        string customName = "editorHandles_customName";
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+        #endregion
 
-        string _hideTypeFilterText = "EDITOR_hideTypeFilterText";
-#pragma warning disable CS0414 // Field is assigned but its value is never used
-        string _fieldName = "fieldName";
-#pragma warning restore CS0414 // Field is assigned but its value is never used
-#pragma warning disable CS0414 // Field is assigned but its value is never used
-        string _targetComponent = "targetComponent";
-#pragma warning restore CS0414 // Field is assigned but its value is never used
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            LogicInput underlyingValue;
+        #endregion
 
-        bool showHandleField = false;
+        #region----------------( External )---------------------------------------------------------------------------//
+            public bool HasOutputTarget => underlyingValue.HasLogicOutputSource;
+            //    (!string.IsNullOrEmpty(property[sourceField][_fieldName].Property.stringValue))
+            //    && property[sourceField][_targetComponent].Property.boxedValue != null;
+            public string Text_LinkedToOutput => 
+                $"<size=10>Link to </size>" +
+                $"{property[sourceField].FieldType.Generic(0).Generic(0).HumanName(true)} " +
+                $"<size=10>Output: </size>";
+        #endregion
 
-        LogicInput underlyingValue;
-        public bool HasOutputTarget => underlyingValue.HasLogicOutputSource;
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            string sourceField = "sourceField";
+            string value = "value";
+            string showHandle = "editorHandles_showHandle";
+            string handle = "editorHandles_handleTarget";
+            string customName = "editorHandles_customName";
+            string _hideTypeFilterText = "EDITOR_hideTypeFilterText";
+            string _fieldName = "fieldName";
+            string _targetComponent = "targetComponent";
+            bool showHandleField = false;
+        #endregion
+        #endregion
 
-        public override DrawerObject OnGUIEasyDrawer(VerticalGroup contents)
-        {
-            //area.x += 2;
-            if (underlyingValue == null)
-                underlyingValue = property.Property.GetUnderlyingValue() as LogicInput;
 
-            if (!property[sourceField][_hideTypeFilterText].AsBool)
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            public override DrawerObject OnGUIEasyDrawer(VerticalGroup contents)
             {
-                property[sourceField][_hideTypeFilterText].Property.boolValue = true;
-            }
-            bool hasOutput = HasOutputTarget;
-            if (Application.isPlaying && hasOutput)
-            {
-            
-            }
+                //area.x += 2;
+                if (underlyingValue == null)
+                    underlyingValue = property.Property.GetUnderlyingValue() as LogicInput;
 
-
-            DrawerObject valueDrawer = new Disable(new Property(property[value]).HideLabel(), hasOutput);
-            FittedLabel fieldValueWithLabel = 
-                new FittedLabel(property.Property.displayName + " ->", valueDrawer).Padding(4).Big().AlignUpperLeft() as FittedLabel;
-
-
-            contents.Add(new SizedHorizontalGroup(fieldValueWithLabel)
-                .AddOnRight(new Button("H", ToggleHandleEditing).AlignCenter(), 22)
-                .AddOnRight(new EmptySpace(), 3));
-
-            contents.Add(new EmptySpace(5));
-            contents.Add(new FittedLabel(Text_LinkedToOutput, new Property(property[sourceField])).Padding(4f).UseRichText());
-
-            if (showHandleField)
-            {
-                contents.Add(new Divider());
-                VerticalGroup handleEditor = new VerticalGroup();
-
-                handleEditor.Add(new Property(property[showHandle]).Label("Show Handle in Editor? "));
-                if (property[showHandle].AsBool)
+                if (!property[sourceField][_hideTypeFilterText].AsBool)
                 {
-                    handleEditor.Add(new Property(property[handle]).Label("Handle Transform :"));
-                    handleEditor.Add(new Property(property[customName]).Label("Handle Custom Name :"));
+                    property[sourceField][_hideTypeFilterText].Property.boolValue = true;
                 }
-                Boxed boxedHandleEditor = new Boxed(handleEditor);
-                contents.Add(boxedHandleEditor);
-                contents.Add(new Divider());
+                bool hasOutput = HasOutputTarget;
+                if (Application.isPlaying && hasOutput)
+                {
+
+                }
+
+
+                DrawerObject valueDrawer = new Disable(new Property(property[value]).HideLabel(), hasOutput);
+                FittedLabel fieldValueWithLabel = 
+                    new FittedLabel(property.Property.displayName + " ->", valueDrawer).Padding(4).Big().AlignUpperLeft() as FittedLabel;
+
+
+                contents.Add(new SizedHorizontalGroup(fieldValueWithLabel)
+                    .AddOnRight(new Button("H", ToggleHandleEditing).AlignCenter(), 22)
+                    .AddOnRight(new EmptySpace(), 3));
+
+                contents.Add(new EmptySpace(5));
+                contents.Add(new FittedLabel(Text_LinkedToOutput, new Property(property[sourceField])).Padding(4f).UseRichText());
+
+                if (showHandleField)
+                {
+                    contents.Add(new Divider());
+                    VerticalGroup handleEditor = new VerticalGroup();
+
+                    handleEditor.Add(new Property(property[showHandle]).Label("Show Handle in Editor? "));
+                    if (property[showHandle].AsBool)
+                    {
+                        handleEditor.Add(new Property(property[handle]).Label("Handle Transform :"));
+                        handleEditor.Add(new Property(property[customName]).Label("Handle Custom Name :"));
+                    }
+                    Boxed boxedHandleEditor = new Boxed(handleEditor);
+                    contents.Add(boxedHandleEditor);
+                    contents.Add(new Divider());
+                }
+
+                Boxed boxedContents = new Boxed(contents);
+                boxedContents.boldness = 2;
+                return boxedContents;
             }
 
-            Boxed boxedContents = new Boxed(contents);
-            boxedContents.boldness = 2;
-            return boxedContents;
-        }
-        public override void OnBeforeFinishGUI(Rect area) 
-        {
-            area.width = 16;
-            area.height = 16;
-            area.y += 4;
+            public override void OnBeforeFinishGUI(Rect area) 
+            {
+                area.width = 16;
+                area.height = 16;
+                area.y += 4;
 
-            GUIContent content = new GUIContent("", EditorGUIUtility.IconContent("Profiler.NextFrame").image);
-            GUIStyle style = new GUIStyle(EditorStyles.label);
-            style.contentOffset = Vector2.left * 14f;
+                GUIContent content = new GUIContent("", EditorGUIUtility.IconContent("Profiler.NextFrame").image);
+                GUIStyle style = new GUIStyle(EditorStyles.label);
+                style.contentOffset = Vector2.left * 14f;
 
-            EditorGUI.LabelField(area, content, style);
-        }
-        public override void OnAfterGUI() { }
+                EditorGUI.LabelField(area, content, style);
+            }
 
-        public void ToggleHandleEditing() => showHandleField = !showHandleField;
+            public override void OnAfterGUI() { }
+        #endregion
 
-        //    (!string.IsNullOrEmpty(property[sourceField][_fieldName].Property.stringValue))
-        //    && property[sourceField][_targetComponent].Property.boxedValue != null;
-        public string Text_LinkedToOutput => 
-            $"<size=10>Link to </size>" +
-            $"{property[sourceField].FieldType.Generic(0).Generic(0).HumanName(true)} " +
-            $"<size=10>Output: </size>";
+        #region----------------( External )---------------------------------------------------------------------------//
+            public void ToggleHandleEditing() => showHandleField = !showHandleField;
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
+}

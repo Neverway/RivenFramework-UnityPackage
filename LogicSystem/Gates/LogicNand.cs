@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -6,7 +6,7 @@
 //
 //
 // Description
-//
+//  Someone is gonna have to explain nand gates to me again ~Liz
 //====================================================================================================================//
 
 using System.Collections;
@@ -15,47 +15,49 @@ using UnityEngine;
 
 namespace RivenFramework
 {
+    /// <summary>
+    /// Someone is gonna have to explain nand gates to me again ~Liz
+    /// </summary>
     public class LogicNand : Logic
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        public LogicInput<bool> inputA = new(false);
-        public LogicInput<bool> inputB = new(false);
-        public LogicOutput<bool> output = new(false);
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            public LogicInput<bool> inputA = new(false);
+            public LogicInput<bool> inputB = new(false);
+            public LogicOutput<bool> output = new(false);
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Start()
+            {
+                //TestInputs();
+                //inputA.CallOnSourceChanged(TestInputs);
+                //inputB.CallOnSourceChanged(TestInputs);
+            }
 
+            private void Update()
+            {
+                output.Set(!(inputA && inputB));
+            }
+        #endregion
 
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Start()
-        {
-            //TestInputs();
-            //inputA.CallOnSourceChanged(TestInputs);
-            //inputB.CallOnSourceChanged(TestInputs);
-        }
-
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-        private void Update()
-        {
-            output.Set(!(inputA && inputB));
-        }
-
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }

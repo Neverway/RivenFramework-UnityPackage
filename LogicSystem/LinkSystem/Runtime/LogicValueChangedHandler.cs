@@ -1,44 +1,80 @@
+//==========================================( Neverway 2027 )=========================================================//
+// Author
+//  Errynei
+//
+// Contributors
+//  Liz M.
+//
+// Description
+//
+//====================================================================================================================//
+
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace RivenFramework
+{
     public class LogicValueChangedHandler : MonoBehaviour
     {
-        private static LogicValueChangedHandler Instance;
-        private List<object> toProcess = new List<object>();
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+        #endregion
 
-        private void LateUpdate()
-        {
-            if (toProcess.Count == 0)
-                return;
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
 
-            List<object> toRemove = new List<object>();
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-            foreach(object processing in toProcess)
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private static LogicValueChangedHandler Instance;
+            private List<object> toProcess = new List<object>();
+        #endregion
+        #endregion
+
+
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void LateUpdate()
             {
-                if (processing != null)
+                if (toProcess.Count == 0)
+                    return;
+
+                List<object> toRemove = new List<object>();
+
+                foreach(object processing in toProcess)
                 {
-                    object fieldValue = processing.GetType().GetField("attachedTo").GetValue(processing);
-                    if (fieldValue is Component component && component != null)
+                    if (processing != null)
                     {
-                        Debug.Log(component.name);
-                        toRemove.Add(processing);
+                        object fieldValue = processing.GetType().GetField("attachedTo").GetValue(processing);
+                        if (fieldValue is Component component && component != null)
+                        {
+                            Debug.Log(component.name);
+                            toRemove.Add(processing);
+                        }
                     }
                 }
+                foreach (LogicInput<object> removing in toRemove)
+                    toProcess.Remove(removing);
             }
-            foreach (LogicInput<object> removing in toRemove)
-                toProcess.Remove(removing);
-        }
+        #endregion
 
-        public static void AutoSubscribeLogicInput(object input)
-        {
-            Instance.toProcess.Add(input);
-        }
+        #region----------------( External )---------------------------------------------------------------------------//
+            public static void AutoSubscribeLogicInput(object input)
+            {
+                Instance.toProcess.Add(input);
+            }
+        #endregion
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void InitializeBeforeLoad()
-        {
-            GameObject instance = new GameObject();
-            Instance = instance.AddComponent<LogicValueChangedHandler>();
-            DontDestroyOnLoad(instance);
-        }
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+            private static void InitializeBeforeLoad()
+            {
+                GameObject instance = new GameObject();
+                Instance = instance.AddComponent<LogicValueChangedHandler>();
+                DontDestroyOnLoad(instance);
+            }
+        #endregion
+        #endregion
     }
+}

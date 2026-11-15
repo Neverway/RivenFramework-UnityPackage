@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -20,115 +20,109 @@ namespace RivenFramework
 {
     public class VolumeTriggerEvent : Volume
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        [Header("Interactable Settings")] [Tooltip("If this is false, this trigger can only be activated once")]
-        public bool resetsAutomatically = true;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [Header("Interactable Settings")] [Tooltip("If this is false, this trigger can only be activated once")]
+            public bool resetsAutomatically = true;
+            public TriggerFilter triggerFilter;
+        #endregion
 
-        public LogicInput<bool> reset;
-        public TriggerFilter triggerFilter;
-        public LogicOutput<bool> onOccupied;
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            public LogicInput<bool> reset;
+            public LogicOutput<bool> onOccupied;
+            [Tooltip(
+                "This event will only fire when something first enters (does not refire for subsequent entries until unoccupied)")]
+            public UnityEvent onFirstOccupied;
+            [Tooltip("This event will only fire when last one leaves")]
+            public UnityEvent onFirstUnoccupied;
+        #endregion
 
-        [Tooltip(
-            "This event will only fire when something first enters (does not refire for subsequent entries until unoccupied)")]
-        public UnityEvent onFirstOccupied;
+        #region----------------( External )---------------------------------------------------------------------------//
+            [Tooltip("A variable to keep track of if this volume has already been trigger")] [HideInInspector]
+            public bool hasBeenTriggered;
+        #endregion
 
-        [Tooltip("This event will only fire when last one leaves")]
-        public UnityEvent onFirstUnoccupied;
-
-
-        public enum TriggerFilter
-        {
-            All,
-            Pawns,
-            Props,
-            OnlyPlayer
-        }
-
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-        [Tooltip("A variable to keep track of if this volume has already been trigger")] [HideInInspector]
-        public bool hasBeenTriggered;
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private new void Update()
-        {
-            base.Update();
-            if (reset) Reset();
-        }
-
-        [Todo ("We should update the state of this volume when it's disabled. If an occupant is non-crushable (doesn't get disabled in rift) then it should be removed from the list.")]
-        private void OnDisable ()
-        {
-        
-        }
-
-        private new void OnTriggerEnter(Collider _other)
-        {
-            bool wasOccupied = IsOccupied();
-            base.OnTriggerEnter(_other);
-            bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
-            if (isOccupied && wasOccupied == false)
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private new void Update()
             {
-                hasBeenTriggered = true;
-                onFirstOccupied.Invoke();
+                base.Update();
+                if (reset) Reset();
             }
-            onOccupied.Set(isOccupied);
-        }
 
-        private new void OnTriggerExit(Collider _other)
-        {
-            base.OnTriggerExit(_other);
-            bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
-            if (isOccupied == false) onFirstUnoccupied.Invoke();
-            onOccupied.Set(isOccupied);
-        }
-
-
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-        private bool IsOccupied()
-        {
-            if (hasBeenTriggered && resetsAutomatically == false)
+            [Todo ("We should update the state of this volume when it's disabled. If an occupant is non-crushable (doesn't get disabled in rift) then it should be removed from the list.")]
+            private void OnDisable ()
             {
+
+            }
+
+            private new void OnTriggerEnter(Collider _other)
+            {
+                bool wasOccupied = IsOccupied();
+                base.OnTriggerEnter(_other);
+                bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
+                if (isOccupied && wasOccupied == false)
+                {
+                    hasBeenTriggered = true;
+                    onFirstOccupied.Invoke();
+                }
+                onOccupied.Set(isOccupied);
+            }
+
+            private new void OnTriggerExit(Collider _other)
+            {
+                base.OnTriggerExit(_other);
+                bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor
+                if (isOccupied == false) onFirstUnoccupied.Invoke();
+                onOccupied.Set(isOccupied);
+            }
+
+            private void Reset()
+            {
+                hasBeenTriggered = false;
+            }
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            public enum TriggerFilter
+            {
+                All,
+                Pawns,
+                Props,
+                OnlyPlayer
+            }
+
+            private bool IsOccupied()
+            {
+                if (hasBeenTriggered && resetsAutomatically == false)
+                {
+                    return false;
+                }
+                switch (triggerFilter)
+                {
+                    case TriggerFilter.All: return pawnsInTrigger.Count != 0 || propsInTrigger.Count != 0;
+                    case TriggerFilter.Pawns: return pawnsInTrigger.Count != 0;
+                    case TriggerFilter.Props: return propsInTrigger.Count != 0;
+                    case TriggerFilter.OnlyPlayer: return GetPlayerInTrigger() != null;
+                }
+
                 return false;
             }
-            switch (triggerFilter)
+
+            private bool CanFireEvents()
             {
-                case TriggerFilter.All: return pawnsInTrigger.Count != 0 || propsInTrigger.Count != 0;
-                case TriggerFilter.Pawns: return pawnsInTrigger.Count != 0;
-                case TriggerFilter.Props: return propsInTrigger.Count != 0;
-                case TriggerFilter.OnlyPlayer: return GetPlayerInTrigger() != null;
+                if (hasBeenTriggered && !resetsAutomatically) return false;
+                return true;
             }
-
-            return false;
-        }
-
-        private bool CanFireEvents()
-        {
-            if (hasBeenTriggered && !resetsAutomatically) return false;
-            return true;
-        }
-
-        private void Reset()
-        {
-            hasBeenTriggered = false;
-        }
-
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+        #endregion
+        #endregion
     }
 }

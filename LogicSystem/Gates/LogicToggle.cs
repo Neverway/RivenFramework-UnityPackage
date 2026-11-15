@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -18,68 +18,64 @@ namespace RivenFramework
 {
     public class LogicToggle : Logic
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        public LogicInput<bool> input = new(false);
-        public LogicOutput<bool> output = new(false);
-        public LogicInput<bool> reset = new(false);
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [Space]
+            [Tooltip("Output will persist as TRUE as soon as input is TRUE once")]
+            public bool stayPowered = false;
+        #endregion
 
-        [Space]
-        [Tooltip("Output will persist as TRUE as soon as input is TRUE once")]
-        public bool stayPowered = false;
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            public LogicInput<bool> input = new(false);
+            public LogicOutput<bool> output = new(false);
+            public LogicInput<bool> reset = new(false);
+            [Space]
+            [Tooltip("This event will only fire when the output is powered")]
+            public UnityEvent onOutputPowered;
+            [Tooltip("This event will only fire when the output is unpowered")]
+            public UnityEvent onOutputUnpowered;
+        #endregion
 
-        [Space]
-        [Tooltip("This event will only fire when the output is powered")]
-        public UnityEvent onOutputPowered;
-        [Tooltip("This event will only fire when the output is unpowered")]
-        public UnityEvent onOutputUnpowered;
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Start()
-        {
-            if (input != null) input.CallOnSourceChanged(Toggle);
-            if (reset != null) reset.CallOnSourceChanged(Reset);
-        }
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Start()
+            {
+                if (input != null) input.CallOnSourceChanged(Toggle);
+                if (reset != null) reset.CallOnSourceChanged(Reset);
+            }
 
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-        private void Toggle()
-        {
-            //Trigger the toggle only when input signal is TRUE
-            if (input.Get() is false) return;
-            if (output.Get() && stayPowered) return;
+            private void Reset()
+            {
+                output.Set(false);
+            }
+        #endregion
 
-            //Toggle the output state (Always set to TRUE if "stayPowered" is TRUE)
-            output.Set(!output);
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-            //Invoke events for change of power state
-            if (output) onOutputPowered.Invoke();
-            else onOutputUnpowered.Invoke();
-        }
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private void Toggle()
+            {
+                //Trigger the toggle only when input signal is TRUE
+                if (input.Get() is false) return;
+                if (output.Get() && stayPowered) return;
 
-        private void Reset()
-        {
-            output.Set(false);
-        }
+                //Toggle the output state (Always set to TRUE if "stayPowered" is TRUE)
+                output.Set(!output);
 
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+                //Invoke events for change of power state
+                if (output) onOutputPowered.Invoke();
+                else onOutputUnpowered.Invoke();
+            }
+        #endregion
+        #endregion
     }
 }

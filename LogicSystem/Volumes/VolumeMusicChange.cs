@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -18,48 +18,46 @@ namespace RivenFramework
 {
     public class VolumeMusicChange : Volume
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        public AudioClip musicTrack;
-        public float transitionTime = 1;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            public AudioClip musicTrack;
+            public float transitionTime = 1;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            private GI_MusicManager musicManager;
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        private GI_MusicManager musicManager;
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private new void OnTriggerEnter(Collider _other)
-        {
-            base.OnTriggerEnter(_other); // Call the base class method
-            if (!GetPlayerInTrigger())
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private new void OnTriggerEnter(Collider _other)
             {
-                return;
+                base.OnTriggerEnter(_other); // Call the base class method
+                if (!GetPlayerInTrigger())
+                {
+                    return;
+                }
+                if (_other.gameObject == GetPlayerInTrigger().gameObject)
+                {
+                        if (!musicManager) musicManager = FindObjectOfType<GI_MusicManager>();
+                        musicManager.CrossFadeToTrack(musicTrack, transitionTime);
+                }
             }
-            if (_other.gameObject == GetPlayerInTrigger().gameObject)
-            {
-                    if (!musicManager) musicManager = FindObjectOfType<GI_MusicManager>();
-                    musicManager.CrossFadeToTrack(musicTrack, transitionTime);
-            }
-        }
+        #endregion
 
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }

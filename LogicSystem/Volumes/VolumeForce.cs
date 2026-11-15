@@ -18,7 +18,6 @@ namespace RivenFramework
     public class VolumeForce : Volume
     {
         #region====================================( Variables )======================================================//
-
         #region----------------( Inspector )--------------------------------------------------------------------------//
             [SerializeField] private float actorForceIntensity;
             [SerializeField] private float propForceIntensity;
@@ -36,11 +35,10 @@ namespace RivenFramework
 
         #region----------------( Internal )---------------------------------------------------------------------------//
         #endregion
-
         #endregion
 
-        #region====================================( Functions )======================================================//
 
+        #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
             private void FixedUpdate()
             {
@@ -85,7 +83,6 @@ namespace RivenFramework
 
         #region----------------( Internal )---------------------------------------------------------------------------//
         #endregion
-
         #endregion
     }
 }

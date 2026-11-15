@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -20,29 +20,28 @@ namespace RivenFramework
 {
     public class VolumePlatformMagnet : Volume
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        [Header("Rotation Settings")]
-        [Tooltip("If enabled, pawns will be rotated with the platform when the platform spins")]
-        public bool rotatePawnsWithPlatform = false;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [Header("Rotation Settings")]
+            [Tooltip("If enabled, pawns will be rotated with the platform when the platform spins")]
+            public bool rotatePawnsWithPlatform = false;
+            public GameObject reparentContainer;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private float previousPlatformYRotation;
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-    
-
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        public GameObject reparentContainer;
-        private float previousPlatformYRotation;
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             private void Awake()
             {
                 previousPlatformYRotation = reparentContainer.transform.eulerAngles.y;
@@ -55,7 +54,7 @@ namespace RivenFramework
                 float currentYRot = reparentContainer.transform.eulerAngles.y;
                 float deltaY = Mathf.DeltaAngle(previousPlatformYRotation, currentYRot);
                 previousPlatformYRotation = currentYRot;
-            
+
                 if (Mathf.Approximately(deltaY, 0f)) return;
 
                 foreach (var pawn in pawnsInTrigger)
@@ -67,16 +66,16 @@ namespace RivenFramework
 
             private new void OnTriggerStay(Collider _other)
             {
-            
+
                 // Pawn has entered the volume
                 if (_other.CompareTag("Pawn"))
                 {
                     // Get a reference to the entity component
                     var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
-                
+
                     // Exit if the object is already parented
                     if (targetEntity.transform.parent == reparentContainer.transform) return;
-                
+
                     // Add the entity to the list if they are not already present
                     ReparentToPlatform(targetEntity.gameObject);
                 }
@@ -86,10 +85,10 @@ namespace RivenFramework
                 {
                     // Get a reference to the entity component
                     var targetProp = _other.gameObject.GetComponentInParent<Actor>().gameObject;
-                
+
                     // Exit if the object is already parented
                     if (targetProp.transform.parent == reparentContainer.transform) return;
-                
+
                     // Add the entity to the list if they are not already present
                     ReparentToPlatform(targetProp);
                 }
@@ -97,14 +96,14 @@ namespace RivenFramework
 
             private void OnTriggerExit(Collider _other)
             {
-            
+
                 // Pawn has entered the volume
                 if (_other.CompareTag("Pawn"))
                 {
                     //print($"{gameObject.name} has triggered a dump");
                     // Get a reference to the entity component
                     var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
-                
+
                     targetEntity.transform.SetParent(null);
                 }
 
@@ -113,26 +112,25 @@ namespace RivenFramework
                 {
                     // Get a reference to the entity component
                     var targetProp = _other.gameObject.GetComponentInParent<Actor>().gameObject;
-                
+
                     targetProp.transform.SetParent(null);
                 }
                 base.OnTriggerEnter(_other);
             }
+        #endregion
 
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-        private void ReparentToPlatform(GameObject _targetObject)
-        {
-            //print($"{gameObject.name} has triggered a move event");
-            // Clear its parent to avoid random bugs
-            _targetObject.transform.SetParent(null);
-            _targetObject.transform.SetParent(reparentContainer.transform);
-        }
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private void ReparentToPlatform(GameObject _targetObject)
+            {
+                //print($"{gameObject.name} has triggered a move event");
+                // Clear its parent to avoid random bugs
+                _targetObject.transform.SetParent(null);
+                _targetObject.transform.SetParent(reparentContainer.transform);
+            }
+        #endregion
+        #endregion
     }
 }

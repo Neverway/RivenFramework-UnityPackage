@@ -18,7 +18,6 @@ namespace RivenFramework
     public class VolumePain : Volume
     {
         #region====================================( Variables )======================================================//
-
         #region----------------( Inspector )--------------------------------------------------------------------------//
             [Tooltip("Negative values will heal pawns")] 
             [SerializeField] private float damageAmount = 10;
@@ -32,11 +31,10 @@ namespace RivenFramework
 
         #region----------------( Internal )---------------------------------------------------------------------------//
         #endregion
-
         #endregion
 
-        #region====================================( Functions )======================================================//
 
+        #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
             private void Update()
             {
@@ -54,7 +52,6 @@ namespace RivenFramework
 
         #region----------------( Internal )---------------------------------------------------------------------------//
         #endregion
-
         #endregion
     }
 }

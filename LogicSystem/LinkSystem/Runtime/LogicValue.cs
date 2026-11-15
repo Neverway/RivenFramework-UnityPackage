@@ -1,7 +1,92 @@
+//==========================================( Neverway 2027 )=========================================================//
+// Author
+//  Errynei
+//
+// Contributors
+//  Liz M.
+//
+// Description
+//
+//====================================================================================================================//
+
 using System;
 using UnityEngine;
 using UnityEngine.Events;
 using Object = System.Object;
+
+namespace RivenFramework
+{
+    [Serializable]
+    public abstract class LogicValue<T> : LogicValue
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [SerializeField] protected bool editorHandles_showHandle = true;
+            [SerializeField] protected Transform editorHandles_handleTarget;
+            [SerializeField] protected string editorHandles_customName = "";
+            [SerializeField] protected T value;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
+
+
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+            public virtual T Get() => value;
+
+            public bool EditorHandles_GetShowHandle() => editorHandles_showHandle;
+
+            public Transform EditorHandles_GetHandle() => editorHandles_handleTarget;
+
+            public string EditorHandles_GetCustomName() => editorHandles_customName;
+
+            public Type GetLogicValueType() => typeof(T);
+
+            public LogicValue GetClone()
+            {
+                if (this is LogicInput<T> input)
+                {
+                    LogicInput<T> toReturn = new LogicInput<T>(value);
+                    toReturn.sourceField = input.sourceField;
+                    toReturn.editorHandles_handleTarget = input.editorHandles_handleTarget;
+                    toReturn.editorHandles_customName = input.editorHandles_customName;
+
+                    return toReturn;
+                }
+                if (this is LogicOutput<T> output)
+                {
+                    LogicOutput<T> toReturn = new LogicOutput<T>(value);
+                    toReturn.OnOutputChanged = output.OnOutputChanged;
+                    toReturn.editorHandles_handleTarget = output.editorHandles_handleTarget;
+                    toReturn.editorHandles_customName = output.editorHandles_customName;
+
+                    return toReturn;
+                }
+                throw new Exception("Cannot Clone: LogicValue was neither a LogicInput nor a LogicOutput");
+            }
+
+            public static implicit operator T(LogicValue<T> logicValue) => logicValue.Get();
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            public LogicValue(T defaultValue) 
+            {
+                value = defaultValue; 
+            }
+        #endregion
+        #endregion
+    }
 
     public interface LogicValue
     {
@@ -12,51 +97,6 @@ using Object = System.Object;
 
         public abstract LogicValue GetClone();
     }
-    
-    [Serializable]
-    public abstract class LogicValue<T> : LogicValue
-    {
-        [SerializeField] protected bool editorHandles_showHandle = true;
-        [SerializeField] protected Transform editorHandles_handleTarget;
-        [SerializeField] protected string editorHandles_customName = "";
-
-        [SerializeField] protected T value;
-        public virtual T Get() => value;
-
-        public LogicValue(T defaultValue) 
-        {
-            value = defaultValue; 
-        }
-        public bool EditorHandles_GetShowHandle() => editorHandles_showHandle;
-        public Transform EditorHandles_GetHandle() => editorHandles_handleTarget;
-        public string EditorHandles_GetCustomName() => editorHandles_customName;
-        public Type GetLogicValueType() => typeof(T);
-
-        public LogicValue GetClone()
-        {
-            if (this is LogicInput<T> input)
-            {
-                LogicInput<T> toReturn = new LogicInput<T>(value);
-                toReturn.sourceField = input.sourceField;
-                toReturn.editorHandles_handleTarget = input.editorHandles_handleTarget;
-                toReturn.editorHandles_customName = input.editorHandles_customName;
-
-                return toReturn;
-            }
-            if (this is LogicOutput<T> output)
-            {
-                LogicOutput<T> toReturn = new LogicOutput<T>(value);
-                toReturn.OnOutputChanged = output.OnOutputChanged;
-                toReturn.editorHandles_handleTarget = output.editorHandles_handleTarget;
-                toReturn.editorHandles_customName = output.editorHandles_customName;
-
-                return toReturn;
-            }
-            throw new Exception("Cannot Clone: LogicValue was neither a LogicInput nor a LogicOutput");
-        }
-
-        public static implicit operator T(LogicValue<T> logicValue) => logicValue.Get();
-    }
 
     public interface LogicInput : LogicValue
     {
@@ -65,6 +105,7 @@ using Object = System.Object;
         public abstract Component GetSourceLogicOutputComponent();
         public abstract object SetFieldReference(Component component, string fieldName);
     }
+
     [Serializable]
     public class LogicInput<T> : LogicValue<T>, LogicInput
     {
@@ -89,6 +130,7 @@ using Object = System.Object;
             return sourceField;
         }
     }
+
     /*
     public interface LogicInputList 
     {
@@ -125,11 +167,11 @@ using Object = System.Object;
         }
     }
     // */
-
     public interface LogicOutput : LogicValue
     {
         public UnityEvent GetOnOutputChanged();
     }
+
     [Serializable]
     public class LogicOutput<T> : LogicValue<T>, LogicOutput
     {
@@ -149,3 +191,4 @@ using Object = System.Object;
         }
         public UnityEvent GetOnOutputChanged() => OnOutputChanged;
     }
+}

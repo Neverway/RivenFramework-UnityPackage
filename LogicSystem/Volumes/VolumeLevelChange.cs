@@ -1,9 +1,11 @@
-//==========================================( Neverway 2026 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
 // Contributors
 //
+//
+// Description
 //
 //====================================================================================================================//
 
@@ -18,55 +20,53 @@ namespace RivenFramework
 {
     public class VolumeLevelChange : Volume
     {
-        #region========================================( Variables )======================================================//
-        /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-        public SceneReference targetScene;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            public SceneReference targetScene;
+        #endregion
 
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            private GI_WorldLoader worldLoader;
+        #endregion
 
-        /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-
-        /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-
-
-        /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
-        private GI_WorldLoader worldLoader;
-
-
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
         #endregion
 
 
-        #region=======================================( Functions )=======================================================//
-        /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
-        private void OnValidate()
-        {
-            // Todo: This is a temporary implementation! ~Liz
-            targetScene.RefreshSceneName();
-        }
-
-        private new void OnTriggerEnter(Collider _other)
-        {
-            base.OnTriggerEnter(_other);
-            if (GetPlayerInTrigger())
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void OnValidate()
             {
-                if (!worldLoader) worldLoader = GameInstance.Get<GI_WorldLoader>();
-
-                foreach (var streamVolume in FindObjectsOfType<VolumeLevelStream>())
-                {
-                    streamVolume.PrepareForLoad();
-                }
-
-                worldLoader.LoadWorld(targetScene.sceneName);
+                // Todo: This is a temporary implementation! ~Liz
+                targetScene.RefreshSceneName();
             }
-        }
 
+            private new void OnTriggerEnter(Collider _other)
+            {
+                base.OnTriggerEnter(_other);
+                if (GetPlayerInTrigger())
+                {
+                    if (!worldLoader) worldLoader = GameInstance.Get<GI_WorldLoader>();
 
-        /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
+                    foreach (var streamVolume in FindObjectsOfType<VolumeLevelStream>())
+                    {
+                        streamVolume.PrepareForLoad();
+                    }
 
+                    worldLoader.LoadWorld(targetScene.sceneName);
+                }
+            }
+        #endregion
 
-        /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
         #endregion
     }
 }

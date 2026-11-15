@@ -1,9 +1,11 @@
-//==========================================( Neverway 2025 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
 // Contributors
 //
+//
+// Description
 //
 //====================================================================================================================//
 
@@ -17,76 +19,76 @@ namespace RivenFramework
 {
     public class VolumeItemPickup : Volume
     {
-        #region========================================( Variables )======================================================//
-        /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-        public TriggerFilter triggerFilter;
-        public enum TriggerFilter
-        {
-            All,
-            OnlyPlayer
-        }
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            public TriggerFilter triggerFilter;
+        #endregion
 
-        public UnityEvent OnAttemptPickup;
-        public LogicOutput<bool> OnSuccessfulPickup;
-    
-        /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            public UnityEvent OnAttemptPickup;
+            public LogicOutput<bool> OnSuccessfulPickup;
+        #endregion
 
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-        /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-
-
-        /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
-
-
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
         #endregion
 
 
-        #region=======================================( Functions )=======================================================//
-        /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
-        private new void OnTriggerEnter(Collider _other)
-        { 
-            // Call the base class method
-            base.OnTriggerEnter(_other);
-            switch (triggerFilter)
-            {
-                case TriggerFilter.All:
-                    if (pawnsInTrigger.Count != 0)
-                    {
-                        var inventory = pawnsInTrigger[0].GetComponentInChildren<Pawn_Inventory>();
-                        if (inventory)
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private new void OnTriggerEnter(Collider _other)
+            { 
+                // Call the base class method
+                base.OnTriggerEnter(_other);
+                switch (triggerFilter)
+                {
+                    case TriggerFilter.All:
+                        if (pawnsInTrigger.Count != 0)
                         {
-                            OnAttemptPickup.Invoke();
-                            if (inventory.AddItem(transform.GetChild(1).gameObject))
+                            var inventory = pawnsInTrigger[0].GetComponentInChildren<Pawn_Inventory>();
+                            if (inventory)
                             {
-                                OnSuccessfulPickup.Set(true);
-                                gameObject.SetActive(false);
+                                OnAttemptPickup.Invoke();
+                                if (inventory.AddItem(transform.GetChild(1).gameObject))
+                                {
+                                    OnSuccessfulPickup.Set(true);
+                                    gameObject.SetActive(false);
+                                }
                             }
                         }
-                    }
-                    break;
-                case TriggerFilter.OnlyPlayer:
-                    if (GetPlayerInTrigger())
-                    {
-                        var inventory = GetPlayerInTrigger().GetComponentInChildren<Pawn_Inventory>();
-                        if (inventory)
+                        break;
+                    case TriggerFilter.OnlyPlayer:
+                        if (GetPlayerInTrigger())
                         {
-                            OnAttemptPickup.Invoke();
-                            if (inventory.AddItem(transform.GetChild(1).gameObject))
+                            var inventory = GetPlayerInTrigger().GetComponentInChildren<Pawn_Inventory>();
+                            if (inventory)
                             {
-                                OnSuccessfulPickup.Set(true);
-                                gameObject.SetActive(false);
+                                OnAttemptPickup.Invoke();
+                                if (inventory.AddItem(transform.GetChild(1).gameObject))
+                                {
+                                    OnSuccessfulPickup.Set(true);
+                                    gameObject.SetActive(false);
+                                }
                             }
                         }
-                    }
-                    break;
+                        break;
+                }
             }
-        }
+        #endregion
 
-        /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-
-        /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
-
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            public enum TriggerFilter
+            {
+                All,
+                OnlyPlayer
+            }
+        #endregion
         #endregion
     }
 }

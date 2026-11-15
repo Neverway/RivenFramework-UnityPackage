@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -17,43 +17,40 @@ namespace RivenFramework
 {
     public class VolumeKill : Volume
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-    
-
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-        private new void OnTriggerEnter(Collider _other)
-        {
-            // R.I.P "Connorses has a hat" debug log message 2024-2025 ~Liz
-        
-            base.OnTriggerEnter(_other); // Call the base class method
-            if (_other.CompareTag("Pawn"))
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private new void OnTriggerEnter(Collider _other)
             {
-                _other.GetComponentInParent<Pawn>().Kill();
+                // R.I.P "Connorses has a hat" debug log message 2024-2025 ~Liz
+
+                base.OnTriggerEnter(_other); // Call the base class method
+                if (_other.CompareTag("Pawn"))
+                {
+                    _other.GetComponentInParent<Pawn>().Kill();
+                }
             }
-        }
+        #endregion
 
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }
