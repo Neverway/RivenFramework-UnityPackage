@@ -6,7 +6,7 @@
 //
 //
 // Description
-//
+//  Plays a fade transition and teleports a pawn to another location. This is used for things like LoZ style room transitions
 //====================================================================================================================//
 
 using System.Collections;
@@ -15,6 +15,9 @@ using UnityEngine;
 
 namespace RivenFramework
 {
+    /// <summary>
+    /// Plays a fade transition and teleports a pawn to another location. This is used for things like LoZ style room transitions
+    /// </summary>
     public class VolumeLevelWarp : MonoBehaviour
     {
         #region====================================( Variables )======================================================//

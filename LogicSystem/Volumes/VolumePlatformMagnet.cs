@@ -115,7 +115,7 @@ namespace RivenFramework
 
                     targetProp.transform.SetParent(null);
                 }
-                base.OnTriggerEnter(_other);
+                base.OnTriggerExit(_other);
             }
         #endregion
 

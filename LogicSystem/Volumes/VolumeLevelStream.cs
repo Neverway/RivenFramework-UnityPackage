@@ -30,7 +30,7 @@ namespace RivenFramework
             [Tooltip("Drag the corresponding volume from the other loaded scene here, then use 'Align To Link Target' to auto-solve the offset/rotation!")]
             [SerializeField] private Transform linkTarget;
             [Tooltip("This is the empty game object that streamed actors are stored in, (to save them from being destroyed on map changes)")]
-            [SerializeField] private VolumeLevelStreamContainer streamContainer;
+            [SerializeField] private VolumeLevelStream_Container streamContainer;
         #endregion
 
         #region----------------( Reference )--------------------------------------------------------------------------//

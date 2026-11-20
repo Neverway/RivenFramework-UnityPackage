@@ -19,7 +19,7 @@ using UnityEditor;
 
 namespace RivenFramework
 {
-    public class TEMP : Logic
+    public class TEMP
     {
         #region====================================( Variables )======================================================//
 

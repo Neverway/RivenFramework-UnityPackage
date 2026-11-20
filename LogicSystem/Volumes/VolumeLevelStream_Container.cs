@@ -18,7 +18,7 @@ using UnityEngine.SceneManagement;
 
 namespace RivenFramework
 {
-    public class VolumeLevelStreamContainer : MonoBehaviour
+    public class VolumeLevelStream_Container : MonoBehaviour
     {
         #region====================================( Variables )======================================================//
         #region----------------( Inspector )--------------------------------------------------------------------------//
