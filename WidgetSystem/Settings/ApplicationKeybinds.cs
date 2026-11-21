@@ -48,7 +48,7 @@ namespace RivenFramework
         private void Update()
         {
             GetCurrentInputDevice();
-            if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+            if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
         }
 
 

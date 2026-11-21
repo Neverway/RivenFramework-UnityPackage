@@ -57,59 +57,27 @@ namespace RivenFramework
 
             protected virtual void OnTriggerEnter(Collider _other)
             {
-                // Pawn has entered the volume
-                if ((detects & VolumeTargets.Pawns) != 0 && _other.CompareTag("Pawn"))
+                var actor = _other.GetComponentInParent<Actor>();
+                if (actor == null || !PassesActorFilter(actor)) return;
+
+                if (actor is Pawn pawn)
                 {
-                    // Get a reference to the entity component
-                    var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
-                    // Exit if this pawn doesn't pass the volume's actor filter
-                    if (targetEntity == null || !PassesActorFilter(targetEntity)) return;
-                    // Add the entity to the list if they are not already present
-                    AddPawnToVolume(targetEntity);
+                    if ((detects & VolumeTargets.Pawns) != 0) AddPawnToVolume(pawn);
+                    return;
                 }
 
-                // A physics prop has entered the volume
-                if ((detects & VolumeTargets.Props) != 0 && _other.CompareTag("PhysProp"))
-                {
-                    // Don't register held objects if we are ignoring held objects
-                   var grabbable = _other.gameObject.GetComponent<Object_PhysPickup>();
-                    if (grabbable && ignoreHeldObjects)
-                    {
-                        if (grabbable.isHeld)
-                        {
-                            return;
-                        }
-                    }
-
-                    // Get a reference to the entity component (So we can grab the correct root of the object)
-                    var targetActor = _other.gameObject.GetComponentInParent<Actor>();
-                    // Exit if this prop isn't an actor, or doesn't pass the volume's actor filter
-                    if (targetActor == null || !PassesActorFilter(targetActor)) return;
-                    // Add the entity to the list if they are not already present
-                    AddPropToVolume(targetActor.gameObject);
-                }
+                if ((detects & VolumeTargets.Props) == 0) return;
+                var holdable = _other.GetComponentInParent<IHoldable>();
+                if (ignoreHeldObjects && holdable is { IsHeld: true }) return;
+                AddPropToVolume(actor.gameObject);
             }
 
             protected virtual void OnTriggerExit(Collider _other)
             {
-                // Pawn has entered the volume
-                if (_other.CompareTag("Pawn"))
-                {
-                    // Get a reference to the entity component
-                    var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
-                    // Remove the entity to the list if they are not already absent
-                    RemovePawnFromVolume(targetEntity);
-                }
-
-                // A physics prop has entered the trigger
-                if (_other.CompareTag("PhysProp"))
-                {
-                    // Get a reference to the entity component
-                    var targetActor = _other.gameObject.GetComponentInParent<Actor>();
-                    if (targetActor == null) return;
-                    // Remove the entity from the list if it is present
-                    RemovePropFromVolume(targetActor.gameObject);
-                }
+                var actor = _other.GetComponentInParent<Actor>();
+                if (actor == null) return;
+                if (actor is Pawn pawn) RemovePawnFromVolume(pawn);
+                else RemovePropFromVolume(actor.gameObject);
             }
 
             public virtual void OnDisable()

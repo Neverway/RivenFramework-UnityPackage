@@ -45,7 +45,7 @@ namespace RivenFramework
             private void Start()
             {
                 velocityText = GetComponent<TMP_Text>();
-                pawnManager = FindObjectOfType<GI_PawnManager>();
+                pawnManager = GameInstance.Get<GI_PawnManager>();
             }
         
             private void Update()
@@ -68,7 +68,7 @@ namespace RivenFramework
                 {
                     if (pawnManager is null)
                     {
-                        pawnManager = FindObjectOfType<GI_PawnManager>();
+                        pawnManager = GameInstance.Get<GI_PawnManager>();
                         if (pawnManager is null)
                         {
                             return false;

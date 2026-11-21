@@ -37,7 +37,7 @@ namespace RivenFramework
         //=-----------------=
         private void Start()
         {
-            widgetManager = FindObjectOfType<GI_WidgetManager>();
+            widgetManager = GameInstance.Get<GI_WidgetManager>();
             widgetManager.AddWidget(loadingWidget);
         }
 

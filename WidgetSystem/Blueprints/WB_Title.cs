@@ -51,8 +51,8 @@ namespace RivenFramework
         //=-----------------=
         private void Start()
         {
-            widgetManager = FindObjectOfType<GI_WidgetManager>();
-            worldLoader = FindObjectOfType<GI_WorldLoader>();
+            widgetManager = GameInstance.Get<GI_WidgetManager>();
+            worldLoader = GameInstance.Get<GI_WorldLoader>();
             //levelLoader = FindObjectOfType<LevelManager>();
             buttonMainGame.onClick.AddListener(delegate { OnClick("buttonMainGame"); });
             buttonExtras.onClick.AddListener(delegate { OnClick("buttonExtras"); });
@@ -76,21 +76,21 @@ namespace RivenFramework
             switch (button)
             {
                 case "buttonMainGame":
-                    if (!worldLoader) worldLoader = FindObjectOfType<GI_WorldLoader>();
+                    if (!worldLoader) worldLoader = GameInstance.Get<GI_WorldLoader>();
                     //if (!levelLoader) levelLoader = FindObjectOfType<LevelManager>();
                     worldLoader.LoadWorld(targetLevelID);
                     // levelLoader.Load("", true); // Replace with function to load save file level
                     break;
                 case "buttonExtras":
-                    if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+                    if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
                     widgetManager.AddWidget(extrasWidget);
                     break;
                 case "buttonRanking":
-                    if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+                    if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
                     widgetManager.AddWidget(rankingWidget);
                     break;
                 case "buttonSettings":
-                    if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+                    if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
                     widgetManager.AddWidget(settingsWidget); // Create the settings widget
                     //Destroy(gameObject); // Remove the current widget
                     //GameInstance.GetWidget("WB_Settings").GetComponent<WB_Settings>().Init();
@@ -99,11 +99,11 @@ namespace RivenFramework
                     Application.Quit();
                     break;
                 case "buttonCredits":
-                    if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+                    if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
                     widgetManager.AddWidget(creditsWidget);
                     break;
                 case "buttonLanguage":
-                    if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+                    if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
                     widgetManager.AddWidget(languageWidget);
                     break;
             }

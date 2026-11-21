@@ -181,7 +181,7 @@ namespace RivenFramework
 
         private void CheckFPSCounterVisibility()
         {
-            widgetManager ??= FindObjectOfType<GI_WidgetManager>();
+            widgetManager ??= GameInstance.Get<GI_WidgetManager>();
             switch (currentSettingsData.showFramecounter)
             {
                 case true:
@@ -314,7 +314,7 @@ namespace RivenFramework
             }
 
             // Framecounter
-            widgetManager = FindObjectOfType<GI_WidgetManager>();
+            widgetManager = GameInstance.Get<GI_WidgetManager>();
             switch (currentSettingsData.showFramecounter)
             {
                 case true:

@@ -46,7 +46,7 @@ namespace RivenFramework
             {
                 //Debug.Log($"[{this.name}] Executing function 'Start()'");
                 applicationKeybinds = FindObjectOfType<ApplicationKeybinds>();
-                widgetManager = FindObjectOfType<GI_WidgetManager>();
+                widgetManager = GameInstance.Get<GI_WidgetManager>();
 
                 // Check if the input action asset is assigned
                 if (applicationKeybinds.inputActionAsset == null)

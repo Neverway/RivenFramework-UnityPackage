@@ -81,7 +81,7 @@ namespace RivenFramework
         //=-----------------=
         private Pawn FindPossessedPawn()
         {
-            if (FindObjectOfType<GI_PawnManager>().localPlayerCharacter) return FindObjectOfType<GI_PawnManager>().localPlayerCharacter.GetComponent<Pawn>();
+            if (GameInstance.Get<GI_PawnManager>().localPlayerCharacter) return GameInstance.Get<GI_PawnManager>().localPlayerCharacter.GetComponent<Pawn>();
             return null;
         }
 

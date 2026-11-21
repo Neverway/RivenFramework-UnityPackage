@@ -170,7 +170,7 @@ namespace RivenFramework
         {
             if (pawnManager is null)
             {
-                pawnManager = FindObjectOfType<GI_PawnManager>();
+                pawnManager = GameInstance.Get<GI_PawnManager>();
                 if (pawnManager is null)
                 {
                     print("ERROR");

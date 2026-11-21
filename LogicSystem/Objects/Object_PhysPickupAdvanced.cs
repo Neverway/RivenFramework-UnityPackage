@@ -16,7 +16,7 @@ using UnityEngine;
 
 namespace RivenFramework
 {
-    public class Object_PhysPickupAdvanced : MonoBehaviour
+    public class Object_PhysPickupAdvanced : MonoBehaviour, IHoldable
     {
         #region====================================( Variables )======================================================//
         #region----------------( Inspector )--------------------------------------------------------------------------//
@@ -25,20 +25,17 @@ namespace RivenFramework
             public float breakAwayDistance = 3;
             public Vector3 holdPositionOffset;
             public Vector3 holdRotationOffset;
-            [Tooltip("This is the radius used to check for obstructions to the attachment point. Set this to 1/2 the depth of the prop's collider for best results.")]
+            [Tooltip("This is the radius used to check for obstructions to the attachment point (Set this to 1/2 the depth of the prop's collider)")]
             public float checkRadius = 0.25f;
             [Tooltip("These are the layers the phys prop will collide with while being held")]
             public LayerMask layerMask;
             public Joint breakableAnchorPin;
             public bool allowGrabbingWhileStuck;
-            [Header("Debug Variables")]
-            public bool isHeld;
-            [Tooltip("Disable these components when the phys prop is being held (mostly intended to disable special effects like motion smearing)")]
-            [SerializeField] private List<MonoBehaviour> componentsDisabledOnHeld = new List<MonoBehaviour>();
         #endregion
 
         #region----------------( Reference )--------------------------------------------------------------------------//
-            [Tooltip("A reference to this prop's rigidbody (we are assuming this component is attached to the same object that has the rigidbody, and getting the reference in start)")]
+            [Header("Debug Variables")]    
+            [Tooltip("A reference to this prop's rigidbody (assuming this component is attached to the same object that has the rigidbody, and getting the reference in start)")]
             public LogicOutput<Rigidbody> propRigidbody = new LogicOutput<Rigidbody>(null);
             [Tooltip("A reference to the pawn that is holding this prop")]
             private Pawn holdingPawn;
@@ -46,6 +43,10 @@ namespace RivenFramework
         #endregion
 
         #region----------------( External )---------------------------------------------------------------------------//
+            bool IHoldable.IsHeld => isHeld;
+            public bool isHeld;
+            [Tooltip("Disable these components when the phys prop is being held (mostly intended to disable special effects like motion smearing)")]
+            [SerializeField] private List<MonoBehaviour> componentsDisabledOnHeld = new List<MonoBehaviour>();
         #endregion
 
         #region----------------( Internal )---------------------------------------------------------------------------//

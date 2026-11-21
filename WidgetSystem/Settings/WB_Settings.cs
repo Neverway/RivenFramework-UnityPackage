@@ -49,7 +49,7 @@ namespace RivenFramework
             //=-----------------=
             private void Start()
             {
-                widgetManager = FindObjectOfType<GI_WidgetManager>();
+                widgetManager = GameInstance.Get<GI_WidgetManager>();
                 applicationSettings = FindObjectOfType<ApplicationSettings>();
                 //applicationSettings.LoadSettings();
                 buttonBack.onClick.AddListener(delegate { OnClick("buttonBack"); });
@@ -87,22 +87,22 @@ namespace RivenFramework
                         applicationSettings.ResetSettings();
                         break;
                     case "buttonGraphics":
-                        if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+                        if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
                         RemoveSubwidgets();
                         widgetManager.AddWidget(graphicsWidget);
                         break;
                     case "buttonAudio":
-                        if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+                        if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
                         RemoveSubwidgets();
                         widgetManager.AddWidget(audioWidget);
                         break;
                     case "buttonControls":
-                        if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+                        if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
                         RemoveSubwidgets();
                         widgetManager.AddWidget(controlsWidget);
                         break;
                     case "buttonGameplay":
-                        if (!widgetManager) widgetManager = FindObjectOfType<GI_WidgetManager>();
+                        if (!widgetManager) widgetManager = GameInstance.Get<GI_WidgetManager>();
                         RemoveSubwidgets();
                         widgetManager.AddWidget(gameplayWidget);
                         break;

@@ -47,7 +47,7 @@ namespace RivenFramework
                 }
                 if (_other.gameObject == GetPlayerInTrigger().gameObject)
                 {
-                        if (!musicManager) musicManager = FindObjectOfType<GI_MusicManager>();
+                        if (!musicManager) musicManager = GameInstance.Get<GI_MusicManager>();
                         musicManager.CrossFadeToTrack(musicTrack, transitionTime);
                 }
             }
