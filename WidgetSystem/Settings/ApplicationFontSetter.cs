@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -18,58 +18,55 @@ namespace RivenFramework
 {
     public class ApplicationFontSetter : MonoBehaviour
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        public TMP_FontAsset currentFont;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            public TMP_FontAsset currentFont;
+            [SerializeField] private TMP_FontAsset defaultFont, dyslexiaAssistFont;
+            [SerializeField] private GI_WidgetManager widgetManager;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        [SerializeField] private TMP_FontAsset defaultFont, dyslexiaAssistFont;
-        [SerializeField] private GI_WidgetManager widgetManager;
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Start()
-        {
-            widgetManager.OnNewWidgetCreated += AssignFontToNewWidget;
-        }
-
-
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-        private void AssignFontToNewWidget()
-        {
-            foreach (var textElement in widgetManager.lastCreatedWidget.GetComponentsInChildren<TMP_Text>())
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Start()
             {
-                if (textElement.gameObject.GetComponent(typeof(Text_DontOverideFont))) continue;
-                textElement.font = currentFont;
+                widgetManager.OnNewWidgetCreated += AssignFontToNewWidget;
             }
-        }
+        #endregion
 
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
-        public void SetAppFont(bool dyslexiaAssistEnabled)
-        {
-            currentFont = dyslexiaAssistEnabled ? dyslexiaAssistFont : defaultFont;
-
-            foreach (var textElement in FindObjectsOfType<TMP_Text>())
+        #region----------------( External )---------------------------------------------------------------------------//
+            public void SetAppFont(bool dyslexiaAssistEnabled)
             {
-                if (textElement.gameObject.GetComponent(typeof(Text_DontOverideFont))) continue;
-                textElement.font = currentFont;
+                currentFont = dyslexiaAssistEnabled ? dyslexiaAssistFont : defaultFont;
+
+                foreach (var textElement in FindObjectsOfType<TMP_Text>())
+                {
+                    if (textElement.gameObject.GetComponent(typeof(Text_DontOverideFont))) continue;
+                    textElement.font = currentFont;
+                }
             }
-        }
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private void AssignFontToNewWidget()
+            {
+                foreach (var textElement in widgetManager.lastCreatedWidget.GetComponentsInChildren<TMP_Text>())
+                {
+                    if (textElement.gameObject.GetComponent(typeof(Text_DontOverideFont))) continue;
+                    textElement.font = currentFont;
+                }
+            }
+        #endregion
+        #endregion
     }
 }

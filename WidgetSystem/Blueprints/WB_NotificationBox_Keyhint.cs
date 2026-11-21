@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -19,58 +19,57 @@ namespace RivenFramework
 {
     public class WB_NotificationBox_Keyhint : MonoBehaviour
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [SerializeField] private Image_KeyHint keyHint;
+            [SerializeField] private TMP_Text keyhintText;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Start()
+            {
 
+            }
 
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        [SerializeField] private Image_KeyHint keyHint;
-        [SerializeField] private TMP_Text keyhintText;
+            private void Update()
+            {
 
+            }
+        #endregion
 
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Start()
-        {
-        
-        }
+        #region----------------( External )---------------------------------------------------------------------------//
+            public void SetKeyHint(string _keyhintText, Sprite _keyhintImage)
+            {
+                keyhintText.text = _keyhintText;
+                keyHint.enabled = false;
+                keyHint.gameObject.GetComponent<Image>().sprite = _keyhintImage;
+                GetComponent<Animator>().Play("WB_NotificationBox_Keyhint_appear");
+            }
 
-        private void Update()
-        {
-    
-        }
+            public void SetKeyHint(string _keyhintText, string _targetActionMap, string _targetAction)
+            {
+                keyhintText.text = _keyhintText;
+                keyHint.enabled = true;
+                keyHint.targetActionMap = _targetActionMap;
+                keyHint.targetAction = _targetAction;
+                GetComponent<Animator>().Play("WB_NotificationBox_Keyhint_appear");
+            }
+        #endregion
 
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
-        public void SetKeyHint(string _keyhintText, Sprite _keyhintImage)
-        {
-            keyhintText.text = _keyhintText;
-            keyHint.enabled = false;
-            keyHint.gameObject.GetComponent<Image>().sprite = _keyhintImage;
-            GetComponent<Animator>().Play("WB_NotificationBox_Keyhint_appear");
-        }
-        public void SetKeyHint(string _keyhintText, string _targetActionMap, string _targetAction)
-        {
-            keyhintText.text = _keyhintText;
-            keyHint.enabled = true;
-            keyHint.targetActionMap = _targetActionMap;
-            keyHint.targetAction = _targetAction;
-            GetComponent<Animator>().Play("WB_NotificationBox_Keyhint_appear");
-        }
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }

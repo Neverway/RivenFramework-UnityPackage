@@ -11,8 +11,8 @@
 //  Data structure class for what's stored in the application settings file
 //====================================================================================================================//
 
-using UnityEngine;
 using System;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -22,212 +22,217 @@ namespace RivenFramework
     [Serializable]
     public class ApplicationSettingsData
     {
-        // File
-        [Tooltip("Change this value when you want to force players not to use an older config")]
-        public int configurationFileCompatibilityVersion;
-        
-        // Graphics
-        // Display
-        [Tooltip("X-Width, Y-Height")] 
-        public int targetResolution;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            // File
+            [Tooltip("Change this value when you want to force players not to use an older config")]
+            public int configurationFileCompatibilityVersion;
+            // Graphics
+            // Display
+            [Tooltip("X-Width, Y-Height")] 
+            public int targetResolution;
+            [Tooltip("0-Fullscreen, 1-Fullscreen Windowed, 2-Windowed, 3-Windowed Maximized")] [Range(0, 3)]
+            public int windowMode;
+            [Tooltip("Vertical sync")] public bool enableVysnc;
+            [SettingsEntryInfo("Limit the 'Frames Per Second' to stay under this amount.")]
+            [Tooltip("Also referred to as target framerate")] [Range(-1, 300)]
+            public int fpsLimit;
+            [SettingsEntryInfo("Enable the 'Frames Per Second' counter.")]
+            [Tooltip("Also referred to as fps counter")]
+            public bool showFramecounter;
+            // Quality
+            [Range(0, 4)]
+            public int qualityPreset;
+            public ApplicationSettingsData_Quality quality;
+            // Effects
+            [Tooltip("0-Off")] [Range(0, 4)] public int antialiasing;
+            [Tooltip("0-Lowest, 4-Highest")] [Range(0, 4)]
+            public int motionBlur;
+            [Tooltip("0-Lowest, 4-Highest")] [Range(0, 4)]
+            public int ambientOcclusion;
+            [Tooltip("0-Lowest, 4-Highest")] [Range(0, 4)]
+            public int bloom;
+            // Audio
+            // Audio Devices
+            [Tooltip("0-System Default")] public int outputDevice;
+            [Tooltip("0-System Default")] public int inputDevice;
+            [Range(0, 100)] public int inputVolume;
+            // Audio Mixer
+            [Range(0, 100)] public int masterVolume;
+            [Range(0, 100)] public int musicVolume;
+            [Range(0, 100)] public int soundVolume;
+            [Range(0, 100)] public int voiceVolume;
+            [Range(0, 100)] public int chatterVolume;
+            [Range(0, 100)] public int ambientVolume;
+            [Range(0, 100)] public int menuVolume;
+            // Audio Accessibility
+            public bool visualizeSoundEffects;
+            [Tooltip("0-Off, 1-Dialogue, 2-Voice Chat, 3-All")] [Range(0, 4)]
+            public int closedCaptioning;
+            public int minVolume;
+            public int maxVolume;
+            public int minFrequency;
+            // Gameplay
+            // View
+            public bool invertHorizontalView;
+            public bool invertVerticalView;
+            public float horizontalLookSpeed;
+            public float verticalLookSpeed;
+            public float joystickLookSensitivity;
+            public float mouseLookSensitivity;
+            public int cameraFov;
+            // Communication
+            public bool hideTextChat;
+            public bool enablePushToTalk;
+            // General Accessibility
+            public float brightness;
+            public bool speedrunMode;
+            public float colorBlindIntensity;
+            [Range(0, 3)] public int colorBlindFilter;
+            public bool dyslexicFriendlyFont;
+            public bool reduceStrobing;
+            public bool screenReader;
+            public int localeID;
+        #endregion
 
-        [Tooltip("0-Fullscreen, 1-Fullscreen Windowed, 2-Windowed, 3-Windowed Maximized")] [Range(0, 3)]
-        public int windowMode;
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
 
-        [Tooltip("Vertical sync")] public bool enableVysnc;
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-        [SettingsEntryInfo("Limit the 'Frames Per Second' to stay under this amount.")]
-        [Tooltip("Also referred to as target framerate")] [Range(-1, 300)]
-        public int fpsLimit;
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
-        [SettingsEntryInfo("Enable the 'Frames Per Second' counter.")]
-        [Tooltip("Also referred to as fps counter")]
-        public bool showFramecounter;
 
-        // Quality
-        [Range(0, 4)]
-        public int qualityPreset;
-        public ApplicationSettingsData_Quality quality;
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+        #endregion
 
-        // Effects
-        [Tooltip("0-Off")] [Range(0, 4)] public int antialiasing;
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-        [Tooltip("0-Lowest, 4-Highest")] [Range(0, 4)]
-        public int motionBlur;
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            // Default constructor
+            public ApplicationSettingsData()
+            {
+                configurationFileCompatibilityVersion = 0;
 
-        [Tooltip("0-Lowest, 4-Highest")] [Range(0, 4)]
-        public int ambientOcclusion;
+                targetResolution = 0;
+                windowMode = 0;
+                enableVysnc = false;
+                fpsLimit = 60;
+                showFramecounter = false;
 
-        [Tooltip("0-Lowest, 4-Highest")] [Range(0, 4)]
-        public int bloom;
+                qualityPreset = 3;
+                quality = new ApplicationSettingsData_Quality();
 
-        // Audio
-        // Audio Devices
-        [Tooltip("0-System Default")] public int outputDevice;
-        [Tooltip("0-System Default")] public int inputDevice;
-        [Range(0, 100)] public int inputVolume;
+                antialiasing = 0;
+                motionBlur = 0;
+                ambientOcclusion = 2;
+                bloom = 2;
 
-        // Audio Mixer
-        [Range(0, 100)] public int masterVolume;
-        [Range(0, 100)] public int musicVolume;
-        [Range(0, 100)] public int soundVolume;
-        [Range(0, 100)] public int voiceVolume;
-        [Range(0, 100)] public int chatterVolume;
-        [Range(0, 100)] public int ambientVolume;
-        [Range(0, 100)] public int menuVolume;
+                outputDevice = 0;
+                inputDevice = 0;
+                inputVolume = 100;
 
-        // Audio Accessibility
-        public bool visualizeSoundEffects;
+                masterVolume = 100;
+                musicVolume = 100;
+                soundVolume = 100;
+                voiceVolume = 100;
+                chatterVolume = 100;
+                ambientVolume = 100;
+                menuVolume = 100;
 
-        [Tooltip("0-Off, 1-Dialogue, 2-Voice Chat, 3-All")] [Range(0, 4)]
-        public int closedCaptioning;
+                visualizeSoundEffects = false;
+                closedCaptioning = 0;
+                minVolume = 0;
+                maxVolume = 140;
+                minFrequency = 17;
 
-        public int minVolume;
-        public int maxVolume;
-        public int minFrequency;
+                invertHorizontalView = false;
+                invertVerticalView = false;
+                horizontalLookSpeed = 1;
+                verticalLookSpeed = 0.75f;
+                joystickLookSensitivity = 0.7f;
+                mouseLookSensitivity = 0.7f;
+                cameraFov = 90;
 
-        // Gameplay
-        // View
-        public bool invertHorizontalView;
-        public bool invertVerticalView;
-        public float horizontalLookSpeed;
-        public float verticalLookSpeed;
-        public float joystickLookSensitivity;
-        public float mouseLookSensitivity;
-        public int cameraFov;
+                hideTextChat = false;
+                enablePushToTalk = false;
 
-        // Communication
-        public bool hideTextChat;
-        public bool enablePushToTalk;
+                brightness = 1;
+                speedrunMode = false;
+                colorBlindIntensity = 1;
+                colorBlindFilter = 0;
+                dyslexicFriendlyFont = false;
+                reduceStrobing = false;
+                screenReader = false;
 
-        // General Accessibility
-        public float brightness;
-        public bool speedrunMode;
-        public float colorBlindIntensity;
-        [Range(0, 3)] public int colorBlindFilter;
-        public bool dyslexicFriendlyFont;
-        public bool reduceStrobing;
-        public bool screenReader;
+                localeID = 0;
+            }
 
-        public int localeID;
+            // Clone constructor
+            public ApplicationSettingsData(ApplicationSettingsData other)
+            {
+                configurationFileCompatibilityVersion = other.configurationFileCompatibilityVersion;
 
-        // Default constructor
-        public ApplicationSettingsData()
-        {
-            configurationFileCompatibilityVersion = 0;
-            
-            targetResolution = 0;
-            windowMode = 0;
-            enableVysnc = false;
-            fpsLimit = 60;
-            showFramecounter = false;
+                targetResolution = other.targetResolution;
+                windowMode = other.windowMode;
+                enableVysnc = other.enableVysnc;
+                fpsLimit = other.fpsLimit;
+                showFramecounter = other.showFramecounter;
 
-            qualityPreset = 3;
-            quality = new ApplicationSettingsData_Quality();
+                qualityPreset = other.qualityPreset;
+                quality = other.quality;
 
-            antialiasing = 0;
-            motionBlur = 0;
-            ambientOcclusion = 2;
-            bloom = 2;
+                antialiasing = other.antialiasing;
+                motionBlur = other.motionBlur;
+                ambientOcclusion = other.ambientOcclusion;
+                bloom = other.bloom;
 
-            outputDevice = 0;
-            inputDevice = 0;
-            inputVolume = 100;
+                outputDevice = other.outputDevice;
+                inputDevice = other.inputDevice;
+                inputVolume = other.inputVolume;
 
-            masterVolume = 100;
-            musicVolume = 100;
-            soundVolume = 100;
-            voiceVolume = 100;
-            chatterVolume = 100;
-            ambientVolume = 100;
-            menuVolume = 100;
+                masterVolume = other.masterVolume;
+                musicVolume = other.musicVolume;
+                soundVolume = other.soundVolume;
+                voiceVolume = other.voiceVolume;
+                chatterVolume = other.chatterVolume;
+                ambientVolume = other.ambientVolume;
+                menuVolume = other.menuVolume;
 
-            visualizeSoundEffects = false;
-            closedCaptioning = 0;
-            minVolume = 0;
-            maxVolume = 140;
-            minFrequency = 17;
+                visualizeSoundEffects = other.visualizeSoundEffects;
+                closedCaptioning = other.closedCaptioning;
+                minVolume = other.minVolume;
+                maxVolume = other.maxVolume;
+                minFrequency = other.minFrequency;
 
-            invertHorizontalView = false;
-            invertVerticalView = false;
-            horizontalLookSpeed = 1;
-            verticalLookSpeed = 0.75f;
-            joystickLookSensitivity = 0.7f;
-            mouseLookSensitivity = 0.7f;
-            cameraFov = 90;
+                invertHorizontalView = other.invertHorizontalView;
+                invertVerticalView = other.invertVerticalView;
+                horizontalLookSpeed = other.horizontalLookSpeed;
+                verticalLookSpeed = other.verticalLookSpeed;
+                joystickLookSensitivity = other.joystickLookSensitivity;
+                mouseLookSensitivity = other.mouseLookSensitivity;
+                cameraFov = other.cameraFov;
 
-            hideTextChat = false;
-            enablePushToTalk = false;
+                hideTextChat = other.hideTextChat;
+                enablePushToTalk = other.enablePushToTalk;
 
-            brightness = 1;
-            speedrunMode = false;
-            colorBlindIntensity = 1;
-            colorBlindFilter = 0;
-            dyslexicFriendlyFont = false;
-            reduceStrobing = false;
-            screenReader = false;
+                brightness = other.brightness;
+                speedrunMode = other.speedrunMode;
+                colorBlindIntensity = other.colorBlindIntensity;
+                colorBlindFilter = other.colorBlindFilter;
+                dyslexicFriendlyFont = other.dyslexicFriendlyFont;
+                reduceStrobing = other.reduceStrobing;
+                screenReader = other.screenReader;
 
-            localeID = 0;
-        }
-
-        // Clone constructor
-        public ApplicationSettingsData(ApplicationSettingsData other)
-        {
-            configurationFileCompatibilityVersion = other.configurationFileCompatibilityVersion;
-            
-            targetResolution = other.targetResolution;
-            windowMode = other.windowMode;
-            enableVysnc = other.enableVysnc;
-            fpsLimit = other.fpsLimit;
-            showFramecounter = other.showFramecounter;
-
-            qualityPreset = other.qualityPreset;
-            quality = other.quality;
-
-            antialiasing = other.antialiasing;
-            motionBlur = other.motionBlur;
-            ambientOcclusion = other.ambientOcclusion;
-            bloom = other.bloom;
-
-            outputDevice = other.outputDevice;
-            inputDevice = other.inputDevice;
-            inputVolume = other.inputVolume;
-
-            masterVolume = other.masterVolume;
-            musicVolume = other.musicVolume;
-            soundVolume = other.soundVolume;
-            voiceVolume = other.voiceVolume;
-            chatterVolume = other.chatterVolume;
-            ambientVolume = other.ambientVolume;
-            menuVolume = other.menuVolume;
-
-            visualizeSoundEffects = other.visualizeSoundEffects;
-            closedCaptioning = other.closedCaptioning;
-            minVolume = other.minVolume;
-            maxVolume = other.maxVolume;
-            minFrequency = other.minFrequency;
-
-            invertHorizontalView = other.invertHorizontalView;
-            invertVerticalView = other.invertVerticalView;
-            horizontalLookSpeed = other.horizontalLookSpeed;
-            verticalLookSpeed = other.verticalLookSpeed;
-            joystickLookSensitivity = other.joystickLookSensitivity;
-            mouseLookSensitivity = other.mouseLookSensitivity;
-            cameraFov = other.cameraFov;
-
-            hideTextChat = other.hideTextChat;
-            enablePushToTalk = other.enablePushToTalk;
-
-            brightness = other.brightness;
-            speedrunMode = other.speedrunMode;
-            colorBlindIntensity = other.colorBlindIntensity;
-            colorBlindFilter = other.colorBlindFilter;
-            dyslexicFriendlyFont = other.dyslexicFriendlyFont;
-            reduceStrobing = other.reduceStrobing;
-            screenReader = other.screenReader;
-
-            localeID = other.localeID;
-        }
+                localeID = other.localeID;
+            }
+        #endregion
+        #endregion
     }
 
     [Serializable]
@@ -253,7 +258,7 @@ namespace RivenFramework
 
         [Tooltip("0 - Off, 1 - Limited, 2 - Enabled")] [Range(0, 2)]
         public int dynamicBones;
-        
+
         // Default Constructor
         public ApplicationSettingsData_Quality()
         {
@@ -265,7 +270,7 @@ namespace RivenFramework
             postprocessingQuality = 2;
             dynamicBones = 2;
         }
-        
+
         // Clone Constructor
         public ApplicationSettingsData_Quality(ApplicationSettingsData_Quality other)
         {

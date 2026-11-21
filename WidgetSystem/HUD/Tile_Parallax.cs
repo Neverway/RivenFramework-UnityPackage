@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -15,13 +15,23 @@ using UnityEngine;
 
 namespace RivenFramework
 {
-        public class Tile_Parallax : MonoBehaviour
-        {
-            //=-----------------=
-            // Public Variables
-            //=-----------------=
+    public class Tile_Parallax : MonoBehaviour
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
             [Tooltip("How much the tiles will shift from their starting position")]
             [SerializeField] private Vector2 parallaxAmount;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            private GI_PawnManager pawnManager;
+            private Transform localPlayer;
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
             [Tooltip("Which gamemode should the parallaxing be active during")]
             //[SerializeField] private string activeGameMode = "Topdown2D";
 
@@ -32,18 +42,12 @@ namespace RivenFramework
             private Vector3 originalPosition;
             private Vector3 originalScale;
             private Vector3 parallaxScale;
+        #endregion
+        #endregion
 
 
-            //=-----------------=
-            // Reference Variables
-            //=-----------------=
-            private GI_PawnManager pawnManager;
-            private Transform localPlayer;
-
-
-            //=-----------------=
-            // Mono Functions
-            //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             private void Start()
             {
                 // Calculate the new local scale based on the parallax amount
@@ -78,11 +82,12 @@ namespace RivenFramework
                 // Set the new position
                 transform.position = newPosition;
             }
+        #endregion
 
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-            //=-----------------=
-            // Internal Functions
-            //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
             private bool GetLocalPlayer()
             {
                 if (localPlayer is null)
@@ -106,10 +111,7 @@ namespace RivenFramework
 
                 return true;
             }
-
-
-            //=-----------------=
-            // External Functions
-            //=-----------------=
-        }
+        #endregion
+        #endregion
+    }
 }

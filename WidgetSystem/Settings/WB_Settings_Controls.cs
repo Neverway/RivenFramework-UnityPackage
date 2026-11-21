@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -15,33 +15,31 @@ using UnityEngine;
 
 namespace RivenFramework
 {
-        public class WB_Settings_Controls : MonoBehaviour
-        {
-            //=-----------------=
-            // Public Variables
-            //=-----------------=
+    public class WB_Settings_Controls : MonoBehaviour
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
             public List<string> targetActionMaps;
-
-
-            //=-----------------=
-            // Private Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Reference Variables
-            //=-----------------=
-            private GI_WidgetManager widgetManager;
             public ApplicationKeybinds applicationKeybinds;
             public GameObject contentRoot;
             public GameObject bindingObject;
             public GameObject bindingWidget;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            private GI_WidgetManager widgetManager;
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-
-            //=-----------------=
-            // Mono Functions
-            //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             void Start()
             {
                 //Debug.Log($"[{this.name}] Executing function 'Start()'");
@@ -142,20 +140,19 @@ namespace RivenFramework
                     }
                 }
             }
+        #endregion
 
-            //=-----------------=
-            // Internal Functions
-            //=-----------------=
-
-
-            //=-----------------=
-            // External Functions
-            //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
             public void Rebind(string _actionMap, string _action, bool _isComposite)
             {
                 Debug.Log($"[{this.name}] Executing function 'Rebind(actionMap={_actionMap}, action={_action}, isComposite={_isComposite})'");
                 widgetManager.AddWidget(bindingWidget);
                 applicationKeybinds.SetBinding(_actionMap, _action, _isComposite);
             }
-        }
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
+    }
 }

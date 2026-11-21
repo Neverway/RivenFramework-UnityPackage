@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -16,30 +16,16 @@ using UnityEngine.UI;
 
 namespace RivenFramework
 {
-        public class WB_Settings_Graphics : MonoBehaviour
-        {
-            //=-----------------=
-            // Public Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Private Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Reference Variables
-            //=-----------------=
-            private ApplicationSettings applicationSettings;
-
+    public class WB_Settings_Graphics : MonoBehaviour
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
             // Display
             [SerializeField] private TMP_Dropdown targetResolution;
             [SerializeField] private Button_Selector windowMode;
             [SerializeField] private Toggle enableVsync;
             [SerializeField] private Slider fpslimit;
             [SerializeField] private Toggle showFramecounter;
-
             // Quality
             [SerializeField] public Button_Selector qualityPreset;
             [SerializeField] public Button_Selector resolutionScale;
@@ -49,17 +35,27 @@ namespace RivenFramework
             [SerializeField] public Button_Selector textureQuality;
             [SerializeField] public Button_Selector postprocessingQuality;
             [SerializeField] public Button_Selector dynamicBones;
-
             // Effects
             [SerializeField] public Button_Selector antialiasing;
             [SerializeField] public Button_Selector motionBlur;
             [SerializeField] public Button_Selector ambientOcclusion;
             [SerializeField] public Button_Selector bloom;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private ApplicationSettings applicationSettings;
+        #endregion
+        #endregion
 
 
-            //=-----------------=
-            // Mono Functions
-            //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             private void Start()
             {
                 applicationSettings = FindObjectOfType<ApplicationSettings>();
@@ -84,10 +80,9 @@ namespace RivenFramework
                 applicationSettings.bufferedSettingsData.ambientOcclusion = ambientOcclusion.currentIndex;
                 applicationSettings.bufferedSettingsData.bloom = bloom.currentIndex;
             }
+        #endregion
 
-            //=-----------------=
-            // Internal Functions
-            //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
             public void InitButtonValues()
             {
                 applicationSettings.bufferedSettingsData = new ApplicationSettingsData(applicationSettings.currentSettingsData);
@@ -112,7 +107,9 @@ namespace RivenFramework
                 ambientOcclusion.currentIndex = applicationSettings.bufferedSettingsData.ambientOcclusion;
                 bloom.currentIndex = applicationSettings.bufferedSettingsData.bloom;
             }
+        #endregion
 
+        #region----------------( Internal )---------------------------------------------------------------------------//
             private void InitEventListeners()
             {
                 targetResolution.onValueChanged.AddListener(delegate
@@ -255,10 +252,7 @@ namespace RivenFramework
                 // Return an empty string for non-perfect aspect ratios
                 return "";
             }
-
-
-            //=-----------------=
-            // External Functions
-            //=-----------------=
-        }
+        #endregion
+        #endregion
+    }
 }

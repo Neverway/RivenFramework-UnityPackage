@@ -1,3 +1,14 @@
+//==========================================( Neverway 2027 )=========================================================//
+// Author
+//  Liz M.
+//
+// Contributors
+//
+//
+// Description
+//
+//====================================================================================================================//
+
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -10,13 +21,35 @@ namespace RivenFramework
     [Serializable]
     public class GameInstanceModule
     {
-        public virtual void OnGameStart() { }
-        public virtual void OnGameUpdate() { }
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
+
+
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+            public virtual void OnGameStart() { }
+
+            public virtual void OnGameUpdate() { }
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
-
-
-
-
 
     [Serializable]
     [GIModuleColor(GIModuleColors.Magenta)]
@@ -33,11 +66,6 @@ namespace RivenFramework
         }
     }
 
-
-
-
-
-
     [Serializable]
     [GIModuleColor(GIModuleColors.Orange)]
     public class GI_DoMoreCrazyShit : GameInstanceModule
@@ -48,19 +76,12 @@ namespace RivenFramework
 
         public void SomeMethod()
         {
-            
+
         }
     }
-
 
     public class BelongsToConnorsAttribute : Attribute
     {
 
     }
-
 }
-
-
-
-
-

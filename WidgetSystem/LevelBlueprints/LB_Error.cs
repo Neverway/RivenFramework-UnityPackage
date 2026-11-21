@@ -1,8 +1,8 @@
 //==========================================( Neverway 2027 )=========================================================//
 // Author
+//  Liz M.
 //
 // Contributors
-//  Liz M.
 //  Errynei
 //  Connorses
 //  Soulex
@@ -20,7 +20,6 @@ namespace RivenFramework
     public class LB_Error : MonoBehaviour
     {
         #region====================================( Variables )======================================================//
-
         #region----------------( Inspector )--------------------------------------------------------------------------//
         #endregion
 
@@ -32,19 +31,18 @@ namespace RivenFramework
 
         #region----------------( Internal )---------------------------------------------------------------------------//
         #endregion
-
         #endregion
 
-        #region====================================( Functions )======================================================//
 
+        #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
-        private void Update()
-        {
-            if (Input.anyKeyDown)
+            private void Update()
             {
-                SceneManager.LoadScene("_Title");
+                if (Input.anyKeyDown)
+                {
+                    SceneManager.LoadScene("_Title");
+                }
             }
-        }
         #endregion
 
         #region----------------( External )---------------------------------------------------------------------------//
@@ -52,7 +50,6 @@ namespace RivenFramework
 
         #region----------------( Internal )---------------------------------------------------------------------------//
         #endregion
-
         #endregion
     }
 }

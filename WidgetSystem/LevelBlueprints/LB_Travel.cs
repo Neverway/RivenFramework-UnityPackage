@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -15,40 +15,37 @@ namespace RivenFramework
 {
     public class LB_Travel : MonoBehaviour
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            private GI_WidgetManager widgetManager;
+            private GameObject loadingWidget;
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Start()
+            {
+                widgetManager = GameInstance.Get<GI_WidgetManager>();
+                widgetManager.AddWidget(loadingWidget);
+            }
+        #endregion
 
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        private GI_WidgetManager widgetManager;
-        private GameObject loadingWidget;
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Start()
-        {
-            widgetManager = GameInstance.Get<GI_WidgetManager>();
-            widgetManager.AddWidget(loadingWidget);
-        }
-
-
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }

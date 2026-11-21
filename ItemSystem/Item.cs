@@ -21,7 +21,6 @@ namespace RivenFramework
     public class Item : Actor
     {
         #region====================================( Variables )======================================================//
-
         #region----------------( Inspector )--------------------------------------------------------------------------//
         #endregion
 
@@ -33,11 +32,10 @@ namespace RivenFramework
 
         #region----------------( Internal )---------------------------------------------------------------------------//
         #endregion
-
         #endregion
 
-        #region====================================( Functions )======================================================//
 
+        #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
         #endregion
 
@@ -52,7 +50,7 @@ namespace RivenFramework
                         break;
                 }
             }
-        
+
             public virtual void UseSecondary(string _mode = "press")
             {
                 switch (_mode)
@@ -63,7 +61,7 @@ namespace RivenFramework
                         break;
                 }
             }
-        
+
             public virtual void UseTertiary(string _mode = "press")
             {
                 switch (_mode)
@@ -78,7 +76,6 @@ namespace RivenFramework
 
         #region----------------( Internal )---------------------------------------------------------------------------//
         #endregion
-
         #endregion
     }
 }

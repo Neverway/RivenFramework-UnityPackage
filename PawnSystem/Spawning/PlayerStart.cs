@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -15,56 +15,53 @@ using UnityEngine;
 
 namespace RivenFramework
 {
-public class PlayerStart : MonoBehaviour
-{
-    //=-----------------=
-    // Public Variables
-    //=-----------------=
-    [Tooltip("")]
-    public string playerStartFilter;
-    [Tooltip("If enabled, draw the dummy model to get a sense of scale of the player")]
-    public bool debugShowMesh;
-    [Tooltip("Colorizes the debug player mesh, mostly used for identifying team spawns")]
-    public Color debugPlayerStartColor = new Color(0, 0.5f, 1, 0.5f);
-
-
-    //=-----------------=
-    // Private Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Reference Variables
-    //=-----------------=
-
-
-    //=-----------------=
-    // Mono Functions
-    //=-----------------=
-    void OnDrawGizmos()
+    public class PlayerStart : MonoBehaviour
     {
-        Gizmos.color = debugPlayerStartColor;
-        var fixedGizmoRotation = transform.rotation * Quaternion.AngleAxis(180, Vector3.up) * Quaternion.AngleAxis(-90, Vector3.right);
-        if (debugShowMesh)
-        {
-            Gizmos.DrawMesh(
-                Resources.Load<Mesh>("Models/DevCharacter"), 
-                transform.position + (transform.up * -0.1f), 
-                fixedGizmoRotation, 
-                transform.localScale * 100);
-        }
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [Tooltip("")]
+            public string playerStartFilter;
+            [Tooltip("If enabled, draw the dummy model to get a sense of scale of the player")]
+            public bool debugShowMesh;
+            [Tooltip("Colorizes the debug player mesh, mostly used for identifying team spawns")]
+            public Color debugPlayerStartColor = new Color(0, 0.5f, 1, 0.5f);
+        #endregion
 
-        Gizmos.DrawIcon(gameObject.transform.position, "player_start");
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
+
+
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            void OnDrawGizmos()
+            {
+                Gizmos.color = debugPlayerStartColor;
+                var fixedGizmoRotation = transform.rotation * Quaternion.AngleAxis(180, Vector3.up) * Quaternion.AngleAxis(-90, Vector3.right);
+                if (debugShowMesh)
+                {
+                    Gizmos.DrawMesh(
+                        Resources.Load<Mesh>("Models/DevCharacter"), 
+                        transform.position + (transform.up * -0.1f), 
+                        fixedGizmoRotation, 
+                        transform.localScale * 100);
+                }
+
+                Gizmos.DrawIcon(gameObject.transform.position, "player_start");
+            }
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
-    
-    
-    //=-----------------=
-    // Internal Functions
-    //=-----------------=
-
-
-    //=-----------------=
-    // External Functions
-    //=-----------------=
-}
 }

@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -16,41 +16,38 @@ namespace RivenFramework
 {
     public class ControlBindingEntry : MonoBehaviour
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        public TMP_Text text;
-        public Image_KeyHint[] keyHints;
-        public bool isComposite;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            public TMP_Text text;
+            public Image_KeyHint[] keyHints;
+            public bool isComposite;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+        #endregion
 
+        #region----------------( External )---------------------------------------------------------------------------//
+            public void SendRebindRequest()
+            {
+                Debug.Log($"[{this.name}] Executing function 'SendRebindRequest()'");
+                FindObjectOfType<WB_Settings_Controls>().Rebind(keyHints[0].targetActionMap, keyHints[0].targetAction, isComposite);
+            }
+        #endregion
 
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-
-
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
-        public void SendRebindRequest()
-        {
-            Debug.Log($"[{this.name}] Executing function 'SendRebindRequest()'");
-            FindObjectOfType<WB_Settings_Controls>().Rebind(keyHints[0].targetActionMap, keyHints[0].targetAction, isComposite);
-        }
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }

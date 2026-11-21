@@ -20,11 +20,36 @@ namespace RivenFramework
     [Serializable]
     public class PawnFilter_IsLocalPlayer : ActorFilter
     {
-        public override bool PassesFilter(Actor _actor)
-        {
-            if (_actor == null) return false;
-            if (!GameInstance.TryGet(out GI_PawnManager pawnManager)) return false;
-            return pawnManager.localPlayerCharacter == _actor.gameObject;
-        }
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
+
+
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            public override bool PassesFilter(Actor _actor)
+            {
+                if (_actor == null) return false;
+                if (!GameInstance.TryGet(out GI_PawnManager pawnManager)) return false;
+                return pawnManager.localPlayerCharacter == _actor.gameObject;
+            }
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }

@@ -1,9 +1,11 @@
-//==========================================( Neverway 2025 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
 // Contributors
 //
+//
+// Description
 //
 //====================================================================================================================//
 
@@ -16,64 +18,61 @@ namespace RivenFramework
 {
     public class GameObject_FaceActiveCamera : MonoBehaviour
     {
-        #region========================================( Variables )======================================================//
-        /*-----[ Inspector Variables ]------------------------------------------------------------------------------------*/
-        [SerializeField] private float updateRate = 0.25f;
-        private bool active = true;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [SerializeField] private float updateRate = 0.25f;
+        #endregion
 
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            private GI_PawnManager pawnManager;
+            private Transform target;
+        #endregion
 
-        /*-----[ External Variables ]-------------------------------------------------------------------------------------*/
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-
-        /*-----[ Internal Variables ]-------------------------------------------------------------------------------------*/
-
-
-        /*-----[ Reference Variables ]------------------------------------------------------------------------------------*/
-        private GI_PawnManager pawnManager;
-        private Transform target;
-
-
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private bool active = true;
+        #endregion
         #endregion
 
 
-        #region=======================================( Functions )=======================================================//
-        /*-----[ Mono Functions ]-----------------------------------------------------------------------------------------*/
-        private void Start()
-        {
-            pawnManager = GameInstance.Get<GI_PawnManager>();
-            InvokeRepeating(nameof(UpdateBillboard), 0, updateRate);
-        }
-
-        private void UpdateBillboard()
-        {
-            if (!active) return;
-            if (!pawnManager)
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Start()
             {
                 pawnManager = GameInstance.Get<GI_PawnManager>();
-                return;
+                InvokeRepeating(nameof(UpdateBillboard), 0, updateRate);
             }
+        #endregion
 
-            if (pawnManager.localPlayerCharacter && !target)
+        #region----------------( External )---------------------------------------------------------------------------//
+            public void SetBillboardActive(bool _active)
             {
-                target = pawnManager.localPlayerCharacter.GetComponentInChildren<Camera>().transform;
-                return;
+                active = _active;
             }
-            
-            if (!target) return;
-            transform.LookAt(target, target.up);
-        }
+        #endregion
 
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private void UpdateBillboard()
+            {
+                if (!active) return;
+                if (!pawnManager)
+                {
+                    pawnManager = GameInstance.Get<GI_PawnManager>();
+                    return;
+                }
 
-        /*-----[ Internal Functions ]-------------------------------------------------------------------------------------*/
+                if (pawnManager.localPlayerCharacter && !target)
+                {
+                    target = pawnManager.localPlayerCharacter.GetComponentInChildren<Camera>().transform;
+                    return;
+                }
 
-
-        /*-----[ External Functions ]-------------------------------------------------------------------------------------*/
-        public void SetBillboardActive(bool _active)
-        {
-            active = _active;
-        }
-
-
+                if (!target) return;
+                transform.LookAt(target, target.up);
+            }
+        #endregion
         #endregion
     }
 }

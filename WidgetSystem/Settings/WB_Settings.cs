@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -15,24 +15,10 @@ using UnityEngine.UI;
 
 namespace RivenFramework
 {
-        public class WB_Settings : MonoBehaviour
-        {
-            //=-----------------=
-            // Public Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Private Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Reference Variables
-            //=-----------------=
-            private GI_WidgetManager widgetManager;
-            private ApplicationSettings applicationSettings;
-
+    public class WB_Settings : MonoBehaviour
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
             [SerializeField] private Button buttonBack,
                 buttonApply,
                 buttonReset,
@@ -40,13 +26,24 @@ namespace RivenFramework
                 buttonAudio,
                 buttonControls,
                 buttonGameplay;
-
             [SerializeField] private GameObject graphicsWidget, audioWidget, controlsWidget, gameplayWidget;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            private GI_WidgetManager widgetManager;
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private ApplicationSettings applicationSettings;
+        #endregion
+        #endregion
 
 
-            //=-----------------=
-            // Mono Functions
-            //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             private void Start()
             {
                 widgetManager = GameInstance.Get<GI_WidgetManager>();
@@ -66,10 +63,26 @@ namespace RivenFramework
             {
                 RemoveSubwidgets();
             }
+        #endregion
 
-            //=-----------------=
-            // Internal Functions
-            //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
+            [Tooltip("Call this to add the first setting sub-widget")]
+            public void Init()
+            {
+                RemoveSubwidgets();
+                widgetManager.AddWidget(graphicsWidget);
+            }
+
+            public void RemoveSubwidgets()
+            {
+                Destroy(widgetManager.GetExistingWidget("WB_Settings_Graphics"));
+                Destroy(widgetManager.GetExistingWidget("WB_Settings_Audio"));
+                Destroy(widgetManager.GetExistingWidget("WB_Settings_Controls"));
+                Destroy(widgetManager.GetExistingWidget("WB_Settings_Gameplay"));
+            }
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
             private void OnClick(string button)
             {
                 switch (button)
@@ -108,24 +121,7 @@ namespace RivenFramework
                         break;
                 }
             }
-
-
-            //=-----------------=
-            // External Functions
-            //=-----------------=
-            [Tooltip("Call this to add the first setting sub-widget")]
-            public void Init()
-            {
-                RemoveSubwidgets();
-                widgetManager.AddWidget(graphicsWidget);
-            }
-
-            public void RemoveSubwidgets()
-            {
-                Destroy(widgetManager.GetExistingWidget("WB_Settings_Graphics"));
-                Destroy(widgetManager.GetExistingWidget("WB_Settings_Audio"));
-                Destroy(widgetManager.GetExistingWidget("WB_Settings_Controls"));
-                Destroy(widgetManager.GetExistingWidget("WB_Settings_Gameplay"));
-            }
-        }
+        #endregion
+        #endregion
+    }
 }

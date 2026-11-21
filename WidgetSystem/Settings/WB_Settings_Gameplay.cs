@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -14,23 +14,10 @@ using UnityEngine.UI;
 
 namespace RivenFramework
 {
-        public class WB_Settings_Gameplay : MonoBehaviour
-        {
-            //=-----------------=
-            // Public Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Private Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Reference Variables
-            //=-----------------=
-            private ApplicationSettings applicationSettings;
-
+    public class WB_Settings_Gameplay : MonoBehaviour
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
             // View
             [SerializeField] private Toggle invertHorizontalView;
             [SerializeField] private Toggle invertVerticalView;
@@ -38,20 +25,29 @@ namespace RivenFramework
             [SerializeField] private Slider verticalLookSpeed;
             [SerializeField] private Slider joystickLookSensitivity;
             [SerializeField] private Slider mouseLookSensitivity;
-
             [SerializeField] private Slider cameraFov;
-
             // Display
             [SerializeField] private Slider brightness;
             [SerializeField] private Toggle speedrunMode;
             [SerializeField] private Slider colorBlindIntensity;
             [SerializeField] private Button_Selector colorBlindFilter;
             [SerializeField] private Toggle dyslexicFriendlyFont;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private ApplicationSettings applicationSettings;
+        #endregion
+        #endregion
 
 
-            //=-----------------=
-            // Mono Functions
-            //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             private void Start()
             {
                 applicationSettings = FindObjectOfType<ApplicationSettings>();
@@ -63,10 +59,9 @@ namespace RivenFramework
             {
                 applicationSettings.bufferedSettingsData.colorBlindFilter = colorBlindFilter.currentIndex;
             }
+        #endregion
 
-            //=-----------------=
-            // Internal Functions
-            //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
             public void InitButtonValues()
             {
                 applicationSettings.bufferedSettingsData = new ApplicationSettingsData(applicationSettings.currentSettingsData);
@@ -84,7 +79,9 @@ namespace RivenFramework
                 dyslexicFriendlyFont.isOn = applicationSettings.bufferedSettingsData.dyslexicFriendlyFont;
                 colorBlindFilter.currentIndex = applicationSettings.bufferedSettingsData.colorBlindFilter;
             }
+        #endregion
 
+        #region----------------( Internal )---------------------------------------------------------------------------//
             private void InitEventListeners()
             {
                 invertHorizontalView.onValueChanged.AddListener(delegate
@@ -134,10 +131,7 @@ namespace RivenFramework
                     applicationSettings.bufferedSettingsData.dyslexicFriendlyFont = dyslexicFriendlyFont.isOn;
                 });
             }
-
-
-            //=-----------------=
-            // External Functions
-            //=-----------------=
-        }
+        #endregion
+        #endregion
+    }
 }

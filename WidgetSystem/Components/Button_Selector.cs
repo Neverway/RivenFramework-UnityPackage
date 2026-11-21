@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -19,83 +19,80 @@ namespace RivenFramework
 {
     public class Button_Selector : MonoBehaviour
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        public List<string> selectorOptions;
-        public int currentIndex;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            public List<string> selectorOptions;
+            public int currentIndex;
+            [SerializeField] private Button left, right;
+            [SerializeField] private GameObject indicator, indicatorSelected, indicatorRoot;
+            [SerializeField] private TMP_Text text;
+            [SerializeField] private List<GameObject> indicators;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            public UnityEvent onValueChanged;
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        public UnityEvent onValueChanged;
-        [SerializeField] private Button left, right;
-        [SerializeField] private GameObject indicator, indicatorSelected, indicatorRoot;
-        [SerializeField] private TMP_Text text;
-        [SerializeField] private List<GameObject> indicators;
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Start()
-        {
-            left.onClick.AddListener(delegate
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Start()
             {
-                if (currentIndex - 1 >= 0)
+                left.onClick.AddListener(delegate
                 {
-                    currentIndex--;
-                    onValueChanged?.Invoke();
-                }
-            });
-            right.onClick.AddListener(delegate
-            {
-                if (currentIndex + 1 <= selectorOptions.Count-1)
+                    if (currentIndex - 1 >= 0)
+                    {
+                        currentIndex--;
+                        onValueChanged?.Invoke();
+                    }
+                });
+                right.onClick.AddListener(delegate
                 {
-                    currentIndex++;
-                    onValueChanged?.Invoke();
-                }
-            });
-            // Create indicators
-            for (int i = 0; i < selectorOptions.Count; i++)
-            {
-                var newIndicator = Instantiate(indicator, indicatorRoot.transform);
-                newIndicator.SetActive(true);
-                indicators.Add(newIndicator);
-            }
-        }
-
-        public void Update()
-        {
-            // Updated selection
-            // I really wish this could have been done inside an onClick event instead of update, but the iterator acts possessed otherwise >:L  ~Liz (Jun12-24)
-            for (int i = 0; i < indicators.Count; i++)
-            {
-                // Reset all the indicator colors
-                indicators[i].GetComponent<Image>().color = indicator.GetComponent<Image>().color;
-                // Set selected indicator (via colour, dummy) and text 
-                if (i == currentIndex)
+                    if (currentIndex + 1 <= selectorOptions.Count-1)
+                    {
+                        currentIndex++;
+                        onValueChanged?.Invoke();
+                    }
+                });
+                // Create indicators
+                for (int i = 0; i < selectorOptions.Count; i++)
                 {
-                    indicators[i].GetComponent<Image>().color = indicatorSelected.GetComponent<Image>().color;
-                    text.text = selectorOptions[i];
+                    var newIndicator = Instantiate(indicator, indicatorRoot.transform);
+                    newIndicator.SetActive(true);
+                    indicators.Add(newIndicator);
                 }
             }
-        }
 
+            public void Update()
+            {
+                // Updated selection
+                // I really wish this could have been done inside an onClick event instead of update, but the iterator acts possessed otherwise >:L  ~Liz (Jun12-24)
+                for (int i = 0; i < indicators.Count; i++)
+                {
+                    // Reset all the indicator colors
+                    indicators[i].GetComponent<Image>().color = indicator.GetComponent<Image>().color;
+                    // Set selected indicator (via colour, dummy) and text 
+                    if (i == currentIndex)
+                    {
+                        indicators[i].GetComponent<Image>().color = indicatorSelected.GetComponent<Image>().color;
+                        text.text = selectorOptions[i];
+                    }
+                }
+            }
+        #endregion
 
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }

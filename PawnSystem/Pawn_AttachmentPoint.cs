@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -15,25 +15,13 @@ using UnityEngine;
 
 namespace RivenFramework
 {
-        public class Pawn_AttachmentPoint : MonoBehaviour
-        {
-            //=-----------------=
-            // Public Variables
-            //=-----------------=
+    public class Pawn_AttachmentPoint : MonoBehaviour
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
             [Tooltip("When trying to pickup an object if it's over this mass, the object will be dragged instead")]
             public float pickupMassLimit = 20f;
-
             public bool heldObjectLooselyPinned;
-
-
-            //=-----------------=
-            // Private Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Reference Variables
-            //=-----------------=
             [Tooltip("The object that is attached to this point, this is set, not assigned, don't touch this")]
             public GameObject attachedObject;
             public Rigidbody attachedRigidbody;
@@ -43,11 +31,21 @@ namespace RivenFramework
             public ConfigurableJoint dragJoint;
             [Tooltip("When dragging or pulling on objects, this line renderer is used to represent the distance between the attachment point and the anchor point")]
             public LineRenderer dragLineRenderer;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-            //=-----------------=
-            // Mono Functions
-            //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             public void Update()
             {
                 if (dragJoint.connectedBody)
@@ -67,16 +65,9 @@ namespace RivenFramework
                     dragLineRenderer.enabled = false;
                 }
             }
+        #endregion
 
-
-            //=-----------------=
-            // Internal Functions
-            //=-----------------=
-
-
-            //=-----------------=
-            // External Functions
-            //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
             /// <summary>
             /// Returns true if something is already being held in this attachment point
             /// (Simple function to make code more readable)
@@ -85,7 +76,7 @@ namespace RivenFramework
             {
                 return attachedObject != null;
             }
-        
+
             /// <summary>
             /// Attach a physics pickup to this attachment point
             /// </summary>
@@ -94,7 +85,7 @@ namespace RivenFramework
             public void Attach(GameObject _targetObject, Rigidbody _targetRigidbody = null)
             {
                 dragLineRenderer.enabled = false;
-            
+
                 // Find the rigidbody of the physics pickup
                 attachedRigidbody = _targetObject.GetComponent<Rigidbody>();
                 if (_targetRigidbody) attachedRigidbody = _targetRigidbody;
@@ -108,11 +99,11 @@ namespace RivenFramework
                 {
                     pickupJoint.connectedBody = attachedRigidbody;
                 }
-            
+
                 attachedObject = _targetObject;
 
             }
-        
+
             /// <summary>
             /// Detach a physics pickup from this attachment point
             /// </summary>
@@ -130,7 +121,7 @@ namespace RivenFramework
                 {
                     return true;
                 }
-            
+
                 // Check mass limitations
                 if (attachedRigidbody.mass > pickupMassLimit)
                 {
@@ -139,5 +130,10 @@ namespace RivenFramework
 
                 return false;
             }
-        }
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
+    }
 }

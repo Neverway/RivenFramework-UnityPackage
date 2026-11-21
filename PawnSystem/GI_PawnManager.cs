@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -17,36 +17,33 @@ namespace RivenFramework
 {
     public class GI_PawnManager : MonoBehaviour
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-        public static GI_PawnManager Instance => GameInstance.Get<GI_PawnManager>();
-        public GameObject defaultPawn;
-        public GameObject localPlayerCharacter;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            public GameObject defaultPawn;
+            public GameObject localPlayerCharacter;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+            public static GI_PawnManager Instance => GameInstance.Get<GI_PawnManager>();
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+        #endregion
 
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-
-
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }

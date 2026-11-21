@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -18,15 +18,38 @@ namespace RivenFramework
 {
     public abstract class PawnStats : ICloneable
     {
-        [Header("Health")]
-        public float health = 100f;
-        public float invulnerabilityTime = 1f;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [Header("Health")]
+            public float health = 100f;
+            public float invulnerabilityTime = 1f;
+            [Header("Teaming")] 
+            public string team = "";
+            public List<string> alliedTeams = new List<string>();
+            public List<string> opposedTeams = new List<string>();
+        #endregion
 
-        [Header("Teaming")] 
-        public string team = "";
-        public List<string> alliedTeams = new List<string>();
-        public List<string> opposedTeams = new List<string>();
-    
-        public abstract object Clone();
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
+
+
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+            public abstract object Clone();
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
     }
 }

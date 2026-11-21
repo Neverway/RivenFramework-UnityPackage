@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -15,39 +15,38 @@ using UnityEngine;
 
 namespace RivenFramework
 {
-        [RequireComponent(typeof(TMP_Text))]
-        public class Text_Speedometer : MonoBehaviour
-        {
-            //=-----------------=
-            // Public Variables
-            //=-----------------=
+    [RequireComponent(typeof(TMP_Text))]
+    public class Text_Speedometer : MonoBehaviour
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
             [Tooltip("If true, the target of this speedometer will be the local player (which this will auto-locate)")]
             [SerializeField] private bool useLocalPlayer;
-
-
-            //=-----------------=
-            // Private Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Reference Variables
-            //=-----------------=
-            private TMP_Text velocityText;
-            private GI_PawnManager pawnManager;
             [Tooltip("The rigidbody this speedometer will be tracking")]
             [SerializeField] private Rigidbody targetRigidbody;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            private TMP_Text velocityText;
+            private GI_PawnManager pawnManager;
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
 
 
-            //=-----------------=
-            // Mono Functions
-            //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             private void Start()
             {
                 velocityText = GetComponent<TMP_Text>();
                 pawnManager = GameInstance.Get<GI_PawnManager>();
             }
-        
+
             private void Update()
             {
                 if (useLocalPlayer&& GetLocalPlayer() is false) return;
@@ -57,11 +56,12 @@ namespace RivenFramework
                     velocityText.text = "Velocity: " + targetRigidbody.velocity.magnitude.ToString("F2") + " m/s";
                 }
             }
+        #endregion
 
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
 
-            //=-----------------=
-            // Internal Functions
-            //=-----------------=
+        #region----------------( Internal )---------------------------------------------------------------------------//
             private bool GetLocalPlayer()
             {
                 if (targetRigidbody is null)
@@ -90,10 +90,7 @@ namespace RivenFramework
 
                 return true;
             }
-
-
-            //=-----------------=
-            // External Functions
-            //=-----------------=
-        }
+        #endregion
+        #endregion
+    }
 }

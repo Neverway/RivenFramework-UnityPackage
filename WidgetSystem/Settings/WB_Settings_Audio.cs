@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -15,29 +15,15 @@ using UnityEngine.UI;
 
 namespace RivenFramework
 {
-        public class WB_Settings_Audio : MonoBehaviour
-        {
-            //=-----------------=
-            // Public Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Private Variables
-            //=-----------------=
-
-
-            //=-----------------=
-            // Reference Variables
-            //=-----------------=
-            private ApplicationSettings applicationSettings;
-
+    public class WB_Settings_Audio : MonoBehaviour
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
             // Audio Devices
             [SerializeField] private TMP_Dropdown outputDevice;
             [SerializeField] private TMP_Dropdown inputDevice;
             [SerializeField] private Slider inputVolume;
             [SerializeField] private Slider inputPreview;
-
             // Audio Mixer
             [SerializeField] private Slider masterVolume;
             [SerializeField] private Slider musicVolume;
@@ -46,18 +32,28 @@ namespace RivenFramework
             [SerializeField] private Slider chatterVolume;
             [SerializeField] private Slider ambientVolume;
             [SerializeField] private Slider menuVolume;
-
             // Audio Accessibility
             [SerializeField] private Toggle visualizeSoundEffects;
             [SerializeField] public Button_Selector closedCaptioning;
             [SerializeField] private Slider minVolume;
             [SerializeField] private Slider maxVolume;
             [SerializeField] private Slider minFrequency;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private ApplicationSettings applicationSettings;
+        #endregion
+        #endregion
 
 
-            //=-----------------=
-            // Mono Functions
-            //=-----------------=
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             private void Start()
             {
                 applicationSettings = FindObjectOfType<ApplicationSettings>();
@@ -69,10 +65,9 @@ namespace RivenFramework
             {
                 applicationSettings.bufferedSettingsData.closedCaptioning = closedCaptioning.currentIndex;
             }
+        #endregion
 
-            //=-----------------=
-            // Internal Functions
-            //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
             public void InitButtonValues()
             {
                 applicationSettings.bufferedSettingsData = new ApplicationSettingsData(applicationSettings.currentSettingsData);
@@ -94,7 +89,9 @@ namespace RivenFramework
                 maxVolume.value = applicationSettings.bufferedSettingsData.maxVolume;
                 minFrequency.value = applicationSettings.bufferedSettingsData.minFrequency;
             }
+        #endregion
 
+        #region----------------( Internal )---------------------------------------------------------------------------//
             private void InitEventListeners()
             {
                 outputDevice.onValueChanged.AddListener(delegate
@@ -156,10 +153,7 @@ namespace RivenFramework
                     applicationSettings.bufferedSettingsData.minFrequency = Mathf.RoundToInt(minFrequency.value);
                 });
             }
-
-
-            //=-----------------=
-            // External Functions
-            //=-----------------=
-        }
+        #endregion
+        #endregion
+    }
 }

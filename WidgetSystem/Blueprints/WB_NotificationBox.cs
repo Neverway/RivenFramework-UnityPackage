@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -17,67 +17,65 @@ namespace RivenFramework
 {
     public class WB_NotificationBox : MonoBehaviour
     {
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [SerializeField] private Transform root;
+            [SerializeField] private GameObject keyhintWidget;
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private float timeTillDeath;
+        #endregion
+        #endregion
 
 
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-        private float timeTillDeath;
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Start()
+            {
 
+            }
 
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        [SerializeField] private Transform root;
-        [SerializeField] private GameObject keyhintWidget;
+            private void Update()
+            {
 
+            }
+        #endregion
 
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Start()
-        {
-    
-        }
+        #region----------------( External )---------------------------------------------------------------------------//
+            public void DisplayKeyHint(float _duration, string _keyhintText, Sprite _keyhintImage)
+            {
+                StopCoroutine(DeathTimer());
+                StartCoroutine(DeathTimer());
+                var keyhint = Instantiate(keyhintWidget, root);
+                keyhint.GetComponent<WB_NotificationBox_Keyhint>().SetKeyHint(_keyhintText, _keyhintImage);
+                Destroy(keyhint, _duration);
+            }
 
-        private void Update()
-        {
-    
-        }
+            public void DisplayKeyHint(float _duration, string _keyhintText, string _targetActionMap, string _targetAction)
+            {
+                StopCoroutine(DeathTimer());
+                StartCoroutine(DeathTimer());
+                var keyhint = Instantiate(keyhintWidget, root);
+                keyhint.transform.SetAsFirstSibling();
+                keyhint.GetComponent<WB_NotificationBox_Keyhint>().SetKeyHint(_keyhintText, _targetActionMap, _targetAction);
+                Destroy(keyhint, _duration);
+            }
+        #endregion
 
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-        private IEnumerator DeathTimer()
-        {
-            yield return new WaitForSeconds(timeTillDeath);
-            //Destroy(gameObject);
-        }
-
-
-        //=-----------------=
-        // External Functions
-        //=-----------------=
-        public void DisplayKeyHint(float _duration, string _keyhintText, Sprite _keyhintImage)
-        {
-            StopCoroutine(DeathTimer());
-            StartCoroutine(DeathTimer());
-            var keyhint = Instantiate(keyhintWidget, root);
-            keyhint.GetComponent<WB_NotificationBox_Keyhint>().SetKeyHint(_keyhintText, _keyhintImage);
-            Destroy(keyhint, _duration);
-        }
-    
-        public void DisplayKeyHint(float _duration, string _keyhintText, string _targetActionMap, string _targetAction)
-        {
-            StopCoroutine(DeathTimer());
-            StartCoroutine(DeathTimer());
-            var keyhint = Instantiate(keyhintWidget, root);
-            keyhint.transform.SetAsFirstSibling();
-            keyhint.GetComponent<WB_NotificationBox_Keyhint>().SetKeyHint(_keyhintText, _targetActionMap, _targetAction);
-            Destroy(keyhint, _duration);
-        }
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private IEnumerator DeathTimer()
+            {
+                yield return new WaitForSeconds(timeTillDeath);
+                //Destroy(gameObject);
+            }
+        #endregion
+        #endregion
     }
 }

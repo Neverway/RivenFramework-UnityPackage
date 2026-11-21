@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -20,11 +20,10 @@ using Random = UnityEngine.Random;
 namespace RivenFramework
 {
     [RequireComponent(typeof(Light))]
-        public class Light_DistanceCulling : MonoBehaviour
-        {
-            //=-----------------=
-            // Public Variables
-            //=-----------------=
+    public class Light_DistanceCulling : MonoBehaviour
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
             [Header("Range Culling")]
             [Tooltip("If enabled, the light will be disabled when the local player is out of range")]
             [SerializeField] private bool cullWhenOutOfRange;
@@ -36,7 +35,6 @@ namespace RivenFramework
             [SerializeField] private float fadeSpeed = 0.2f;
             [Tooltip("If enabled, a sphere will be drawn around the light representing the culling range of the light in the editor")]
             [SerializeField] private bool debugDrawCullRange;
-        
             [Header("Shadow Budgeting")]
             [Tooltip("If enabled, this light will never cast shadows, so it won't take up any available shadow caster slots and won't harm performance as much")]
             [SerializeField] private bool neverCastShadows;
@@ -44,38 +42,36 @@ namespace RivenFramework
             [SerializeField] private bool alwaysCastShadows;
             [Tooltip("The higher this value, the higher the importance of this light when being ranked for available shadow caster slots (So set this value higher for lights you wanna keep casting shadows, but use is sparingly!)")]
             [SerializeField] private float shadowPriorityBias;
-        
-        
-            //=-----------------=
-            // Private Variables
-            //=-----------------=
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+            // The original shadow type this light uses before it may have been culled out
+            private LightShadows storedShadowType;
+            private Light targetLight;
+            private Transform localPlayer;
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+            // GI_LightShadowBudgetManager stuffs
+            public bool CanCastShadows => !neverCastShadows && storedShadowType != LightShadows.None;
+            public bool IsInRange { get; private set; }
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
             // The original intensity of the light before we began fading it out
             private float storedLightIntensity;
             // The original intensity of the lights shadows before we began fading it out
             private float storedShadowStrength;
-            // The original shadow type this light uses before it may have been culled out
-            private LightShadows storedShadowType;
             // Stored value of the range this light culls at so it doesn't get recalculated constantly
             private float cachedCullRange;
-        
-        
-        
-            //=-----------------=
-            // Reference Variables
-            //=-----------------=
-            private Light targetLight;
             private Coroutine intensityFadeRoutine;
             private Coroutine shadowFadeRoutine;
-            private Transform localPlayer;
-            // GI_LightShadowBudgetManager stuffs
-            public bool CanCastShadows => !neverCastShadows && storedShadowType != LightShadows.None;
-            public bool IsInRange { get; private set; }
-        
-        
-        
-            //=-----------------=
-            // Mono Functions
-            //=-----------------=
+        #endregion
+        #endregion
+
+
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
             private void Start()
             {
                 targetLight = GetComponent<Light>();
@@ -105,12 +101,52 @@ namespace RivenFramework
                 Gizmos.color = new Color(0.9f,0.5f,0.0f,0.4f);
                 Gizmos.DrawWireSphere(transform.position, targetLight.range * rangeMultiplier);
             }
+        #endregion
 
+        #region----------------( External )---------------------------------------------------------------------------//
+            public bool EvaluateCulling(Vector3 playerPos)
+            {
+                if (!cullWhenOutOfRange)
+                {
+                    IsInRange = true;
+                    return true;
+                }
 
-        
-            //=-----------------=
-            // Internal Functions
-            //=-----------------=
+                IsInRange = (transform.position - playerPos).sqrMagnitude <= cachedCullRange;
+
+                if (fadeLightWhenCulled)
+                {
+                    if (!IsInRange && targetLight.intensity >= storedLightIntensity)
+                        StartIntensityFade(false);
+                    if (IsInRange && targetLight.intensity <= 0f)
+                        StartIntensityFade(true);
+                }
+                else
+                {
+                    targetLight.enabled = IsInRange;
+                }
+
+                return IsInRange;
+            }    
+
+            public float GetShadowImportanceScore(Vector3 playerPos)
+            {
+                if (alwaysCastShadows) return float.MaxValue;
+
+                float distSq = Mathf.Max((transform.position - playerPos).sqrMagnitude, 0.01f);
+                float sizeWeight = targetLight.range * Mathf.Max(targetLight.intensity, 0.01f);
+                return (sizeWeight * shadowPriorityBias) / distSq;
+            }
+
+            public void SetShadowCasting(bool enable, float fadeDuration)
+            {
+                if (enable && !CanCastShadows) return;
+                if (shadowFadeRoutine != null) StopCoroutine(shadowFadeRoutine);
+                shadowFadeRoutine = StartCoroutine(ShadowFadeRoutine(enable, fadeDuration));
+            }
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
             private void RecalculateCullRange()
             {
                 float r = targetLight.range * rangeMultiplier;
@@ -180,52 +216,7 @@ namespace RivenFramework
                     targetLight.shadows = LightShadows.None;
                 }
             }
-
-
-            //=-----------------=
-            // External Functions
-            //=-----------------=
-            public bool EvaluateCulling(Vector3 playerPos)
-            {
-                if (!cullWhenOutOfRange)
-                {
-                    IsInRange = true;
-                    return true;
-                }
-
-                IsInRange = (transform.position - playerPos).sqrMagnitude <= cachedCullRange;
-
-                if (fadeLightWhenCulled)
-                {
-                    if (!IsInRange && targetLight.intensity >= storedLightIntensity)
-                        StartIntensityFade(false);
-                    if (IsInRange && targetLight.intensity <= 0f)
-                        StartIntensityFade(true);
-                }
-                else
-                {
-                    targetLight.enabled = IsInRange;
-                }
-
-                return IsInRange;
-            }    
-        
-            public float GetShadowImportanceScore(Vector3 playerPos)
-            {
-                if (alwaysCastShadows) return float.MaxValue;
-
-                float distSq = Mathf.Max((transform.position - playerPos).sqrMagnitude, 0.01f);
-                float sizeWeight = targetLight.range * Mathf.Max(targetLight.intensity, 0.01f);
-                return (sizeWeight * shadowPriorityBias) / distSq;
-            }
-        
-            public void SetShadowCasting(bool enable, float fadeDuration)
-            {
-                if (enable && !CanCastShadows) return;
-                if (shadowFadeRoutine != null) StopCoroutine(shadowFadeRoutine);
-                shadowFadeRoutine = StartCoroutine(ShadowFadeRoutine(enable, fadeDuration));
-            }
-
-
-        }
+        #endregion
+        #endregion
+    }
 }

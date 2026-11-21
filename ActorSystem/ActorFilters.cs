@@ -11,9 +11,9 @@
 //  System for filtering actors by different properties, like display name, id, tag, team, etc.
 //====================================================================================================================//
 
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace RivenFramework
 {
@@ -21,8 +21,35 @@ namespace RivenFramework
     /// Base for every actor filter
     /// </summary>
     [Serializable]
-    public abstract class ActorFilter : Filter<Actor> { }
-    
+    public abstract class ActorFilter : Filter<Actor>
+    {
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
+
+
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( External )---------------------------------------------------------------------------//
+        #endregion
+
+        #region----------------( Internal )---------------------------------------------------------------------------//
+        #endregion
+        #endregion
+    }
+
     /// <summary>
     /// A list of filters and how they are checked to determin if a target passes a filter check
     /// </summary>
@@ -91,7 +118,7 @@ namespace RivenFramework
 
         #endregion
     }
-    
+
     /// <summary>
     /// Passes actors if their display name matches
     /// </summary>

@@ -1,4 +1,4 @@
-//==========================================( Neverway 2024 )=========================================================//
+//==========================================( Neverway 2027 )=========================================================//
 // Author
 //  Liz M.
 //
@@ -9,115 +9,111 @@
 //  Keeps this object when changing scenes and ensures there is only ever one of them present in a scene
 //====================================================================================================================//
 
-using MarkupAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MarkupAttributes;
 using UnityEngine;
 
 namespace RivenFramework
 {
     public class GameInstance : MonoBehaviour
     {
-        public static ActorDomain globalActorDomain;
+        #region====================================( Variables )======================================================//
+        #region----------------( Inspector )--------------------------------------------------------------------------//
+            [SerializeReference] public GameInstanceModule[] modules;
+        #endregion
 
-        [SerializeReference] public GameInstanceModule[] modules;
-        //protected Dictionary<Type, GameInstanceModule> moduleDictionary;
+        #region----------------( Reference )--------------------------------------------------------------------------//
+        #endregion
 
-        //=-----------------=
-        // Public Variables
-        //=-----------------=
-
-
-        //=-----------------=
-        // Private Variables
-        //=-----------------=
-
-        //=-----------------=
-        // Reference Variables
-        //=-----------------=
-        private static GameInstance _instance;
-        public static GameInstance Instance 
-        { 
-            get 
-            {
-                if (_instance == null) 
-                    throw new NullReferenceException("GameInstance is missing");
-                return _instance;
-            } 
-        }
-
-
-        //=-----------------=
-        // Mono Functions
-        //=-----------------=
-        private void Awake()
-        {
-            if (_instance != null)
-            {
-                Destroy(gameObject);
-                return;
+        #region----------------( External )---------------------------------------------------------------------------//
+            public static ActorDomain globalActorDomain;
+            public static GameInstance Instance 
+            { 
+                get 
+                {
+                    if (_instance == null) 
+                        throw new NullReferenceException("GameInstance is missing");
+                    return _instance;
+                } 
             }
-            
-            _instance = this;
-            DontDestroyOnLoad(_instance);
-            InitializeGameInstance();
-        }
+        #endregion
 
-        //=-----------------=
-        // Internal Functions
-        //=-----------------=
-        private void InitializeGameInstance()
-        {
-            globalActorDomain = ActorDomain.CreateNewGlobalDomain();
-            globalActorDomain.gameObject.name = "Global Actor Domain";
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            //protected Dictionary<Type, GameInstanceModule> moduleDictionary;
+            private static GameInstance _instance;
+        #endregion
+        #endregion
 
-            foreach (GameInstanceModule module in modules)
+
+        #region====================================( Functions )======================================================//
+        #region----------------( Inherited )--------------------------------------------------------------------------//
+            private void Awake()
             {
+                if (_instance != null)
+                {
+                    Destroy(gameObject);
+                    return;
+                }
 
+                _instance = this;
+                DontDestroyOnLoad(_instance);
+                InitializeGameInstance();
             }
-        }
+        #endregion
 
-        //=-----------------=
-        // External Functions
-        //=-----------------=
+        #region----------------( External )---------------------------------------------------------------------------//
+            /// <summary>
+            /// Directly gets a component from the GameInstance of the type provided
+            /// </summary>
+            /// <typeparam name="T">GameInstance component you wish to retrieve</typeparam>
+            /// <returns>The component of type T from GameInstance</returns>
+            /// <exception cref="NullReferenceException"></exception>
+            public static T Get<T>() where T : MonoBehaviour
+            {
+                if (_instance == null)
+                    throw new NullReferenceException($"{nameof(GameInstance)}: Trying to get a component from {nameof(GameInstance)} " +
+                        $"but there is no main instance set for it. (Likely has not been instantiated, must have one GameObject with" +
+                        $"this component attached in the scene at game start)");
 
-        /// <summary>
-        /// Directly gets a component from the GameInstance of the type provided
-        /// </summary>
-        /// <typeparam name="T">GameInstance component you wish to retrieve</typeparam>
-        /// <returns>The component of type T from GameInstance</returns>
-        /// <exception cref="NullReferenceException"></exception>
-        public static T Get<T>() where T : MonoBehaviour
-        {
-            if (_instance == null)
-                throw new NullReferenceException($"{nameof(GameInstance)}: Trying to get a component from {nameof(GameInstance)} " +
-                    $"but there is no main instance set for it. (Likely has not been instantiated, must have one GameObject with" +
-                    $"this component attached in the scene at game start)");
+                return _instance.GetComponent<T>();
+            }
 
-            return _instance.GetComponent<T>();
-        }
+            /// <summary>
+            /// Directly gets a component from the GameInstance of the type provided
+            /// </summary>
+            /// <typeparam name="T">GameInstance component you wish to retrieve</typeparam>
+            /// <param name="gameInstanceModule">outputs component of the given variable type</param>
+            /// <returns>True if there was a component of that type on GameInstance</returns>
+            public static bool TryGet<T>(out T gameInstanceModule) where T : MonoBehaviour
+            {
+                gameInstanceModule = _instance != null ? _instance.GetComponent<T>() : null;
+                return gameInstanceModule != null;
+            }
 
-        /// <summary>
-        /// Directly gets a component from the GameInstance of the type provided
-        /// </summary>
-        /// <typeparam name="T">GameInstance component you wish to retrieve</typeparam>
-        /// <param name="gameInstanceModule">outputs component of the given variable type</param>
-        /// <returns>True if there was a component of that type on GameInstance</returns>
-        public static bool TryGet<T>(out T gameInstanceModule) where T : MonoBehaviour
-        {
-            gameInstanceModule = _instance != null ? _instance.GetComponent<T>() : null;
-            return gameInstanceModule != null;
-        }
+            public static Coroutine SendCoroutine(IEnumerator coroutine) => Instance.StartCoroutine(coroutine);
+        #endregion
 
-        // Reload Static Fields
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        static void InitializeStaticFields()
-        {
-            _instance = null;
-        }
+        #region----------------( Internal )---------------------------------------------------------------------------//
+            private void InitializeGameInstance()
+            {
+                globalActorDomain = ActorDomain.CreateNewGlobalDomain();
+                globalActorDomain.gameObject.name = "Global Actor Domain";
 
-        public static Coroutine SendCoroutine(IEnumerator coroutine) => Instance.StartCoroutine(coroutine);
+                foreach (GameInstanceModule module in modules)
+                {
+
+                }
+            }
+
+            // Reload Static Fields
+            [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+            static void InitializeStaticFields()
+            {
+                _instance = null;
+            }
+        #endregion
+        #endregion
     }
 }
-
