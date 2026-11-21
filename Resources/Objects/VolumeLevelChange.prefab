@@ -105,3 +105,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b3393b7d4fc5eeca141e474d125b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  affectedActors:
+    mode: 0
+  ignoreHeldObjects: 1
+  disabledObjectsExitVolume: 1
+  detects: -1
+  pawnsInTrigger: []
+  propsInTrigger: []
+  targetScene:
+    sceneAsset: {fileID: 0}
+    sceneName: 

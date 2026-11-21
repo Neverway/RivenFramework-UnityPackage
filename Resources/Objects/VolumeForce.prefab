@@ -209,10 +209,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a863a355825bd35ac3ef6d0eb91bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unaffectedTeams: []
-  ignoreUnaffectedTeamsFilter: 0
+  affectedActors:
+    mode: 0
   ignoreHeldObjects: 1
   disabledObjectsExitVolume: 1
+  detects: -1
   pawnsInTrigger: []
   propsInTrigger: []
   actorForceIntensity: 5000

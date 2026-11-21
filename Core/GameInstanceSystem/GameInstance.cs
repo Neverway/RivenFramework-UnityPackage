@@ -106,7 +106,7 @@ namespace RivenFramework
         /// <returns>True if there was a component of that type on GameInstance</returns>
         public static bool TryGet<T>(out T gameInstanceModule) where T : MonoBehaviour
         {
-            gameInstanceModule = Get<T>();
+            gameInstanceModule = _instance != null ? _instance.GetComponent<T>() : null;
             return gameInstanceModule != null;
         }
 

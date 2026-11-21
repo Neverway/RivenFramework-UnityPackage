@@ -245,10 +245,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2c2e8062917ff7489ac23d6b56c3e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unaffectedTeams: []
-  ignoreUnaffectedTeamsFilter: 0
+  affectedActors:
+    mode: 0
   ignoreHeldObjects: 1
   disabledObjectsExitVolume: 1
+  detects: -1
   pawnsInTrigger: []
   propsInTrigger: []
   exitPositionOffset: {x: 0, y: 0, z: 0}

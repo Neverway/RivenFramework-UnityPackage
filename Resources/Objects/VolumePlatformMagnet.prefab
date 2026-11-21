@@ -95,11 +95,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db6e680fdecdb0be89f19e82e98ce497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unaffectedTeams: []
-  ignoreUnaffectedTeamsFilter: 0
+  affectedActors:
+    mode: 0
+    filters: []
   ignoreHeldObjects: 1
   disabledObjectsExitVolume: 1
+  detects: -1
   pawnsInTrigger: []
   propsInTrigger: []
-  pawnManager: {fileID: 0}
+  rotatePawnsWithPlatform: 0
   reparentContainer: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []

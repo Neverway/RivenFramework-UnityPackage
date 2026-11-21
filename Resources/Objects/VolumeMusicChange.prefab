@@ -105,11 +105,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8bf6945510e25f199919bb840d48365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unaffectedTeams: []
-  ignoreUnaffectedTeamsFilter: 0
+  affectedActors:
+    mode: 0
+    filters:
+    - rid: 7692443308549210113
   ignoreHeldObjects: 1
   disabledObjectsExitVolume: 1
+  detects: 0
   pawnsInTrigger: []
   propsInTrigger: []
   musicTrack: {fileID: 8300000, guid: 9ef3f284ca0f78f07bade07612372682, type: 3}
   transitionTime: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 7692443308549210113
+      type: {class: PawnFilter_IsLocalPlayer, ns: RivenFramework, asm: RivenFramework.PawnManagement}
+      data: 

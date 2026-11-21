@@ -63,7 +63,11 @@ namespace RivenFramework
             /// <param name="_worldName">The name of the world to load</param>
             public void LoadWorld(string _worldName)
             {
-                if (_worldName == SceneManager.GetActiveScene().name) Debug.LogWarning("Target world is the same as the loaded world, this causes strange issues please dont do this!!!!");
+                if (_worldName == SceneManager.GetActiveScene().name)
+                {
+                    Debug.LogWarning("Target world is the same as the loaded world, this causes strange issues please dont do this!!!!");
+                    return;
+                }
             
                 if (isLoading)
                 {
@@ -85,12 +89,18 @@ namespace RivenFramework
             /// <param name="_worldName">The name of the world to load</param>
             public void ForceLoadWorld(string _worldName)
             {
-                if (DoesSceneExist(_worldName) is false && _worldName != "_Error")
+                if (!DoesSceneExist(_worldName))
                 {
-                    ForceLoadWorld("_Error");
+                    Debug.LogError($"Could not find scene '{_worldName}'! Loading fallback...");
+                    _worldName = "_Error";
                 }
+                void NotifyLoaded(Scene _scene, LoadSceneMode _mode)
+                {
+                    SceneManager.sceneLoaded -= NotifyLoaded;
+                    OnWorldLoaded?.Invoke();
+                }
+                SceneManager.sceneLoaded += NotifyLoaded;
                 SceneManager.LoadScene(_worldName);
-                OnWorldLoaded?.Invoke();
             }
         #endregion
 

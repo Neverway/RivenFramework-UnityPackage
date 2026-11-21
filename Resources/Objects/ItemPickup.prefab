@@ -118,9 +118,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd475a26bae10db88ad2b0dfaad61264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guid: 
   id: Volume
   displayName: Volume
-  uniqueId: 
+  tags: []
+  team: {fileID: 0}
 --- !u!1001 &6981721891215658708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -248,10 +250,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a5767c6725c19cab8d658b35c098ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unaffectedTeams: []
-  ignoreUnaffectedTeamsFilter: 0
+  affectedActors:
+    mode: 0
+    filters:
+    - rid: 7692443308549210112
   ignoreHeldObjects: 1
   disabledObjectsExitVolume: 1
+  detects: 1
   pawnsInTrigger: []
   propsInTrigger: []
   triggerFilter: 1
@@ -266,6 +271,12 @@ MonoBehaviour:
     OnOutputChanged:
       m_PersistentCalls:
         m_Calls: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 7692443308549210112
+      type: {class: PawnFilter_IsLocalPlayer, ns: RivenFramework, asm: RivenFramework.PawnManagement}
+      data: 
 --- !u!54 &3291334530249350354
 Rigidbody:
   m_ObjectHideFlags: 0

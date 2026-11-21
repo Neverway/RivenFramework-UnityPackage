@@ -24,7 +24,6 @@ namespace RivenFramework
         #region----------------( Inspector )--------------------------------------------------------------------------//
             [Header("Interactable Settings")] [Tooltip("If this is false, this trigger can only be activated once")]
             public bool resetsAutomatically = true;
-            public TriggerFilter triggerFilter;
         #endregion
 
         #region----------------( Reference )--------------------------------------------------------------------------//
@@ -92,29 +91,10 @@ namespace RivenFramework
         #endregion
 
         #region----------------( Internal )---------------------------------------------------------------------------//
-            public enum TriggerFilter
-            {
-                All,
-                Pawns,
-                Props,
-                OnlyPlayer
-            }
-
             private bool IsOccupied()
             {
-                if (hasBeenTriggered && resetsAutomatically == false)
-                {
-                    return false;
-                }
-                switch (triggerFilter)
-                {
-                    case TriggerFilter.All: return pawnsInTrigger.Count != 0 || propsInTrigger.Count != 0;
-                    case TriggerFilter.Pawns: return pawnsInTrigger.Count != 0;
-                    case TriggerFilter.Props: return propsInTrigger.Count != 0;
-                    case TriggerFilter.OnlyPlayer: return GetPlayerInTrigger() != null;
-                }
-
-                return false;
+                if (hasBeenTriggered && resetsAutomatically == false) return false;
+                return pawnsInTrigger.Count != 0 || propsInTrigger.Count != 0;
             }
 
             private bool CanFireEvents()

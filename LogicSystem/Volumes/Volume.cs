@@ -27,6 +27,9 @@ namespace RivenFramework
             public bool ignoreHeldObjects = true;
             [Tooltip("If enabled, will remove objects from the list of objects in the volume when that object becomes disabled")]
             public bool disabledObjectsExitVolume = true;
+            [System.Flags] public enum VolumeTargets { Pawns = 1, Props = 2 }
+            [Tooltip("Which kinds of objects this volume reacts to")]
+            public VolumeTargets detects = VolumeTargets.Pawns | VolumeTargets.Props;
         #endregion
 
         #region----------------( Reference )--------------------------------------------------------------------------//
@@ -46,16 +49,16 @@ namespace RivenFramework
 
         #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
-            protected void Update()
+            protected virtual void Update()
             {
                 CheckPawnsInTrigger();
                 CheckPropsInTrigger();
             }
 
-            protected void OnTriggerEnter(Collider _other)
+            protected virtual void OnTriggerEnter(Collider _other)
             {
                 // Pawn has entered the volume
-                if (_other.CompareTag("Pawn"))
+                if ((detects & VolumeTargets.Pawns) != 0 && _other.CompareTag("Pawn"))
                 {
                     // Get a reference to the entity component
                     var targetEntity = _other.gameObject.GetComponentInParent<Pawn>();
@@ -66,7 +69,7 @@ namespace RivenFramework
                 }
 
                 // A physics prop has entered the volume
-                if (_other.CompareTag("PhysProp"))
+                if ((detects & VolumeTargets.Props) != 0 && _other.CompareTag("PhysProp"))
                 {
                     // Don't register held objects if we are ignoring held objects
                    var grabbable = _other.gameObject.GetComponent<Object_PhysPickup>();
@@ -87,7 +90,7 @@ namespace RivenFramework
                 }
             }
 
-            protected void OnTriggerExit(Collider _other)
+            protected virtual void OnTriggerExit(Collider _other)
             {
                 // Pawn has entered the volume
                 if (_other.CompareTag("Pawn"))
@@ -213,32 +216,19 @@ namespace RivenFramework
             /// </summary>
             protected virtual void CheckPawnsInTrigger()
             {
-                var pawnsToRemove = new List<Pawn>();
-
-                foreach (var _pawn in pawnsInTrigger)
+                for (int i = pawnsInTrigger.Count - 1; i >= 0; i--)
                 {
-                    if (_pawn == null)
+                    var pawn = pawnsInTrigger[i];
+                    if (pawn == null)
                     {
-                        pawnsToRemove.Add(_pawn);
-                        continue;
+                        pawnsInTrigger.RemoveAt(i);
+                        OnObjectsInVolumeUpdated(VolumeUpdateType.PawnRemoved);
                     }
-
-                    // Adding this redundant check since sometimes it was throwing a null ref on the active check ~Liz
-                    if (_pawn)
+                    else if (disabledObjectsExitVolume && !pawn.gameObject.activeInHierarchy)
                     {
-                        if (_pawn.gameObject.activeInHierarchy is false && disabledObjectsExitVolume)
-                        {
-                            pawnsToRemove.Add(_pawn);
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        pawnsToRemove.Add(_pawn);
+                        RemovePawnFromVolume(pawn);
                     }
                 }
-
-                foreach (var _pawn in pawnsToRemove) RemovePawnFromVolume(_pawn);
             }
 
             /// <summary>
@@ -246,24 +236,19 @@ namespace RivenFramework
             /// </summary>
             protected virtual void CheckPropsInTrigger()
             {
-                var propsToRemove = new List<GameObject>();
-
-                foreach (var _prop in propsInTrigger)
+                for (int i = propsInTrigger.Count - 1; i >= 0; i--)
                 {
-                    if (_prop == null)
+                    var prop = propsInTrigger[i];
+                    if (prop == null)
                     {
-                        propsToRemove.Add(_prop);
-                        continue;
+                        propsInTrigger.RemoveAt(i);
+                        OnObjectsInVolumeUpdated(VolumeUpdateType.PropRemoved);
                     }
-
-                    if (_prop && _prop.gameObject.activeInHierarchy is false && disabledObjectsExitVolume)
+                    else if (disabledObjectsExitVolume && !prop.gameObject.activeInHierarchy)
                     {
-                        propsToRemove.Add(_prop);
-                        continue;
+                        RemovePropFromVolume(prop);
                     }
                 }
-
-                foreach (var _prop in propsToRemove) RemovePropFromVolume(_prop);
             }
 
             /// <summary>
@@ -272,29 +257,9 @@ namespace RivenFramework
             /// <returns>Returns the pawn component of the local player if they are in this volume, otherwise returns null</returns>
             protected Pawn GetPlayerInTrigger()
             {
-                if (pawnManager == null)
-                {
-                    pawnManager = FindObjectOfType<GI_PawnManager>();
-                    if (pawnManager == null) return null;
-                }
-
-                if (pawnManager.localPlayerCharacter == null)
-                { 
-                    return null;
-                }
-
-                foreach (var _pawn in pawnsInTrigger)
-                {
-                    //print("Cool dogs don't do drugs");
-                    var test = pawnManager.localPlayerCharacter;
-                    //print($"{test}");
-                    if (pawnsInTrigger.Contains(test.GetComponent<Pawn>()))
-                    {
-                        //print("Cool cats wear cool hats");
-                        return _pawn;
-                    }
-                }
-
+                if (!GameInstance.TryGet(out GI_PawnManager pawnManager) || pawnManager.localPlayerCharacter == null) return null;
+                foreach (var pawn in pawnsInTrigger)
+                    if (pawn != null && pawn.gameObject == pawnManager.localPlayerCharacter) return pawn;
                 return null;
             }
 

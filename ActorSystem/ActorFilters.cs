@@ -18,6 +18,12 @@ using System.Collections.Generic;
 namespace RivenFramework
 {
     /// <summary>
+    /// Base for every actor filter
+    /// </summary>
+    [Serializable]
+    public abstract class ActorFilter : Filter<Actor> { }
+    
+    /// <summary>
     /// A list of filters and how they are checked to determin if a target passes a filter check
     /// </summary>
     [Serializable]
@@ -30,7 +36,7 @@ namespace RivenFramework
             public Mode mode = Mode.MustPassAll;
 
             [Tooltip("Which filters to check (If empty, all actors pass the filter)")]
-            [SerializeReference, Polymorphic] public List<Filter<Actor>> filters = new List<Filter<Actor>>();
+            [SerializeReference, Polymorphic] public List<ActorFilter> filters = new List<ActorFilter>();
         #endregion
 
         #region----------------( Reference )--------------------------------------------------------------------------//
@@ -90,7 +96,7 @@ namespace RivenFramework
     /// Passes actors if their display name matches
     /// </summary>
     [Serializable]
-    public class ActorFilter_IsNamed : Filter<Actor>
+    public class ActorFilter_IsNamed : ActorFilter
     {
         #region====================================( Variables )==========================================================//
 
@@ -132,7 +138,7 @@ namespace RivenFramework
     /// Passes the actor with a specific ID
     /// </summary>
     [Serializable]
-    public class ActorFilter_IsID : Filter<Actor>
+    public class ActorFilter_IsID : ActorFilter
     {
         #region====================================( Variables )==========================================================//
 
@@ -174,7 +180,7 @@ namespace RivenFramework
     /// Passes actors that have at least one of the listed tags
     /// </summary>
     [Serializable]
-    public class ActorFilter_HasAnyActorTag : Filter<Actor>
+    public class ActorFilter_HasAnyActorTag : ActorFilter
     {
         #region====================================( Variables )==========================================================//
 
@@ -216,7 +222,7 @@ namespace RivenFramework
     /// Passes actors that have every one of the listed tags
     /// </summary>
     [Serializable]
-    public class ActorFilter_HasAllActorTags : Filter<Actor>
+    public class ActorFilter_HasAllActorTags : ActorFilter
     {
         #region====================================( Variables )==========================================================//
 
@@ -258,7 +264,7 @@ namespace RivenFramework
     /// Passes actors that are on a specific team
     /// </summary>
     [Serializable]
-    public class ActorFilter_IsOnTeam : Filter<Actor>
+    public class ActorFilter_IsOnTeam : ActorFilter
     {
         #region====================================( Variables )==========================================================//
 
@@ -300,7 +306,7 @@ namespace RivenFramework
     /// Passes actors whose team has one of the chosen relations to a team (For example, a pain volume that should not hurt its own team uses Opposed and Neutral)
     /// </summary>
     [Serializable]
-    public class ActorFilter_TeamRelation : Filter<Actor>
+    public class ActorFilter_TeamRelation : ActorFilter
     {
         #region====================================( Variables )========================================================== //
 
