@@ -9,14 +9,14 @@ namespace RivenFramework
         //Define whether or not the widget pauses the pawns in the scene
         public abstract bool PausesPawns();
 
-        protected void OnEnable()
+        protected virtual void OnEnable()
         {
             if (PausesPawns())
                 foreach (var pawn in FindObjectsOfType<Pawn>())
                     pawn.Pause(this);
         }
 
-        protected void OnDisable()
+        protected virtual void OnDisable()
         {
             if (PausesPawns())
                 foreach (var pawn in FindObjectsOfType<Pawn>())
