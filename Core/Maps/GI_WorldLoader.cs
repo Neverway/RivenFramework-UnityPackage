@@ -108,28 +108,29 @@ namespace RivenFramework
             private IEnumerator LoadWorldCoroutine(string _worldName)
             {
                 isLoading = true;
-                yield return new WaitForSeconds(delayBeforeWorldChange);
-        
-                var previousScene = SceneManager.GetActiveScene();
+                float originalTimescale = Time.timeScale;
 
-                var originalTimescale = Time.timeScale;
-                Time.timeScale = 0;
-        
-                AsyncOperation loadAsync = SceneManager.LoadSceneAsync(_worldName, LoadSceneMode.Additive);
-                while (!loadAsync.isDone) { yield return new WaitForEndOfFrame(); }
-        
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(_worldName));
-        
-                //print("Called ejection");
-                //yield return StartCoroutine(WaitForEjectCompletion());
-        
-                AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync(previousScene);
-                while (!unloadAsync.isDone) { yield return new WaitForEndOfFrame(); }
+                try
+                {
+                    yield return new WaitForSeconds(delayBeforeWorldChange);
 
-                Time.timeScale = originalTimescale;
+                    var previousScene = SceneManager.GetActiveScene();
+                    originalTimescale = Time.timeScale;
+                    Time.timeScale = 0;
 
-                isLoading = false;
-                
+                    AsyncOperation loadAsync = SceneManager.LoadSceneAsync(_worldName, LoadSceneMode.Additive);
+                    while (!loadAsync.isDone) { yield return new WaitForEndOfFrame(); }
+                    SceneManager.SetActiveScene(SceneManager.GetSceneByName(_worldName));
+
+                    AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync(previousScene);
+                    while (!unloadAsync.isDone) { yield return new WaitForEndOfFrame(); }
+                }
+                finally
+                {
+                    Time.timeScale = originalTimescale;
+                    isLoading = false;
+                }
+
                 OnWorldLoaded?.Invoke();
             }
 
