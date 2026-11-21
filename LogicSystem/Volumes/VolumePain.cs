@@ -36,9 +36,9 @@ namespace RivenFramework
 
         #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
-            private void Update()
+            protected override void Update()
             {
-                // Who gets hurt (or healed) is decided by the volume's "Affected Actors" filter
+                base.Update();
                 foreach (var entity in pawnsInTrigger)
                 {
                     if (entity == null) continue;

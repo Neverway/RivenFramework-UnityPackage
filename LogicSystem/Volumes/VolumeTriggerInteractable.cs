@@ -60,7 +60,7 @@ namespace RivenFramework
                 interactionIndicator = transform.GetChild(0).gameObject;
             }
 
-            private new void OnTriggerEnter(Collider _other)
+            protected override void OnTriggerEnter(Collider _other)
             { 
                 // Call the base class method
                 base.OnTriggerEnter(_other);
@@ -75,7 +75,7 @@ namespace RivenFramework
                 }
             }
 
-            private new void OnTriggerExit(Collider _other)
+            protected override void OnTriggerExit(Collider _other)
             {
                 base.OnTriggerExit(_other); // Call the base class method
 

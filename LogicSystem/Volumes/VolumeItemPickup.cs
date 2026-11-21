@@ -39,7 +39,7 @@ namespace RivenFramework
         #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
             [Todo_PoorlyCoded("Assuming the item object for an item pickup is the first child of the item pickup is probably a crappy way to handle this.")]
-            private new void OnTriggerEnter(Collider _other)
+            protected override void OnTriggerEnter(Collider _other)
             {
                 base.OnTriggerEnter(_other);
                 foreach (var pawn in pawnsInTrigger)

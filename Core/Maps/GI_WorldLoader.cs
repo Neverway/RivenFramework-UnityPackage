@@ -26,17 +26,17 @@ namespace RivenFramework
         #region----------------( Inspector )--------------------------------------------------------------------------//
             [Tooltip("The amount of time to wait when a load level function is called before the level actually begins loading")]
             [SerializeField] public float delayBeforeWorldChange = 0.25f;
-            [Tooltip("The minimum amount of time to wait on the loading screen between level changes")]
-            [SerializeField] public float minimumRequiredLoadTime = 1f;
+            //[Tooltip("The minimum amount of time to wait on the loading screen between level changes")]
+            //[SerializeField] public float minimumRequiredLoadTime = 1f;
             [Tooltip("The ID of the level that we will wait on during loading (It's the loading screen level)")]
             [SerializeField] private string loadingWorldID = "_Travel";
-            [Tooltip("The ID of the level that we store objects in between level changes to avoid them being unloaded")]
-            public string streamingWorldID = "_Streaming";
+            //[Tooltip("The ID of the level that we store objects in between level changes to avoid them being unloaded")]
+            //public string streamingWorldID = "_Streaming";
         #endregion
 
         #region----------------( Reference )--------------------------------------------------------------------------//
-            private Image loadingBar;
-            private Scene streamingScene;
+            //private Image loadingBar;
+            //private Scene streamingScene;
         #endregion
 
         #region----------------( External )---------------------------------------------------------------------------//

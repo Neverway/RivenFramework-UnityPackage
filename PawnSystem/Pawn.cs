@@ -79,34 +79,28 @@ namespace RivenFramework
         //=-----------------=
         public void ModifyHealth(float _value)
         {
-            if (isInvulnerable) return;
+            if (_value == 0 || isDead) return;
+            if (_value < 0 && isInvulnerable) return;
+            
+            float newHealth = Mathf.Clamp(currentStats.health + _value, 0, defaultStats.health);
+            if (_value > 0 && newHealth == currentStats.health) return;
+            
+            currentStats.health = newHealth;
+            if (_value > 0)
+            {
+                OnPawnHeal?.Invoke();
+                return;
+            }
+            
             StartCoroutine(InvulnerabilityCooldown());
-            switch (_value)
+            
+            OnPawnHurt?.Invoke();
+            if (newHealth <= 0)
             {
-                case > 0:
-                    OnPawnHeal?.Invoke();
-                    isDead = false;
-                    break;
-                case < 0:
-                    if (isDead) return;
-                    OnPawnHurt?.Invoke();
-                    break;
-            }
-
-            if (currentStats.health + _value <= 0)
-            {
-                if (isDead) return;
-                OnPawnDeath?.Invoke();
                 isDead = true;
-                if (despawnOnDeath)
-                {
-                    Destroy(gameObject, despawnOnDeathDelay);
-                }
+                OnPawnDeath?.Invoke();
+                if (despawnOnDeath) Destroy(gameObject, despawnOnDeathDelay);
             }
-
-            if (currentStats.health + _value > defaultStats.health) currentStats.health = defaultStats.health;
-            else if (currentStats.health + _value < 0) currentStats.health = 0;
-            else currentStats.health += _value;
         }
 
         // Instantly sets the pawns health to zero, firing its onDeath event

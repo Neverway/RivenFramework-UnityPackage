@@ -48,7 +48,7 @@ namespace RivenFramework
 
         #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
-            private new void Update()
+            protected override void Update()
             {
                 base.Update();
                 if (reset) Reset();
@@ -57,10 +57,10 @@ namespace RivenFramework
             [Todo ("We should update the state of this volume when it's disabled. If an occupant is non-crushable (doesn't get disabled in rift) then it should be removed from the list.")]
             private void OnDisable ()
             {
-
+                base.OnDisable();
             }
 
-            private new void OnTriggerEnter(Collider _other)
+            protected override void OnTriggerEnter(Collider _other)
             {
                 bool wasOccupied = IsOccupied();
                 base.OnTriggerEnter(_other);
@@ -73,7 +73,7 @@ namespace RivenFramework
                 onOccupied.Set(isOccupied);
             }
 
-            private new void OnTriggerExit(Collider _other)
+            protected override void OnTriggerExit(Collider _other)
             {
                 base.OnTriggerExit(_other);
                 bool isOccupied = IsOccupied (); //This boolean prevents us from needing to call IsOccupied() twice. - Connor

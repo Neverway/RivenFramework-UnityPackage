@@ -64,7 +64,7 @@ namespace RivenFramework
                 }
             }
 
-            private new void OnTriggerStay(Collider _other)
+            private void OnTriggerStay(Collider _other)
             {
 
                 // Pawn has entered the volume
@@ -94,7 +94,7 @@ namespace RivenFramework
                 }
             }
 
-            private void OnTriggerExit(Collider _other)
+            protected override void OnTriggerExit(Collider _other)
             {
 
                 // Pawn has entered the volume

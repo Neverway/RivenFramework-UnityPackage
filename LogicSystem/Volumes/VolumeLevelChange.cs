@@ -45,7 +45,7 @@ namespace RivenFramework
                 targetScene.RefreshSceneName();
             }
 
-            private new void OnTriggerEnter(Collider _other)
+            protected override void OnTriggerEnter(Collider _other)
             {
                 base.OnTriggerEnter(_other);
                 if (GetPlayerInTrigger())

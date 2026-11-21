@@ -43,7 +43,8 @@ namespace RivenFramework
         //=-----------------=
         private void Start()
         {
-            UpdateItemList();
+            UpdateItemList(); 
+            UpdateEquippedItem();
         }
 
         private void Update()
@@ -74,16 +75,16 @@ namespace RivenFramework
 
         private bool HasItem(GameObject _itemPrefab)
         {
-            if (_itemPrefab.GetComponent<Actor>() is null) return false;
-        
-            for (int i = 0; i < items.Count; i++)
+            var prefabActor = _itemPrefab.GetComponent<Actor>();
+            
+            if (prefabActor == null || string.IsNullOrEmpty(prefabActor.id)) return false;
+            
+            foreach (var item in items)
             {
-                if (items[i].GetComponent<Actor>())
-                {
-                    if (items[i].GetComponent<Actor>().id == _itemPrefab.GetComponent<Actor>().id) return true;
-                }
+                var actor = item.GetComponent<Actor>();
+                if (actor && actor.id == prefabActor.id) return true;
             }
-
+            
             return false;
         }
     
@@ -120,7 +121,7 @@ namespace RivenFramework
 
         public void SwitchTo(int _index)
         {
-            if (items.Count < _index) return;
+            if (_index < 0 || _index >= items.Count) return;
             currentIndex = _index;
             UpdateEquippedItem();
         }
@@ -139,9 +140,14 @@ namespace RivenFramework
             return true;
         }
 
-        public bool RemoveItem()
+        public bool RemoveItem(int _index)
         {
-            return false;
+            if (_index < 0 || _index >= items.Count) return false;
+            Destroy(items[_index]);
+            items.RemoveAt(_index);
+            currentIndex = Mathf.Clamp(currentIndex, 0, Mathf.Max(0, items.Count - 1));
+            UpdateEquippedItem();
+            return true;
         }
     }
 }

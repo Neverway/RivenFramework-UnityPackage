@@ -34,7 +34,7 @@ namespace RivenFramework
 
         #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
-            private new void OnTriggerEnter(Collider _other)
+            protected override void OnTriggerEnter(Collider _other)
             {
                 // R.I.P "Connorses has a hat" debug log message 2024-2025 ~Liz
 

@@ -38,7 +38,7 @@ namespace RivenFramework
 
         #region====================================( Functions )======================================================//
         #region----------------( Inherited )--------------------------------------------------------------------------//
-            private new void OnTriggerEnter(Collider _other)
+            protected override void OnTriggerEnter(Collider _other)
             {
                 base.OnTriggerEnter(_other); // Call the base class method
                 if (!GetPlayerInTrigger())
